@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Calendar, MapPin, Trophy, Zap } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import type { NewsItem } from "@shared/schema";
+import { newsData } from "@/data/newsData";
 
 const iconMap: Record<string, typeof Trophy> = {
   Trophy,
@@ -11,28 +10,6 @@ const iconMap: Record<string, typeof Trophy> = {
 };
 
 export default function News() {
-  const { data: newsItems = [], isLoading } = useQuery<NewsItem[]>({
-    queryKey: ["news"],
-    queryFn: async () => {
-      const response = await fetch("/api/news");
-      if (!response.ok) throw new Error("Failed to fetch news");
-      return response.json();
-    },
-  });
-
-  if (isLoading) {
-    return (
-      <div className="pt-10 pb-20">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center py-20">
-            <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent"></div>
-            <p className="mt-4 text-muted-foreground">Loading news...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="pt-10 pb-20">
       <div className="container mx-auto px-4 md:px-6">
@@ -45,13 +22,13 @@ export default function News() {
           <p className="text-muted-foreground text-lg">Stay updated with our latest achievements and events.</p>
         </motion.div>
 
-        {newsItems.length === 0 ? (
+        {newsData.length === 0 ? (
           <div className="text-center py-20">
             <p className="text-muted-foreground text-lg">No news items yet. Check back soon!</p>
           </div>
         ) : (
           <div className="grid md:grid-cols-2 gap-6">
-            {newsItems.map((item, index) => {
+            {newsData.map((item, index) => {
               const Icon = iconMap[item.iconName] || Trophy;
               return (
                 <motion.div

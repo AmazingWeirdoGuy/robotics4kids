@@ -2,8 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, TrendingUp, Users, Award, BookOpen, Calendar, Trophy, MapPin, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { useQuery } from "@tanstack/react-query";
-import type { NewsItem } from "@shared/schema";
+import { newsData } from "@/data/newsData";
 import heroImage from "@assets/generated_images/high_school_robotics_team_building_a_sleek_robot_in_a_bright_lab.png";
 import workshopImage from "@assets/generated_images/robotics_workshop_with_kids_coding.png";
 import competitionImage from "@assets/generated_images/robotics_competition_arena.png";
@@ -17,16 +16,7 @@ const iconMap: Record<string, typeof Trophy> = {
 };
 
 export default function Hero() {
-  const { data: allNews = [] } = useQuery<NewsItem[]>({
-    queryKey: ["news"],
-    queryFn: async () => {
-      const response = await fetch("/api/news");
-      if (!response.ok) throw new Error("Failed to fetch news");
-      return response.json();
-    },
-  });
-
-  const latestNews = allNews.slice(0, 3);
+  const latestNews = newsData.slice(0, 3);
 
   return (
     <div className="flex flex-col w-full">
