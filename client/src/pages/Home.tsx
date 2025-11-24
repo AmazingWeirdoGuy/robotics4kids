@@ -1,12 +1,33 @@
 import { motion } from "framer-motion";
-import { ArrowRight, TrendingUp, Users, Award, BookOpen, Calendar, Trophy } from "lucide-react";
+import { ArrowRight, TrendingUp, Users, Award, BookOpen, Calendar, Trophy, MapPin, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import { useQuery } from "@tanstack/react-query";
+import type { NewsItem } from "@shared/schema";
 import heroImage from "@assets/generated_images/high_school_robotics_team_building_a_sleek_robot_in_a_bright_lab.png";
 import workshopImage from "@assets/generated_images/robotics_workshop_with_kids_coding.png";
 import competitionImage from "@assets/generated_images/robotics_competition_arena.png";
 
+const iconMap: Record<string, typeof Trophy> = {
+  Trophy,
+  Calendar,
+  TrendingUp,
+  MapPin,
+  Zap,
+};
+
 export default function Hero() {
+  const { data: allNews = [] } = useQuery<NewsItem[]>({
+    queryKey: ["news"],
+    queryFn: async () => {
+      const response = await fetch("/api/news");
+      if (!response.ok) throw new Error("Failed to fetch news");
+      return response.json();
+    },
+  });
+
+  const latestNews = allNews.slice(0, 3);
+
   return (
     <div className="flex flex-col w-full">
       {/* Hero Section */}
@@ -221,36 +242,41 @@ export default function Hero() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { title: "Regional Championship Win!", date: "Nov 20, 2025", category: "Competition", icon: Trophy },
-              { title: "Upcoming Workshop Series", date: "Dec 05, 2025", category: "Events", icon: Calendar },
-              { title: "New Lab Equipment Arrived", date: "Nov 15, 2025", category: "Update", icon: TrendingUp },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="glass-card p-6 rounded-2xl hover:bg-white/60 dark:hover:bg-slate-800/60 transition-colors cursor-pointer"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 rounded-lg bg-blue-50 text-primary">
-                    <item.icon className="w-5 h-5" />
-                  </div>
-                  <span className="text-xs font-medium text-muted-foreground bg-secondary px-2 py-1 rounded-md">
-                    {item.category}
-                  </span>
-                </div>
-                <h3 className="font-heading text-xl font-bold mb-2 line-clamp-2">{item.title}</h3>
-                <p className="text-muted-foreground text-sm mb-4">{item.date}</p>
-                <Link href="/news">
-                  <span className="text-sm font-medium text-primary flex items-center gap-1 hover:underline">
-                    Read more <ArrowRight className="w-3 h-3" />
-                  </span>
-                </Link>
-              </motion.div>
-            ))}
+            {latestNews.length > 0 ? (
+              latestNews.map((item, i) => {
+                const Icon = iconMap[item.iconName] || Trophy;
+                return (
+                  <motion.div
+                    key={item.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="glass-card p-6 rounded-2xl hover:bg-white/60 dark:hover:bg-slate-800/60 transition-colors cursor-pointer"
+                  >
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="p-2 rounded-lg bg-blue-50 text-primary">
+                        <Icon className="w-5 h-5" />
+                      </div>
+                      <span className="text-xs font-medium text-muted-foreground bg-secondary px-2 py-1 rounded-md">
+                        {item.category}
+                      </span>
+                    </div>
+                    <h3 className="font-heading text-xl font-bold mb-2 line-clamp-2">{item.title}</h3>
+                    <p className="text-muted-foreground text-sm mb-4">{item.date}</p>
+                    <Link href="/news">
+                      <span className="text-sm font-medium text-primary flex items-center gap-1 hover:underline">
+                        Read more <ArrowRight className="w-3 h-3" />
+                      </span>
+                    </Link>
+                  </motion.div>
+                );
+              })
+            ) : (
+              <div className="col-span-3 text-center py-12 text-muted-foreground">
+                No news items yet. Check back soon!
+              </div>
+            )}
           </div>
           
           <div className="mt-8 text-center md:hidden">
