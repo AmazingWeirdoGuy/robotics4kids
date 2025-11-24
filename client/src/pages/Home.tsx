@@ -28,7 +28,7 @@ export default function Hero() {
             Established 2025
           </span>
           <h1 className="font-heading text-6xl md:text-8xl font-bold leading-[0.9] tracking-tighter mb-6 text-foreground">
-            The Big <span className="text-primary">25</span>
+            Robotics for <span className="text-primary">Kids</span>
             <br />
             <span className="text-4xl md:text-6xl opacity-80">Innovating Tomorrow.</span>
           </h1>

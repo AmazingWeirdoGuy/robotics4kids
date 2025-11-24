@@ -1,8 +1,9 @@
 import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
-import { Menu, X, Cpu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import logo from "@assets/image_1763957987556.png";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,12 +41,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       >
         <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 group cursor-pointer">
-              <div className="p-2 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                <Cpu className="w-6 h-6 text-primary" />
-              </div>
-              <span className="font-heading font-bold text-xl tracking-tight">
-                RoboClub<span className="text-primary">25</span>
-              </span>
+              <img src={logo} alt="R4K Logo" className="h-12 w-auto object-contain" />
           </Link>
 
           {/* Desktop Nav */}
@@ -109,8 +105,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="container mx-auto px-4 md:px-6 grid md:grid-cols-4 gap-8">
           <div className="col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <Cpu className="w-6 h-6 text-primary" />
-              <span className="font-heading font-bold text-xl">RoboClub25</span>
+              <img src={logo} alt="R4K Logo" className="h-10 w-auto" />
+              <span className="font-heading font-bold text-xl">Robotics for Kids</span>
             </div>
             <p className="text-muted-foreground max-w-md">
               Empowering the next generation of engineers and innovators through robotics education and community outreach.
@@ -134,7 +130,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
         <div className="container mx-auto px-4 md:px-6 mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 text-center text-muted-foreground text-sm">
-          © 2025 RoboClub. All rights reserved.
+          © 2025 Robotics for Kids. All rights reserved.
         </div>
       </footer>
     </div>
