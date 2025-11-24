@@ -41,7 +41,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       >
         <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 group cursor-pointer">
-              <img src={logo} alt="R4K Logo" className="h-12 w-auto object-contain" />
+              <img src={logo} alt="R4K Logo" className="h-12 w-12 object-cover rounded-full" />
           </Link>
 
           {/* Desktop Nav */}
@@ -105,7 +105,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="container mx-auto px-4 md:px-6 grid md:grid-cols-4 gap-8">
           <div className="col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <img src={logo} alt="R4K Logo" className="h-10 w-auto" />
+              <img src={logo} alt="R4K Logo" className="h-10 w-10 object-cover rounded-full" />
               <span className="font-heading font-bold text-xl">Robotics for Kids</span>
             </div>
             <p className="text-muted-foreground max-w-md">
