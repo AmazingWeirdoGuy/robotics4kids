@@ -1,5 +1,47 @@
 import { motion } from "framer-motion";
-import { Target, Users, Repeat, GraduationCap, MapPin, Calendar } from "lucide-react";
+import { Target, Users, Repeat, MapPin, Calendar, Award, Code, BookOpen, UserCheck } from "lucide-react";
+
+const teamCategories = [
+  {
+    title: "Officers",
+    icon: Award,
+    color: "bg-blue-100 text-blue-600",
+    members: [
+      { name: "Officer Name 1", role: "President" },
+      { name: "Officer Name 2", role: "Vice President" },
+      { name: "Officer Name 3", role: "Secretary" },
+    ]
+  },
+  {
+    title: "Website Development",
+    icon: Code,
+    color: "bg-purple-100 text-purple-600",
+    members: [
+      { name: "Developer Name 1", role: "Lead Developer" },
+      { name: "Developer Name 2", role: "Developer" },
+    ]
+  },
+  {
+    title: "Faculty Advisors",
+    icon: BookOpen,
+    color: "bg-green-100 text-green-600",
+    members: [
+      { name: "Advisor Name 1", role: "Faculty Advisor" },
+      { name: "Advisor Name 2", role: "Faculty Advisor" },
+    ]
+  },
+  {
+    title: "Active Members",
+    icon: UserCheck,
+    color: "bg-cyan-100 text-cyan-600",
+    members: [
+      { name: "Member Name 1", role: "Active Member" },
+      { name: "Member Name 2", role: "Active Member" },
+      { name: "Member Name 3", role: "Active Member" },
+      { name: "Member Name 4", role: "Active Member" },
+    ]
+  },
+];
 
 const schools = [
   { year: "2018", name: "Prasert Islam School", location: "Nonthaburi, Thailand", note: "& 2022 revisit" },
@@ -129,6 +171,57 @@ export default function About() {
             </motion.div>
           ))}
         </div>
+
+        {/* Team Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-20"
+        >
+          <h2 className="font-heading text-4xl md:text-5xl font-bold mb-4 text-center">Our Team</h2>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto text-center mb-12">
+            Meet the dedicated individuals who make R4K possible.
+          </p>
+          
+          <div className="grid md:grid-cols-2 gap-8">
+            {teamCategories.map((category, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="glass-card p-8 rounded-2xl"
+                data-testid={`team-category-${i}`}
+              >
+                <div className="flex items-center gap-4 mb-6">
+                  <div className={`w-12 h-12 rounded-xl ${category.color} flex items-center justify-center`}>
+                    <category.icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="font-heading text-2xl font-bold">{category.title}</h3>
+                </div>
+                <div className="space-y-4">
+                  {category.members.map((member, j) => (
+                    <div 
+                      key={j} 
+                      className="flex items-center gap-4 p-3 rounded-xl bg-white/50 dark:bg-slate-800/50"
+                      data-testid={`team-member-${i}-${j}`}
+                    >
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold text-sm">
+                        {member.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                      </div>
+                      <div>
+                        <p className="font-medium">{member.name}</p>
+                        <p className="text-sm text-muted-foreground">{member.role}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
 
         {/* School Timeline */}
         <motion.div
