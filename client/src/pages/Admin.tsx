@@ -1,449 +1,322 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Lock, Plus, Trash2, Edit, Mail, FileText, LogOut } from "lucide-react";
-import type { NewsItem, ContactSubmission, InsertNewsItem } from "@shared/schema";
-import { insertNewsItemSchema } from "@shared/schema";
+import { Save, Plus, Trash2, AlertTriangle, CheckCircle } from "lucide-react";
 
-const loginSchema = z.object({
-  password: z.string().min(1, "Password is required"),
-});
+interface NewsItem {
+  id: number;
+  title: string;
+  date: string;
+  category: string;
+  description: string;
+  iconName: string;
+  image?: string;
+}
+
+interface Officer {
+  firstName: string;
+  lastName: string;
+  role: string;
+  image: string;
+}
+
+interface WebDev {
+  firstName: string;
+  lastName: string;
+  role: string;
+  image: string;
+}
+
+interface TeamMember {
+  name: string;
+  image: string;
+}
 
 export default function Admin() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isNewsDialogOpen, setIsNewsDialogOpen] = useState(false);
-  const [editingNews, setEditingNews] = useState<NewsItem | null>(null);
   const { toast } = useToast();
-  const queryClient = useQueryClient();
-  
-  // Login Form
-  const loginForm = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: { password: "" },
-  });
+  const [isReplit, setIsReplit] = useState<boolean | null>(null);
+  const [activeTab, setActiveTab] = useState<"news" | "team">("news");
+  const [saving, setSaving] = useState(false);
 
-  function onLogin(values: z.infer<typeof loginSchema>) {
-    if (values.password === "admin") {
-      setIsAuthenticated(true);
-      toast({ title: "Welcome back, Admin" });
-    } else {
-      toast({ title: "Access Denied", description: "Incorrect password", variant: "destructive" });
+  const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
+  const [officers, setOfficers] = useState<Officer[]>([]);
+  const [webDevelopment, setWebDevelopment] = useState<WebDev[]>([]);
+  const [facultyAdvisors, setFacultyAdvisors] = useState<TeamMember[]>([]);
+  const [activeMembers, setActiveMembers] = useState<TeamMember[]>([]);
+
+  useEffect(() => {
+    checkAccess();
+  }, []);
+
+  useEffect(() => {
+    if (isReplit) {
+      if (activeTab === "news") {
+        loadNewsData();
+      } else {
+        loadTeamData();
+      }
     }
-  }
+  }, [isReplit, activeTab]);
 
-  // News Query
-  const { data: newsItems = [], isLoading: newsLoading } = useQuery<NewsItem[]>({
-    queryKey: ["news"],
-    queryFn: async () => {
-      const response = await fetch("/api/news");
-      if (!response.ok) throw new Error("Failed to fetch news");
-      return response.json();
-    },
-    enabled: isAuthenticated,
-  });
+  const checkAccess = async () => {
+    try {
+      const res = await fetch("/api/admin/check");
+      const data = await res.json();
+      setIsReplit(data.isReplit);
+    } catch {
+      setIsReplit(false);
+    }
+  };
 
-  // Contact Submissions Query
-  const { data: submissions = [], isLoading: submissionsLoading } = useQuery<ContactSubmission[]>({
-    queryKey: ["contact-submissions"],
-    queryFn: async () => {
-      const response = await fetch("/api/contact");
-      if (!response.ok) throw new Error("Failed to fetch submissions");
-      return response.json();
-    },
-    enabled: isAuthenticated,
-  });
+  const loadNewsData = async () => {
+    try {
+      const res = await fetch("/api/admin/news");
+      const data = await res.json();
+      const content = data.content;
+      const match = content.match(/export const newsData: NewsItemData\[\] = (\[[\s\S]*?\]);/);
+      if (match) {
+        const newsArray = eval(match[1]);
+        setNewsItems(newsArray);
+      }
+    } catch (error) {
+      console.error("Failed to load news:", error);
+    }
+  };
 
-  // News Form
-  const newsForm = useForm<z.infer<typeof insertNewsItemSchema>>({
-    resolver: zodResolver(insertNewsItemSchema),
-    defaultValues: {
-      title: "",
-      date: new Date().toISOString().split("T")[0],
-      category: "",
-      description: "",
-      iconName: "Trophy",
-    },
-  });
+  const loadTeamData = async () => {
+    try {
+      const res = await fetch("/api/admin/team");
+      const data = await res.json();
+      const content = data.content;
+      
+      const officersMatch = content.match(/const officers = (\[[\s\S]*?\]);/);
+      if (officersMatch) setOfficers(eval(officersMatch[1]));
+      
+      const webDevMatch = content.match(/const webDevelopment = (\[[\s\S]*?\]);/);
+      if (webDevMatch) setWebDevelopment(eval(webDevMatch[1]));
+      
+      const advisorsMatch = content.match(/const facultyAdvisors = (\[[\s\S]*?\]);/);
+      if (advisorsMatch) setFacultyAdvisors(eval(advisorsMatch[1]));
+      
+      const membersMatch = content.match(/const activeMembers = (\[[\s\S]*?\]);/);
+      if (membersMatch) setActiveMembers(eval(membersMatch[1]));
+    } catch (error) {
+      console.error("Failed to load team:", error);
+    }
+  };
 
-  // Create News Mutation
-  const createNewsMutation = useMutation({
-    mutationFn: async (data: InsertNewsItem) => {
-      const response = await fetch("/api/news", {
+  const saveNewsData = async () => {
+    setSaving(true);
+    try {
+      const content = `export interface NewsItemData {
+  id: number;
+  title: string;
+  date: string;
+  category: string;
+  description: string;
+  iconName: string;
+  image?: string;
+}
+
+export const newsData: NewsItemData[] = ${JSON.stringify(newsItems, null, 2)};
+`;
+      await fetch("/api/admin/news", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ content }),
       });
-      if (!response.ok) throw new Error("Failed to create news");
-      return response.json();
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["news"] });
-      toast({ title: "News item created successfully!" });
-      setIsNewsDialogOpen(false);
-      newsForm.reset();
-    },
-    onError: () => {
-      toast({ title: "Error", description: "Failed to create news item", variant: "destructive" });
-    },
-  });
-
-  // Update News Mutation
-  const updateNewsMutation = useMutation({
-    mutationFn: async ({ id, data }: { id: number; data: Partial<InsertNewsItem> }) => {
-      const response = await fetch(`/api/news/${id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) throw new Error("Failed to update news");
-      return response.json();
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["news"] });
-      toast({ title: "News item updated successfully!" });
-      setIsNewsDialogOpen(false);
-      setEditingNews(null);
-      newsForm.reset();
-    },
-    onError: () => {
-      toast({ title: "Error", description: "Failed to update news item", variant: "destructive" });
-    },
-  });
-
-  // Delete News Mutation
-  const deleteNewsMutation = useMutation({
-    mutationFn: async (id: number) => {
-      const response = await fetch(`/api/news/${id}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) throw new Error("Failed to delete news");
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["news"] });
-      toast({ title: "News item deleted successfully!" });
-    },
-    onError: () => {
-      toast({ title: "Error", description: "Failed to delete news item", variant: "destructive" });
-    },
-  });
-
-  function onSubmitNews(values: z.infer<typeof insertNewsItemSchema>) {
-    if (editingNews) {
-      updateNewsMutation.mutate({ id: editingNews.id, data: values });
-    } else {
-      createNewsMutation.mutate(values);
+      toast({ title: "Saved!", description: "News updated. Commit and push to GitHub to deploy." });
+    } catch {
+      toast({ title: "Error", description: "Failed to save", variant: "destructive" });
     }
+    setSaving(false);
+  };
+
+  const saveTeamData = async () => {
+    setSaving(true);
+    try {
+      const res = await fetch("/api/admin/team");
+      const data = await res.json();
+      let content = data.content;
+
+      content = content.replace(/const officers = \[[\s\S]*?\];/, `const officers = ${JSON.stringify(officers, null, 2)};`);
+      content = content.replace(/const webDevelopment = \[[\s\S]*?\];/, `const webDevelopment = ${JSON.stringify(webDevelopment, null, 2)};`);
+      content = content.replace(/const facultyAdvisors = \[[\s\S]*?\];/, `const facultyAdvisors = ${JSON.stringify(facultyAdvisors, null, 2)};`);
+      content = content.replace(/const activeMembers = \[[\s\S]*?\];/, `const activeMembers = ${JSON.stringify(activeMembers, null, 2)};`);
+
+      await fetch("/api/admin/team", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content }),
+      });
+      toast({ title: "Saved!", description: "Team updated. Commit and push to GitHub to deploy." });
+    } catch {
+      toast({ title: "Error", description: "Failed to save", variant: "destructive" });
+    }
+    setSaving(false);
+  };
+
+  const addNewsItem = () => {
+    const newId = newsItems.length > 0 ? Math.max(...newsItems.map(n => n.id)) + 1 : 1;
+    setNewsItems([...newsItems, {
+      id: newId,
+      title: "New Article",
+      date: new Date().toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }),
+      category: "Announcement",
+      description: "Article description...",
+      iconName: "Zap",
+      image: ""
+    }]);
+  };
+
+  const updateNewsItem = (id: number, field: keyof NewsItem, value: string | number) => {
+    setNewsItems(newsItems.map(item => item.id === id ? { ...item, [field]: value } : item));
+  };
+
+  const deleteNewsItem = (id: number) => setNewsItems(newsItems.filter(item => item.id !== id));
+
+  if (isReplit === null) {
+    return <div className="min-h-screen flex items-center justify-center"><p>Checking access...</p></div>;
   }
 
-  function handleEditNews(news: NewsItem) {
-    setEditingNews(news);
-    newsForm.reset({
-      title: news.title,
-      date: news.date,
-      category: news.category,
-      description: news.description,
-      iconName: news.iconName,
-    });
-    setIsNewsDialogOpen(true);
-  }
-
-  function handleAddNew() {
-    setEditingNews(null);
-    newsForm.reset({
-      title: "",
-      date: new Date().toISOString().split("T")[0],
-      category: "",
-      description: "",
-      iconName: "Trophy",
-    });
-    setIsNewsDialogOpen(true);
-  }
-
-  if (!isAuthenticated) {
+  if (!isReplit) {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="w-full max-w-md p-8 glass-card rounded-2xl"
-        >
-          <div className="flex justify-center mb-6">
-            <div className="p-4 rounded-full bg-blue-50 text-primary">
-              <Lock className="w-8 h-8" />
-            </div>
-          </div>
-          <h1 className="text-2xl font-heading font-bold text-center mb-2">Admin Access</h1>
-          <p className="text-center text-muted-foreground mb-8">Enter your password to manage the site.</p>
-          
-          <Form {...loginForm}>
-            <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
-              <FormField
-                control={loginForm.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input type="password" placeholder="••••••••" {...field} className="bg-white/50" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" className="w-full h-11 rounded-full shadow-lg shadow-primary/20">
-                Login
-              </Button>
-            </form>
-          </Form>
-        </motion.div>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center glass-card p-12 rounded-3xl max-w-md">
+          <AlertTriangle className="w-16 h-16 text-yellow-500 mx-auto mb-6" />
+          <h1 className="font-heading text-3xl font-bold mb-4">Admin Not Available</h1>
+          <p className="text-muted-foreground">
+            The admin panel is only available on Replit. To edit content, open this project in Replit.
+          </p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="pt-10 pb-20 container mx-auto px-4 md:px-6">
-      <div className="flex justify-between items-center mb-8">
-        <div>
-          <h1 className="font-heading text-4xl font-bold">Dashboard</h1>
-          <p className="text-muted-foreground">Manage content and view inquiries.</p>
+    <div className="pt-10 pb-20">
+      <div className="container mx-auto px-4 md:px-6">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
+          <div className="flex items-center gap-3 mb-2">
+            <CheckCircle className="w-6 h-6 text-green-500" />
+            <span className="text-sm text-green-600 font-medium">Connected to Replit</span>
+          </div>
+          <h1 className="font-heading text-5xl font-bold mb-4">Admin Panel</h1>
+          <p className="text-muted-foreground text-lg">Edit content, then commit and push to GitHub to deploy to Vercel.</p>
+        </motion.div>
+
+        <div className="flex gap-4 mb-8">
+          <Button variant={activeTab === "news" ? "default" : "outline"} onClick={() => setActiveTab("news")} className="rounded-full" data-testid="tab-news">News</Button>
+          <Button variant={activeTab === "team" ? "default" : "outline"} onClick={() => setActiveTab("team")} className="rounded-full" data-testid="tab-team">Team</Button>
         </div>
-        <Button variant="outline" onClick={() => setIsAuthenticated(false)} className="gap-2">
-          <LogOut className="w-4 h-4" /> Logout
-        </Button>
-      </div>
 
-      <Tabs defaultValue="news" className="space-y-8">
-        <TabsList className="bg-white/50 p-1 rounded-full border border-white/20">
-          <TabsTrigger value="news" className="rounded-full px-6 data-[state=active]:bg-primary data-[state=active]:text-white">
-            <FileText className="w-4 h-4 mr-2" /> News
-          </TabsTrigger>
-          <TabsTrigger value="messages" className="rounded-full px-6 data-[state=active]:bg-primary data-[state=active]:text-white">
-            <Mail className="w-4 h-4 mr-2" /> Messages
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="news">
-          <Card className="glass-card border-0">
-            <CardHeader className="flex flex-row items-center justify-between">
-              <div>
-                <CardTitle>News Articles</CardTitle>
-                <CardDescription>Manage your club's announcements.</CardDescription>
+        {activeTab === "news" && (
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="font-heading text-2xl font-bold">News Articles</h2>
+              <div className="flex gap-3">
+                <Button onClick={addNewsItem} variant="outline" className="rounded-full" data-testid="button-add-news"><Plus className="w-4 h-4 mr-2" /> Add</Button>
+                <Button onClick={saveNewsData} disabled={saving} className="rounded-full" data-testid="button-save-news"><Save className="w-4 h-4 mr-2" /> {saving ? "Saving..." : "Save"}</Button>
               </div>
-              <Dialog open={isNewsDialogOpen} onOpenChange={setIsNewsDialogOpen}>
-                <DialogTrigger asChild>
-                  <Button onClick={handleAddNew} className="rounded-full shadow-md shadow-primary/20">
-                    <Plus className="w-4 h-4 mr-2" /> Add New
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-lg">
-                  <DialogHeader>
-                    <DialogTitle>{editingNews ? "Edit News Item" : "Add News Item"}</DialogTitle>
-                    <DialogDescription>
-                      {editingNews ? "Update the news item details." : "Create a new news announcement."}
-                    </DialogDescription>
-                  </DialogHeader>
-                  <Form {...newsForm}>
-                    <form onSubmit={newsForm.handleSubmit(onSubmitNews)} className="space-y-4">
-                      <FormField
-                        control={newsForm.control}
-                        name="title"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Title</FormLabel>
-                            <FormControl>
-                              <Input placeholder="News title" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={newsForm.control}
-                        name="date"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Date</FormLabel>
-                            <FormControl>
-                              <Input type="date" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={newsForm.control}
-                        name="category"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Category</FormLabel>
-                            <FormControl>
-                              <Input placeholder="e.g., Competition, Events" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={newsForm.control}
-                        name="iconName"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Icon</FormLabel>
-                            <Select onValueChange={field.onChange} value={field.value}>
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select an icon" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="Trophy">Trophy</SelectItem>
-                                <SelectItem value="Calendar">Calendar</SelectItem>
-                                <SelectItem value="Zap">Zap</SelectItem>
-                                <SelectItem value="MapPin">MapPin</SelectItem>
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={newsForm.control}
-                        name="description"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Description</FormLabel>
-                            <FormControl>
-                              <Textarea placeholder="News details..." {...field} rows={4} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <div className="flex gap-2 justify-end">
-                        <Button type="button" variant="outline" onClick={() => setIsNewsDialogOpen(false)}>
-                          Cancel
-                        </Button>
-                        <Button type="submit" disabled={createNewsMutation.isPending || updateNewsMutation.isPending}>
-                          {createNewsMutation.isPending || updateNewsMutation.isPending ? "Saving..." : "Save"}
-                        </Button>
-                      </div>
-                    </form>
-                  </Form>
-                </DialogContent>
-              </Dialog>
-            </CardHeader>
-            <CardContent>
-              {newsLoading ? (
-                <div className="text-center py-8">Loading...</div>
-              ) : newsItems.length === 0 ? (
-                <div className="text-center py-8 text-muted-foreground">No news items yet.</div>
-              ) : (
-                <Table>
-                  <TableHeader>
-                    <TableRow className="hover:bg-transparent border-slate-200 dark:border-slate-800">
-                      <TableHead>Title</TableHead>
-                      <TableHead>Date</TableHead>
-                      <TableHead>Category</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {newsItems.map((item) => (
-                      <TableRow key={item.id} className="hover:bg-white/40 transition-colors border-slate-100 dark:border-slate-800">
-                        <TableCell className="font-medium">{item.title}</TableCell>
-                        <TableCell>{item.date}</TableCell>
-                        <TableCell>
-                          <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
-                            {item.category}
-                          </span>
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 text-muted-foreground hover:text-primary"
-                            onClick={() => handleEditNews(item)}
-                          >
-                            <Edit className="w-4 h-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 text-muted-foreground hover:text-destructive"
-                            onClick={() => {
-                              if (confirm("Are you sure you want to delete this news item?")) {
-                                deleteNewsMutation.mutate(item.id);
-                              }
-                            }}
-                            disabled={deleteNewsMutation.isPending}
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
+            </div>
+            {newsItems.map((item) => (
+              <div key={item.id} className="glass-card p-6 rounded-2xl space-y-4" data-testid={`news-editor-${item.id}`}>
+                <div className="flex justify-between items-start">
+                  <h3 className="font-bold">Article #{item.id}</h3>
+                  <Button variant="ghost" size="sm" onClick={() => deleteNewsItem(item.id)} className="text-red-500"><Trash2 className="w-4 h-4" /></Button>
+                </div>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div><label className="text-sm font-medium mb-1 block">Title</label><Input value={item.title} onChange={(e) => updateNewsItem(item.id, "title", e.target.value)} /></div>
+                  <div><label className="text-sm font-medium mb-1 block">Date</label><Input value={item.date} onChange={(e) => updateNewsItem(item.id, "date", e.target.value)} /></div>
+                  <div><label className="text-sm font-medium mb-1 block">Category</label><Input value={item.category} onChange={(e) => updateNewsItem(item.id, "category", e.target.value)} /></div>
+                  <div><label className="text-sm font-medium mb-1 block">Icon</label><Input value={item.iconName} onChange={(e) => updateNewsItem(item.id, "iconName", e.target.value)} placeholder="Trophy, Calendar, Zap, MapPin, Heart" /></div>
+                </div>
+                <div><label className="text-sm font-medium mb-1 block">Image URL</label><Input value={item.image || ""} onChange={(e) => updateNewsItem(item.id, "image", e.target.value)} placeholder="https://..." /></div>
+                <div><label className="text-sm font-medium mb-1 block">Description</label><Textarea value={item.description} onChange={(e) => updateNewsItem(item.id, "description", e.target.value)} /></div>
+              </div>
+            ))}
+          </div>
+        )}
 
-        <TabsContent value="messages">
-          <Card className="glass-card border-0">
-            <CardHeader>
-              <CardTitle>Recent Inquiries</CardTitle>
-              <CardDescription>Messages from the contact form.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {submissionsLoading ? (
-                <div className="text-center py-8">Loading...</div>
-              ) : submissions.length === 0 ? (
-                <div className="text-center py-8 text-muted-foreground">No messages yet.</div>
-              ) : (
-                <Table>
-                  <TableHeader>
-                    <TableRow className="hover:bg-transparent border-slate-200 dark:border-slate-800">
-                      <TableHead>From</TableHead>
-                      <TableHead>Message</TableHead>
-                      <TableHead>Date</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {submissions.map((msg) => (
-                      <TableRow key={msg.id} className="hover:bg-white/40 transition-colors border-slate-100 dark:border-slate-800">
-                        <TableCell>
-                          <div className="font-medium">{msg.name}</div>
-                          <div className="text-xs text-muted-foreground">{msg.email}</div>
-                        </TableCell>
-                        <TableCell className="max-w-md">
-                          <p className="line-clamp-2 text-sm">{msg.message}</p>
-                        </TableCell>
-                        <TableCell className="text-sm text-muted-foreground">
-                          {new Date(msg.createdAt).toLocaleDateString()}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+        {activeTab === "team" && (
+          <div className="space-y-8">
+            <div className="flex justify-end">
+              <Button onClick={saveTeamData} disabled={saving} className="rounded-full" data-testid="button-save-team"><Save className="w-4 h-4 mr-2" /> {saving ? "Saving..." : "Save All"}</Button>
+            </div>
+
+            <div className="glass-card p-6 rounded-2xl">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="font-heading text-xl font-bold">Officers</h3>
+                <Button onClick={() => setOfficers([...officers, { firstName: "", lastName: "", role: "", image: "" }])} variant="outline" size="sm" className="rounded-full"><Plus className="w-4 h-4 mr-1" /> Add</Button>
+              </div>
+              <div className="space-y-3">
+                {officers.map((o, i) => (
+                  <div key={i} className="grid grid-cols-5 gap-3 items-center">
+                    <Input placeholder="First" value={o.firstName} onChange={(e) => { const u = [...officers]; u[i].firstName = e.target.value; setOfficers(u); }} />
+                    <Input placeholder="Last" value={o.lastName} onChange={(e) => { const u = [...officers]; u[i].lastName = e.target.value; setOfficers(u); }} />
+                    <Input placeholder="Role" value={o.role} onChange={(e) => { const u = [...officers]; u[i].role = e.target.value; setOfficers(u); }} />
+                    <Input placeholder="Image URL" value={o.image} onChange={(e) => { const u = [...officers]; u[i].image = e.target.value; setOfficers(u); }} />
+                    <Button variant="ghost" size="sm" onClick={() => setOfficers(officers.filter((_, idx) => idx !== i))} className="text-red-500"><Trash2 className="w-4 h-4" /></Button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="glass-card p-6 rounded-2xl">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="font-heading text-xl font-bold">Website Development</h3>
+                <Button onClick={() => setWebDevelopment([...webDevelopment, { firstName: "", lastName: "", role: "", image: "" }])} variant="outline" size="sm" className="rounded-full"><Plus className="w-4 h-4 mr-1" /> Add</Button>
+              </div>
+              <div className="space-y-3">
+                {webDevelopment.map((d, i) => (
+                  <div key={i} className="grid grid-cols-5 gap-3 items-center">
+                    <Input placeholder="First" value={d.firstName} onChange={(e) => { const u = [...webDevelopment]; u[i].firstName = e.target.value; setWebDevelopment(u); }} />
+                    <Input placeholder="Last" value={d.lastName} onChange={(e) => { const u = [...webDevelopment]; u[i].lastName = e.target.value; setWebDevelopment(u); }} />
+                    <Input placeholder="Role" value={d.role} onChange={(e) => { const u = [...webDevelopment]; u[i].role = e.target.value; setWebDevelopment(u); }} />
+                    <Input placeholder="Image URL" value={d.image} onChange={(e) => { const u = [...webDevelopment]; u[i].image = e.target.value; setWebDevelopment(u); }} />
+                    <Button variant="ghost" size="sm" onClick={() => setWebDevelopment(webDevelopment.filter((_, idx) => idx !== i))} className="text-red-500"><Trash2 className="w-4 h-4" /></Button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="glass-card p-6 rounded-2xl">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="font-heading text-xl font-bold">Faculty Advisors</h3>
+                <Button onClick={() => setFacultyAdvisors([...facultyAdvisors, { name: "", image: "" }])} variant="outline" size="sm" className="rounded-full"><Plus className="w-4 h-4 mr-1" /> Add</Button>
+              </div>
+              <div className="space-y-3">
+                {facultyAdvisors.map((a, i) => (
+                  <div key={i} className="grid grid-cols-3 gap-3 items-center">
+                    <Input placeholder="Full Name" value={a.name} onChange={(e) => { const u = [...facultyAdvisors]; u[i].name = e.target.value; setFacultyAdvisors(u); }} />
+                    <Input placeholder="Image URL" value={a.image} onChange={(e) => { const u = [...facultyAdvisors]; u[i].image = e.target.value; setFacultyAdvisors(u); }} />
+                    <Button variant="ghost" size="sm" onClick={() => setFacultyAdvisors(facultyAdvisors.filter((_, idx) => idx !== i))} className="text-red-500"><Trash2 className="w-4 h-4" /></Button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="glass-card p-6 rounded-2xl">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="font-heading text-xl font-bold">Active Members</h3>
+                <Button onClick={() => setActiveMembers([...activeMembers, { name: "", image: "" }])} variant="outline" size="sm" className="rounded-full"><Plus className="w-4 h-4 mr-1" /> Add</Button>
+              </div>
+              <div className="space-y-3">
+                {activeMembers.map((m, i) => (
+                  <div key={i} className="grid grid-cols-3 gap-3 items-center">
+                    <Input placeholder="Full Name" value={m.name} onChange={(e) => { const u = [...activeMembers]; u[i].name = e.target.value; setActiveMembers(u); }} />
+                    <Input placeholder="Image URL" value={m.image} onChange={(e) => { const u = [...activeMembers]; u[i].image = e.target.value; setActiveMembers(u); }} />
+                    <Button variant="ghost" size="sm" onClick={() => setActiveMembers(activeMembers.filter((_, idx) => idx !== i))} className="text-red-500"><Trash2 className="w-4 h-4" /></Button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
