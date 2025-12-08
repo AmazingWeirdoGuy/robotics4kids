@@ -1,16 +1,13 @@
 import { motion } from "framer-motion";
-import { ArrowRight, TrendingUp, Users, Award, BookOpen, Calendar, Trophy, MapPin, Zap } from "lucide-react";
+import { ArrowRight, Globe, Users, GraduationCap, BookOpen, Calendar, Trophy, MapPin, Zap, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { newsData } from "@/data/newsData";
-import heroImage from "@assets/generated_images/high_school_robotics_team_building_a_sleek_robot_in_a_bright_lab.png";
-import workshopImage from "@assets/generated_images/robotics_workshop_with_kids_coding.png";
-import competitionImage from "@assets/generated_images/robotics_competition_arena.png";
 
 const iconMap: Record<string, typeof Trophy> = {
   Trophy,
   Calendar,
-  TrendingUp,
+  Heart,
   MapPin,
   Zap,
 };
@@ -25,11 +22,11 @@ export default function Hero() {
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <img
-            src={heroImage}
-            alt="Robotics Team"
+            src="https://r4kclub.com//storage/284/61ebc709cb961_banner.jpg"
+            alt="R4K Banner"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/70 to-transparent dark:from-black/90 dark:via-black/70" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent dark:from-black/90 dark:via-black/70" />
         </div>
 
         <div className="container mx-auto px-4 md:px-6 relative z-10">
@@ -40,24 +37,24 @@ export default function Hero() {
             className="max-w-2xl"
           >
             <span className="inline-block px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 font-medium text-sm mb-6 border border-blue-200">
-              Established 2025
+              Established 2018
             </span>
             <h1 className="font-heading text-6xl md:text-8xl font-bold leading-[0.9] tracking-tighter mb-6 text-foreground">
               Robotics for <span className="text-primary">Kids</span>
               <br />
-              <span className="text-4xl md:text-6xl opacity-80">Innovating Tomorrow.</span>
+              <span className="text-4xl md:text-6xl opacity-80">Technology Equity.</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg leading-relaxed">
-              We are a group of high school students sharing our passion for robotics and programming with the next generation of innovators.
+              We are a group of high school students sharing our knowledge about robotics and programming with children across Thailand and ASEAN.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link href="/contact">
-                <Button size="lg" className="rounded-full px-8 text-lg h-14 shadow-xl shadow-primary/25">
-                  Join the Team
+                <Button size="lg" className="rounded-full px-8 text-lg h-14 shadow-xl shadow-primary/25" data-testid="button-join">
+                  Partner With Us
                 </Button>
               </Link>
               <Link href="/about">
-                <Button variant="outline" size="lg" className="rounded-full px-8 text-lg h-14 bg-white/50 backdrop-blur border-white/40 hover:bg-white/80">
+                <Button variant="outline" size="lg" className="rounded-full px-8 text-lg h-14 bg-white/50 backdrop-blur border-white/40 hover:bg-white/80" data-testid="button-learn-more">
                   Learn More <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </Link>
@@ -82,16 +79,17 @@ export default function Hero() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
             <h2 className="font-heading text-4xl md:text-5xl font-bold mb-4">Our Progress & Impact</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Since our founding, we've been dedicated to making a measurable difference in our community through STEM education.
+            <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
+              R4K is now in 9 schools across Thailand, Myanmar, Philippines and Laos. We have grown into a network of 100+ student coaches and teacher advisors, supported by 17 strong core club members.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-4 gap-6">
             {[
-              { icon: Users, label: "Students Reached", value: "500+", color: "text-blue-500" },
-              { icon: Award, label: "Awards Won", value: "15", color: "text-purple-500" },
-              { icon: TrendingUp, label: "Workshops Hosted", value: "40+", color: "text-cyan-500" },
+              { icon: Globe, label: "Countries", value: "4", color: "text-blue-500" },
+              { icon: MapPin, label: "Partner Schools", value: "9", color: "text-green-500" },
+              { icon: Users, label: "Coaches & Advisors", value: "100+", color: "text-purple-500" },
+              { icon: GraduationCap, label: "Core Members", value: "17", color: "text-cyan-500" },
             ].map((stat, i) => (
               <motion.div
                 key={i}
@@ -100,6 +98,7 @@ export default function Hero() {
                 transition={{ delay: i * 0.1 }}
                 viewport={{ once: true }}
                 className="glass-card p-8 rounded-3xl text-center"
+                data-testid={`stat-${stat.label.toLowerCase().replace(/\s+/g, '-')}`}
               >
                 <div className={`mx-auto w-16 h-16 rounded-2xl bg-white/80 dark:bg-slate-800 flex items-center justify-center mb-6 shadow-lg ${stat.color}`}>
                   <stat.icon className="w-8 h-8" />
@@ -112,65 +111,72 @@ export default function Hero() {
         </div>
       </section>
 
-      {/* Our Course Section */}
+      {/* Our Courses Section */}
       <section className="py-24">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <span className="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">Education</span>
-              <h2 className="font-heading text-4xl md:text-5xl font-bold mb-6">Our Course Curriculum</h2>
-              <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-                We've developed a comprehensive curriculum designed to take students from zero to hero in robotics. Our courses cover mechanics, electronics, and programming.
-              </p>
-              
-              <div className="space-y-6 mb-8">
-                {[
-                  { title: "Intro to Python", desc: "Learn the language of the future with hands-on coding." },
-                  { title: "Mechanical Engineering", desc: "Design and build robot chassis and mechanisms." },
-                  { title: "Sensors & Logic", desc: "Make robots smarter with autonomous decision making." },
-                ].map((item, i) => (
-                  <div key={i} className="flex gap-4">
-                    <div className="mt-1 w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
-                      <BookOpen className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-lg">{item.title}</h4>
-                      <p className="text-muted-foreground">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              
-              <Link href="/contact">
-                <Button className="rounded-full px-8 py-6 shadow-lg shadow-primary/20">Enroll in a Course</Button>
-              </Link>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="relative"
-            >
-              <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800">
-                <img src={workshopImage} alt="Students learning" className="w-full h-full object-cover" />
-              </div>
-              <div className="absolute -bottom-6 -left-6 bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-xl max-w-xs hidden md:block">
-                <div className="flex items-center gap-4">
-                  <div className="bg-green-100 text-green-600 p-3 rounded-xl">
-                    <Users className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <p className="font-bold text-2xl">98%</p>
-                    <p className="text-sm text-muted-foreground">Student Satisfaction</p>
-                  </div>
+          <div className="text-center mb-16">
+            <span className="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">Education</span>
+            <h2 className="font-heading text-4xl md:text-5xl font-bold mb-4">Our Courses</h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Providing kids with the fun experience of robotics and programming foundations.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                title: "Micro:bit Tiny:bit",
+                desc: "Overview and three classes outlining the basics of robotic programming using the Yahboom Tiny:bit smart robot and BBC Micro:bit chip.",
+                image: "https://r4kclub.com//storage/412/63eb4945953b2_18C04C53-2D7A-4242-9C6F-48BDBEB3315E.jpeg",
+                link: "https://docs.google.com/presentation/d/1OflKdwVpcN1dVqpK6EKd71--vB7qQP4f-RI5MU_bDTc/edit?usp=sharing"
+              },
+              {
+                title: "LEGO EV3",
+                desc: "Five class curriculum outlining the basics of robotics programming using the Lego Mindstorms EV3 robot.",
+                image: "https://r4kclub.com//storage/413/63eb4a29a3332_F24EFC0F-7809-4232-9BB0-FE73CC083C86.jpeg",
+                link: "https://docs.google.com/presentation/d/13-g4edxw7CDdy4v-hbmjic7MD3ebHB5eBGfPxhVoHOE/edit"
+              },
+              {
+                title: "Raspberry Pi",
+                desc: "Thai language Raspberry Pi course with labs and assignments.",
+                image: "https://r4kclub.com//storage/88/5fd6eaaff0299_870x400_08.jpg",
+                link: "https://drive.google.com/file/d/14_mnA1poyv9cjoB9onj6YppqP5oegOP7/view?usp=sharing"
+              },
+              {
+                title: "Micro:bit Zoom:bit",
+                desc: "A course outlining the basics of robotics programming, based on the Micro:bit Zoom:bit platform.",
+                image: "https://r4kclub.com//storage/615/65e561fe5fba4_zoombit-v2-TH-800x800.png",
+                link: "https://docs.google.com/presentation/d/1ndA06pSGkPt7QtOgQYFrn9nsLddMeT5E7ypqfLsIKIU/edit?usp=sharing"
+              },
+            ].map((course, i) => (
+              <motion.a
+                key={i}
+                href={course.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="group glass-card rounded-3xl overflow-hidden hover:shadow-xl transition-shadow"
+                data-testid={`course-${i}`}
+              >
+                <div className="aspect-square overflow-hidden">
+                  <img 
+                    src={course.image} 
+                    alt={course.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-              </div>
-            </motion.div>
+                <div className="p-6">
+                  <h3 className="font-heading text-xl font-bold mb-2">{course.title}</h3>
+                  <p className="text-muted-foreground text-sm line-clamp-3">{course.desc}</p>
+                  <span className="inline-flex items-center gap-1 text-primary text-sm font-medium mt-4 group-hover:gap-2 transition-all">
+                    View Course <ArrowRight className="w-4 h-4" />
+                  </span>
+                </div>
+              </motion.a>
+            ))}
           </div>
         </div>
       </section>
@@ -181,37 +187,73 @@ export default function Hero() {
           <div className="text-center mb-16">
             <h2 className="font-heading text-4xl md:text-5xl font-bold mb-4">Our Activities</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Beyond the classroom, we engage in competitions, hackathons, and community events.
+              Our activities comprise fundraising and setting up R4K clubs at partner schools, both are of non-profit nature.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="group relative overflow-hidden rounded-3xl aspect-video shadow-xl"
-            >
-              <img src={competitionImage} alt="Competition" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
-                <h3 className="text-white text-2xl font-bold mb-2">Robotics Competitions</h3>
-                <p className="text-white/80">Testing our skills against the best teams in the region.</p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="group relative overflow-hidden rounded-3xl aspect-video shadow-xl"
-            >
-              <img src={workshopImage} alt="Workshop" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
-                <h3 className="text-white text-2xl font-bold mb-2">Community Workshops</h3>
-                <p className="text-white/80">Teaching local kids the fundamentals of STEM.</p>
-              </div>
-            </motion.div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                title: "Wat Sai Yai School, Nonthaburi",
+                image: "https://r4kclub.com//storage/409/63eb476bbef6c_A4FD0D92-1673-4614-8D95-B04FC928CEE5.jpeg",
+                location: "Thailand"
+              },
+              {
+                title: "Xavier Schools & UP Integrated School",
+                image: "https://r4kclub.com//storage/410/63eb47a3738b7_9832607F-1C44-40F4-AC7D-C4C66AA7EE45.jpeg",
+                location: "Philippines"
+              },
+              {
+                title: "Pasatipatai School, Luang Prabang",
+                image: "https://r4kclub.com//storage/541/6437b232e28a1_7ar4k.jpeg",
+                location: "Laos"
+              },
+              {
+                title: "Wat Lat Pla Duk School, Nonthaburi",
+                image: "https://r4kclub.com//storage/596/65e40c83d562b_R4K-Wat-Lat-Pla-Duk.jpg",
+                location: "Thailand"
+              },
+              {
+                title: "Fundraising Activities in Bangkok",
+                image: "https://r4kclub.com//storage/219/5fe6d96848b0a_12.jpg",
+                location: "Thailand"
+              },
+              {
+                title: "Prasert Islam School, Nonthaburi",
+                image: "https://r4kclub.com//storage/175/5fe015a49416b_800x600_04.jpg",
+                location: "Thailand"
+              },
+              {
+                title: "Schools of Hope Foundation",
+                image: "https://r4kclub.com//storage/133/5fd71ee2030c3_16.jpg",
+                location: "Myanmar-Thai Border"
+              },
+              {
+                title: "Phimai Vithaya School, Nakhon Ratchasima",
+                image: "https://r4kclub.com//storage/239/5fe98012bfd74_IMG_5169.JPG",
+                location: "Thailand"
+              },
+            ].map((activity, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.05 }}
+                viewport={{ once: true }}
+                className="group relative overflow-hidden rounded-2xl aspect-[4/3] shadow-lg"
+                data-testid={`activity-${i}`}
+              >
+                <img 
+                  src={activity.image} 
+                  alt={activity.title} 
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4">
+                  <span className="text-blue-300 text-xs font-medium mb-1">{activity.location}</span>
+                  <h3 className="text-white text-sm font-bold line-clamp-2">{activity.title}</h3>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -222,10 +264,10 @@ export default function Hero() {
           <div className="flex justify-between items-end mb-12">
             <div>
               <h2 className="font-heading text-4xl md:text-5xl font-bold mb-4">Latest News</h2>
-              <p className="text-muted-foreground text-lg">Updates from the R4K team.</p>
+              <p className="text-muted-foreground text-lg">Follow our latest news and announcements here.</p>
             </div>
             <Link href="/news">
-              <Button variant="ghost" className="hidden md:flex group">
+              <Button variant="ghost" className="hidden md:flex group" data-testid="button-view-all-news">
                 View All News <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
@@ -243,6 +285,7 @@ export default function Hero() {
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1 }}
                     className="glass-card p-6 rounded-2xl hover:bg-white/60 dark:hover:bg-slate-800/60 transition-colors cursor-pointer"
+                    data-testid={`news-${item.id}`}
                   >
                     <div className="flex items-center gap-3 mb-4">
                       <div className="p-2 rounded-lg bg-blue-50 text-primary">
@@ -271,9 +314,31 @@ export default function Hero() {
           
           <div className="mt-8 text-center md:hidden">
             <Link href="/news">
-              <Button variant="outline" className="w-full">View All News</Button>
+              <Button variant="outline" className="w-full" data-testid="button-view-all-news-mobile">View All News</Button>
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Donation CTA Section */}
+      <section className="py-24 bg-gradient-to-br from-blue-600 to-blue-800 text-white">
+        <div className="container mx-auto px-4 md:px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <Heart className="w-16 h-16 mx-auto mb-6 opacity-80" />
+            <h2 className="font-heading text-4xl md:text-5xl font-bold mb-4">Support Our Mission</h2>
+            <p className="text-xl text-blue-100 max-w-2xl mx-auto mb-8">
+              We are now open for donations for the purchase of materials needed for teaching and for student coach's tuition.
+            </p>
+            <Link href="/contact">
+              <Button size="lg" variant="secondary" className="rounded-full px-8 text-lg h-14" data-testid="button-donate">
+                Make a Donation
+              </Button>
+            </Link>
+          </motion.div>
         </div>
       </section>
     </div>

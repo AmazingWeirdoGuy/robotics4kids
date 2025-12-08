@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Calendar, MapPin, Trophy, Zap } from "lucide-react";
+import { Calendar, MapPin, Trophy, Zap, Heart } from "lucide-react";
 import { newsData } from "@/data/newsData";
 
 const iconMap: Record<string, typeof Trophy> = {
@@ -7,6 +7,7 @@ const iconMap: Record<string, typeof Trophy> = {
   Calendar,
   Zap,
   MapPin,
+  Heart,
 };
 
 export default function News() {
@@ -19,7 +20,7 @@ export default function News() {
           className="mb-12"
         >
           <h1 className="font-heading text-5xl font-bold mb-4">Latest News</h1>
-          <p className="text-muted-foreground text-lg">Stay updated with our latest achievements and events.</p>
+          <p className="text-muted-foreground text-lg">Follow our latest news and announcements here.</p>
         </motion.div>
 
         {newsData.length === 0 ? (
@@ -36,22 +37,39 @@ export default function News() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="glass-card p-8 rounded-2xl group cursor-pointer"
+                  className="glass-card rounded-2xl overflow-hidden group cursor-pointer"
+                  data-testid={`news-card-${item.id}`}
                 >
-                  <div className="flex items-start justify-between mb-6">
-                    <div className="p-3 rounded-xl bg-blue-50 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                      <Icon className="w-6 h-6" />
+                  {item.image && (
+                    <div className="aspect-video overflow-hidden">
+                      <img 
+                        src={item.image} 
+                        alt={item.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
                     </div>
-                    <span className="text-sm font-medium text-muted-foreground bg-white/50 px-3 py-1 rounded-full">
-                      {item.date}
-                    </span>
+                  )}
+                  <div className="p-8">
+                    <div className="flex items-start justify-between mb-6">
+                      <div className="flex items-center gap-3">
+                        <div className="p-3 rounded-xl bg-blue-50 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                          <Icon className="w-6 h-6" />
+                        </div>
+                        <span className="text-xs font-medium text-muted-foreground bg-secondary px-3 py-1 rounded-full">
+                          {item.category}
+                        </span>
+                      </div>
+                      <span className="text-sm font-medium text-muted-foreground">
+                        {item.date}
+                      </span>
+                    </div>
+                    <h3 className="font-heading text-2xl font-bold mb-3 group-hover:text-primary transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {item.description}
+                    </p>
                   </div>
-                  <h3 className="font-heading text-2xl font-bold mb-3 group-hover:text-primary transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {item.description}
-                  </p>
                 </motion.div>
               );
             })}

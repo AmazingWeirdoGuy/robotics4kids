@@ -1,0 +1,24 @@
+About us
+Robotics for Kids
+We are a group of high school students who want to share our knowledge about robotics with other children, providing opportunities to learn robotics and programming. Our founders include a Thailand representative for International Youth Robot Competition (IYRC) in Korea, as well as 2-time National VEX Robotics Champion and 2-time Thailand Representative to the VEX Robotics World Championships in the US, and another is studying for a high school major in Artificial Intelligence (AI). 
+Acknowledging the rapid development of technology in the modern world, the significance of programming knowledge is now greater than ever. Robotics for Kids (R4K) club was created with the goal of providing technology equity in the form of giving equal access to robotics and programming knowledge to children in Thailand, and in other ASEAN countries.
+Our organization works by contacting and partnering with local schools, garnering help from 1-2 teachers to become R4K school advisors, donating the necessary equipment needed for teaching, and going in to teach a few students of the school to become student coaches. These student coaches then will teach and share their gained knowledge with other children in the school by organizing group lessons.
+Through this "Coach the Coach" impact model, we can create sustainable tech-inclusion environments.
+ 
+Accomplishments since 2018  
+Established a network of 9 schools, 4 in Thailand, 1 in Myanmar, 3 in the Philippines, and 1 in Laos
+Developed Micro:bit, Raspberry Pi and LEGO EV3 courses to train 100+ change agents so far: 24 R4K school advisors who embedded Robotics into their curriculums, 26 student coaches who further taught 60+ R4K student graduates.
+
+The club has grown into a group of 20+ core club leaders
+ 
+
+List of R4K Schools
+2018 (& 2022) - Prasert Islam School, Nonthaburi, Thailand
+2020 - Schools of Hope Foundation For Myanmar Immigrant Children, Myanmar-Thai Border
+2020 - Phimai Vithaya School, Nakhon Ratchasima, Thailand
+2022 - Wat Tsai Yai School, Nonthaburi, Thailand
+2022 - Wat Lad Pla Duk School, Nonthaburi, Thailand
+2022 - Xavier School San Juan, Philippines
+2022 - Xavier School Nuvali, Philippines
+2022 - University of Philippines Integrated School, Philippines 
+2023 - Pasatipatai School, Laos

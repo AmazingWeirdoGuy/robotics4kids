@@ -1,40 +1,7 @@
 import { motion } from "framer-motion";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useToast } from "@/hooks/use-toast";
-import { Mail, Phone, MapPin } from "lucide-react";
-
-const formSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
-});
+import { Mail, Globe, Heart } from "lucide-react";
 
 export default function Contact() {
-  const { toast } = useToast();
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      message: "",
-    },
-  });
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    toast({
-      title: "Message Sent!",
-      description: "We'll get back to you as soon as possible.",
-    });
-    form.reset();
-  }
-
   return (
     <div className="pt-10 pb-20">
       <div className="container mx-auto px-4 md:px-6">
@@ -45,7 +12,7 @@ export default function Contact() {
           >
             <h1 className="font-heading text-5xl md:text-6xl font-bold mb-6">Get in Touch</h1>
             <p className="text-xl text-muted-foreground mb-12">
-              Have questions about joining the club or partnering with us? We'd love to hear from you.
+              Interested in partnering with R4K or want to support our mission of bringing robotics education to children across ASEAN?
             </p>
 
             <div className="space-y-8">
@@ -55,27 +22,56 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="font-heading font-semibold text-lg">Email Us</h3>
-                  <p className="text-muted-foreground">contact@r4kclub.com</p>
+                  <a href="mailto:contact@r4kclub.com" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-email">
+                    contact@r4kclub.com
+                  </a>
                 </div>
               </div>
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-primary">
-                  <Phone className="w-6 h-6" />
+                  <Globe className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-heading font-semibold text-lg">Call Us</h3>
-                  <p className="text-muted-foreground">(555) 123-4567</p>
+                  <h3 className="font-heading font-semibold text-lg">Website</h3>
+                  <a href="https://www.r4kclub.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-website">
+                    www.r4kclub.com
+                  </a>
                 </div>
               </div>
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-primary">
-                  <MapPin className="w-6 h-6" />
+                  <Heart className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-heading font-semibold text-lg">Visit Us</h3>
-                  <p className="text-muted-foreground">123 Innovation Way, Tech City</p>
+                  <h3 className="font-heading font-semibold text-lg">Support</h3>
+                  <p className="text-muted-foreground">
+                    Donations for teaching materials and student coach tuition
+                  </p>
                 </div>
               </div>
+            </div>
+
+            {/* Partnership Info */}
+            <div className="mt-12 glass-card p-6 rounded-2xl">
+              <h3 className="font-heading font-bold text-lg mb-3">Partnership Opportunities</h3>
+              <ul className="space-y-2 text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span>Become a partner school</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span>Sponsor robotics equipment</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span>Support student coach scholarships</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-primary mt-1">•</span>
+                  <span>Volunteer as a teacher advisor</span>
+                </li>
+              </ul>
             </div>
           </motion.div>
 
@@ -83,54 +79,36 @@ export default function Contact() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
-            className="glass-card p-8 md:p-10 rounded-3xl"
+            className="glass-card p-4 md:p-6 rounded-3xl"
           >
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Your name" {...field} className="bg-white/50 border-white/30 focus:bg-white" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input placeholder="your@email.com" {...field} className="bg-white/50 border-white/30 focus:bg-white" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="message"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Message</FormLabel>
-                      <FormControl>
-                        <Textarea placeholder="How can we help?" {...field} className="min-h-[120px] bg-white/50 border-white/30 focus:bg-white" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button type="submit" className="w-full rounded-full h-12 text-lg shadow-lg shadow-primary/20">
-                  Send Message
-                </Button>
-              </form>
-            </Form>
+            <h2 className="font-heading text-2xl font-bold mb-4 text-center">Contact Form</h2>
+            <p className="text-muted-foreground text-center mb-6">
+              Fill out the form below and we'll get back to you soon.
+            </p>
+            
+            {/* Embedded Google Form */}
+            <div className="w-full rounded-2xl overflow-hidden bg-white">
+              <iframe
+                src="https://docs.google.com/forms/d/e/1FAIpQLSdExample/viewform?embedded=true"
+                width="100%"
+                height="600"
+                frameBorder="0"
+                marginHeight={0}
+                marginWidth={0}
+                className="w-full"
+                title="Contact Form"
+                data-testid="google-form"
+              >
+                Loading…
+              </iframe>
+            </div>
+
+            <p className="text-sm text-muted-foreground text-center mt-4">
+              Alternatively, email us directly at{" "}
+              <a href="mailto:contact@r4kclub.com" className="text-primary hover:underline">
+                contact@r4kclub.com
+              </a>
+            </p>
           </motion.div>
         </div>
       </div>
