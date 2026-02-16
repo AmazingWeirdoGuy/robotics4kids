@@ -133,16 +133,28 @@ export default function About() {
 
       <section className="py-32 bg-[hsl(222,20%,16%)]">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
-          <motion.div {...fadeUp} className="max-w-3xl">
-            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400 mb-4">Origins</p>
-            <h2 className="font-heading text-3xl md:text-4xl font-bold mb-8 text-white">Experienced Leaders</h2>
-            <p className="text-white/40 leading-relaxed mb-6">
-              Our founders include a Thailand representative for International Youth Robot Competition (IYRC) in Korea, as well as 2-time National VEX Robotics Champion and 2-time Thailand Representative to the VEX Robotics World Championships in the US.
-            </p>
-            <p className="text-white/40 leading-relaxed">
-              Acknowledging the rapid development of technology in the modern world, the significance of programming knowledge is now greater than ever.
-            </p>
-          </motion.div>
+          <div className="grid md:grid-cols-2 gap-16 md:gap-24 items-center">
+            <motion.div {...fadeUp}>
+              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400 mb-4">Origins</p>
+              <h2 className="font-heading text-3xl md:text-4xl font-bold mb-8 text-white">Experienced Leaders</h2>
+              <p className="text-white/40 leading-relaxed mb-6">
+                Our founders include a Thailand representative for International Youth Robot Competition (IYRC) in Korea, as well as 2-time National VEX Robotics Champion and 2-time Thailand Representative to the VEX Robotics World Championships in the US.
+              </p>
+              <p className="text-white/40 leading-relaxed">
+                Acknowledging the rapid development of technology in the modern world, the significance of programming knowledge is now greater than ever.
+              </p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+            >
+              <div className="aspect-[4/3] overflow-hidden rounded-lg shadow-xl shadow-blue-500/5">
+                <img src="https://r4kclub.com//storage/284/61ebc709cb961_banner.jpg" alt="R4K Team" className="w-full h-full object-cover" />
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
