@@ -4,7 +4,7 @@ import { Mail, Globe, Heart, ArrowRight } from "lucide-react";
 export default function Contact() {
   return (
     <div>
-      <section className="py-32 bg-white">
+      <section className="py-32 bg-background">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
             <motion.div
@@ -12,50 +12,50 @@ export default function Contact() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] as const }}
             >
-              <p className="text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">Reach Out</p>
-              <h1 className="font-heading text-5xl md:text-7xl font-bold leading-[0.95] tracking-[-0.02em] mb-8">Get in Touch</h1>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-16">
+              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400/70 mb-6">Reach Out</p>
+              <h1 className="font-heading text-5xl md:text-7xl font-bold leading-[0.95] tracking-[-0.02em] mb-8 text-white">Get in Touch</h1>
+              <p className="text-lg text-white/40 leading-relaxed mb-16">
                 Interested in partnering with R4K or supporting our mission of bringing robotics education to children across ASEAN?
               </p>
 
               <div className="space-y-10">
                 <div className="flex items-start gap-5">
-                  <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Mail className="w-4 h-4" />
+                  <div className="w-10 h-10 rounded-full bg-[hsl(220,16%,16%)] flex items-center justify-center flex-shrink-0 mt-0.5 border border-white/5">
+                    <Mail className="w-4 h-4 text-blue-400" />
                   </div>
                   <div>
-                    <h3 className="font-heading font-semibold mb-1">Email</h3>
-                    <a href="mailto:contact@r4kclub.com" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-email">
+                    <h3 className="font-heading font-semibold mb-1 text-white">Email</h3>
+                    <a href="mailto:contact@r4kclub.com" className="text-sm text-white/40 hover:text-blue-400 transition-colors" data-testid="link-email">
                       contact@r4kclub.com
                     </a>
                   </div>
                 </div>
                 <div className="flex items-start gap-5">
-                  <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Globe className="w-4 h-4" />
+                  <div className="w-10 h-10 rounded-full bg-[hsl(220,16%,16%)] flex items-center justify-center flex-shrink-0 mt-0.5 border border-white/5">
+                    <Globe className="w-4 h-4 text-blue-400" />
                   </div>
                   <div>
-                    <h3 className="font-heading font-semibold mb-1">Website</h3>
-                    <a href="https://www.r4kclub.com" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-website">
+                    <h3 className="font-heading font-semibold mb-1 text-white">Website</h3>
+                    <a href="https://www.r4kclub.com" target="_blank" rel="noopener noreferrer" className="text-sm text-white/40 hover:text-blue-400 transition-colors" data-testid="link-website">
                       www.r4kclub.com
                     </a>
                   </div>
                 </div>
                 <div className="flex items-start gap-5">
-                  <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Heart className="w-4 h-4" />
+                  <div className="w-10 h-10 rounded-full bg-[hsl(220,16%,16%)] flex items-center justify-center flex-shrink-0 mt-0.5 border border-white/5">
+                    <Heart className="w-4 h-4 text-blue-400" />
                   </div>
                   <div>
-                    <h3 className="font-heading font-semibold mb-1">Support</h3>
-                    <p className="text-sm text-muted-foreground">
+                    <h3 className="font-heading font-semibold mb-1 text-white">Support</h3>
+                    <p className="text-sm text-white/40">
                       Donations for teaching materials and student coach tuition
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-16 border-t border-black/5 pt-12">
-                <h3 className="text-xs font-semibold tracking-[0.3em] uppercase mb-6">Partnership Opportunities</h3>
+              <div className="mt-16 border-t border-white/5 pt-12">
+                <h3 className="text-xs font-semibold tracking-[0.3em] uppercase mb-6 text-white/60">Partnership Opportunities</h3>
                 <ul className="space-y-4">
                   {[
                     "Become a partner school",
@@ -63,8 +63,8 @@ export default function Contact() {
                     "Support student coach scholarships",
                     "Volunteer as a teacher advisor",
                   ].map((item, i) => (
-                    <li key={i} className="flex items-center gap-3 text-sm text-muted-foreground">
-                      <ArrowRight className="w-3 h-3 flex-shrink-0" />
+                    <li key={i} className="flex items-center gap-3 text-sm text-white/40" data-testid={`text-partnership-${i}`}>
+                      <ArrowRight className="w-3 h-3 flex-shrink-0 text-blue-400/50" />
                       {item}
                     </li>
                   ))}
@@ -76,12 +76,12 @@ export default function Contact() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] as const, delay: 0.2 }}
-              className="bg-neutral-50 p-6 md:p-10"
+              className="bg-[hsl(220,18%,10%)] p-6 md:p-10 border border-white/5"
             >
-              <h2 className="font-heading text-xl font-semibold mb-2 text-center">Contact Form</h2>
-              <p className="text-sm text-muted-foreground text-center mb-8">Fill out the form and we'll be in touch.</p>
+              <h2 className="font-heading text-xl font-semibold mb-2 text-center text-white">Contact Form</h2>
+              <p className="text-sm text-white/40 text-center mb-8">Fill out the form and we'll be in touch.</p>
 
-              <div className="bg-white overflow-hidden">
+              <div className="bg-[hsl(220,16%,14%)] overflow-hidden">
                 <iframe
                   src="https://docs.google.com/forms/d/e/1FAIpQLSdExample/viewform?embedded=true"
                   width="100%"
@@ -97,9 +97,9 @@ export default function Contact() {
                 </iframe>
               </div>
 
-              <p className="text-xs text-muted-foreground text-center mt-6">
+              <p className="text-xs text-white/30 text-center mt-6">
                 Or email us at{" "}
-                <a href="mailto:contact@r4kclub.com" className="text-foreground hover:underline">contact@r4kclub.com</a>
+                <a href="mailto:contact@r4kclub.com" className="text-blue-400 hover:underline" data-testid="link-footer-contact-email">contact@r4kclub.com</a>
               </p>
             </motion.div>
           </div>

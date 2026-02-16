@@ -33,44 +33,48 @@
 }
 
 :root {
-  --background: 0 0% 100%;
-  --foreground: 0 0% 7%;
+  --background: 220 20% 6%;
+  --foreground: 0 0% 98%;
 
-  --card: 0 0% 100%;
-  --card-foreground: 0 0% 7%;
+  --card: 220 18% 10%;
+  --card-foreground: 0 0% 98%;
 
-  --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 7%;
+  --popover: 220 18% 10%;
+  --popover-foreground: 0 0% 98%;
 
-  --primary: 0 0% 7%;
+  --primary: 217 70% 55%;
   --primary-foreground: 0 0% 100%;
 
-  --secondary: 0 0% 96%;
-  --secondary-foreground: 0 0% 7%;
+  --secondary: 220 16% 14%;
+  --secondary-foreground: 0 0% 90%;
 
-  --muted: 0 0% 96%;
-  --muted-foreground: 0 0% 45%;
+  --muted: 220 14% 16%;
+  --muted-foreground: 215 10% 55%;
 
-  --accent: 0 0% 96%;
-  --accent-foreground: 0 0% 7%;
+  --accent: 217 70% 55%;
+  --accent-foreground: 0 0% 100%;
 
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 0 0% 100%;
 
-  --border: 0 0% 90%;
-  --input: 0 0% 90%;
-  --ring: 0 0% 7%;
+  --border: 220 12% 18%;
+  --input: 220 12% 18%;
+  --ring: 217 70% 55%;
 
   --radius: 0.5rem;
 }
 
 @layer utilities {
-  .glass {
-    @apply bg-white/80 backdrop-blur-xl border-b border-black/5;
+  .glass-dark {
+    @apply bg-[hsl(220,18%,8%)]/80 backdrop-blur-xl border-b border-white/5;
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-neutral-900 to-neutral-500;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-400;
+  }
+
+  .text-gradient-blue {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600;
   }
 }
 
