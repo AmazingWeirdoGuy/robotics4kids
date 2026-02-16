@@ -59,38 +59,35 @@ export default function News() {
                 const hasContent = item.content && item.content.trim().length > 0;
 
                 return (
-                  <motion.div
-                    key={item.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.08, duration: 0.5 }}
-                    className="bg-[hsl(222,20%,14%)] border border-blue-500/8 group card-glow card-glow-hover transition-all duration-500 rounded-lg overflow-hidden"
-                    data-testid={`news-card-${item.id}`}
-                  >
-                    <div className="flex flex-col md:flex-row">
-                      {item.image && (
-                        <div className="md:w-80 aspect-video md:aspect-auto overflow-hidden flex-shrink-0">
-                          <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100" />
-                        </div>
-                      )}
-                      <div className="p-8 md:p-10 flex-1">
-                        <div className="flex items-center gap-4 mb-5">
-                          <Icon className="w-4 h-4 text-blue-400" />
-                          <span className="text-xs tracking-wide uppercase text-white/40">{item.category}</span>
-                          <span className="text-xs text-white/25 ml-auto">{item.date}</span>
-                        </div>
-                        <h3 className="font-heading text-2xl font-semibold mb-4 leading-snug text-white">{item.title}</h3>
-                        <p className="text-sm text-white/40 leading-relaxed">{item.description}</p>
-                        {hasContent && (
-                          <Link href={`/news/${item.id}`}>
-                            <span className="inline-flex items-center gap-2 mt-6 text-xs font-medium tracking-wide uppercase text-blue-400 hover:text-blue-300 hover:gap-3 transition-all duration-300 cursor-pointer" data-testid={`link-read-article-${item.id}`}>
-                              Read Article <ArrowRight className="w-3 h-3" />
-                            </span>
-                          </Link>
+                  <Link key={item.id} href={`/news/${item.id}`}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.08, duration: 0.5 }}
+                      className="bg-[hsl(222,20%,14%)] border border-blue-500/8 group card-glow card-glow-hover transition-all duration-500 rounded-lg overflow-hidden cursor-pointer"
+                      data-testid={`news-card-${item.id}`}
+                    >
+                      <div className="flex flex-col md:flex-row">
+                        {item.image && (
+                          <div className="md:w-80 aspect-video md:aspect-auto overflow-hidden flex-shrink-0">
+                            <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100" />
+                          </div>
                         )}
+                        <div className="p-8 md:p-10 flex-1">
+                          <div className="flex items-center gap-4 mb-5">
+                            <Icon className="w-4 h-4 text-blue-400" />
+                            <span className="text-xs tracking-wide uppercase text-white/40">{item.category}</span>
+                            <span className="text-xs text-white/25 ml-auto">{item.date}</span>
+                          </div>
+                          <h3 className="font-heading text-2xl font-semibold mb-4 leading-snug text-white">{item.title}</h3>
+                          <p className="text-sm text-white/40 leading-relaxed">{item.description}</p>
+                          <div className="inline-flex items-center gap-2 mt-6 text-xs font-medium tracking-wide uppercase text-blue-400 group-hover:gap-3 transition-all duration-300">
+                            Read Article <ArrowRight className="w-3 h-3" />
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </motion.div>
+                    </motion.div>
+                  </Link>
                 );
               })}
             </div>
