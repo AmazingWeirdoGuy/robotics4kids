@@ -79,22 +79,32 @@ Preferred communication style: Simple, everyday language.
 
 ### Content Management
 
-**Current Implementation:**
-- News items defined in `client/src/data/newsData.ts`
-- Team members defined directly in `client/src/pages/About.tsx`
-- Manual editing required, version controlled through Git
+**JSON-Based CMS:**
+- All content stored in JSON files in `client/public/data/`:
+  - `news.json` — news articles with title, date, category, description, content, iconName, image
+  - `members.json` — team members grouped by class: officers, websiteManagers, facultyAdvisors, activeMembers (each with id, name, title, bio, photo, email)
+  - `heroImages.json` — homepage hero carousel images with id, image, caption
+  - `programs.json` — program cards with id, name, description, image, link
+- Frontend pages fetch JSON on mount via `fetch("/data/filename.json")`
+- Uploaded images stored in `client/public/uploads/` organized by subfolder (members/, news/, hero/, programs/)
 
 **Admin Panel (Development Only):**
-- Web-based interface for editing content files
-- Available at `/admin` route when running in development mode
-- Direct file system manipulation through Express API
+- Full CMS at `/admin` route, gated behind `import.meta.env.DEV`
+- 4 tabs: Members, News, Hero Images, Programs
+- Features per tab:
+  - Drag-and-drop reordering via @dnd-kit (with "Save Order" button)
+  - Add/Edit/Delete with Dialog forms and AlertDialog confirmations
+  - Image upload with cropping via react-easy-crop (1:1 for members/programs, 16:9 for news/hero)
+- Dev-only Express endpoints in `server/index-dev.ts`:
+  - `POST /dev/save-json` — writes JSON to `client/public/data/`
+  - `POST /dev/upload` — uploads images (via multer) to `client/public/uploads/{category}/`
+  - `DELETE /dev/upload` — deletes uploaded images
 
-**Trade-offs:**
-- ✅ Simple, no database required
-- ✅ Version controlled content
-- ✅ Type-safe data structures
-- ❌ Requires code deployment for content updates
-- ❌ Limited to developers/technical users for production updates
+**Deployment Workflow:**
+1. Edit content on Replit using admin panel
+2. Commit changes (JSON files + uploaded images are in the repo)
+3. Push to GitHub → Vercel auto-deploys
+4. Production build is static — no Express server, no dev endpoints
 
 ### Routing Strategy
 
