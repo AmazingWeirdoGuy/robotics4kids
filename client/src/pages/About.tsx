@@ -46,7 +46,7 @@ const fadeUp = {
 function PersonCard({ name, subtitle, image, initials }: { name: string; subtitle?: string; image: string; initials: string }) {
   return (
     <div className="text-center">
-      <div className="w-28 h-28 mx-auto rounded-full bg-[hsl(220,16%,16%)] flex items-center justify-center text-blue-400/40 font-heading text-xl font-semibold mb-4 overflow-hidden border border-white/5">
+      <div className="w-28 h-28 mx-auto rounded-full bg-gradient-to-br from-[hsl(220,20%,22%)] to-[hsl(222,22%,16%)] flex items-center justify-center text-blue-400/50 font-heading text-xl font-semibold mb-4 overflow-hidden border border-blue-500/10 shadow-lg shadow-blue-500/5">
         {image ? (
           <img src={image} alt={name} className="w-full h-full object-cover" />
         ) : (
@@ -54,7 +54,7 @@ function PersonCard({ name, subtitle, image, initials }: { name: string; subtitl
         )}
       </div>
       <p className="font-heading font-semibold text-sm text-white">{name}</p>
-      {subtitle && <p className="text-xs text-white/40 mt-1">{subtitle}</p>}
+      {subtitle && <p className="text-xs text-blue-300/50 mt-1">{subtitle}</p>}
     </div>
   );
 }
@@ -62,7 +62,7 @@ function PersonCard({ name, subtitle, image, initials }: { name: string; subtitl
 export default function About() {
   return (
     <div>
-      <section className="py-32 bg-background">
+      <section className="py-32 bg-gradient-to-b from-[hsl(222,22%,12%)] to-[hsl(222,22%,10%)]">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -70,22 +70,22 @@ export default function About() {
             transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] as const }}
             className="max-w-3xl"
           >
-            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400/70 mb-6">About R4K</p>
+            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400 mb-6">About R4K</p>
             <h1 className="font-heading text-5xl md:text-7xl font-bold leading-[0.95] tracking-[-0.02em] mb-8 text-white">
               Robotics for Kids
             </h1>
-            <p className="text-xl text-white/40 leading-relaxed">
+            <p className="text-xl text-white/45 leading-relaxed">
               We are a group of high school students who want to share our knowledge about robotics with other children, providing opportunities to learn robotics and programming.
             </p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-32 bg-[hsl(220,18%,8%)]">
+      <section className="py-32 bg-[hsl(222,20%,16%)]">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <div className="grid md:grid-cols-2 gap-16 md:gap-24 items-center">
             <motion.div {...fadeUp}>
-              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400/70 mb-4">Origins</p>
+              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400 mb-4">Origins</p>
               <h2 className="font-heading text-3xl md:text-4xl font-bold mb-8 text-white">Experienced Leaders</h2>
               <p className="text-white/40 leading-relaxed mb-6">
                 Our founders include a Thailand representative for International Youth Robot Competition (IYRC) in Korea, as well as 2-time National VEX Robotics Champion and 2-time Thailand Representative to the VEX Robotics World Championships in the US.
@@ -100,7 +100,7 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ duration: 1 }}
             >
-              <div className="aspect-[4/3] overflow-hidden">
+              <div className="aspect-[4/3] overflow-hidden rounded-lg shadow-xl shadow-blue-500/5">
                 <img src="https://r4kclub.com//storage/284/61ebc709cb961_banner.jpg" alt="R4K Team" className="w-full h-full object-cover" />
               </div>
             </motion.div>
@@ -108,9 +108,9 @@ export default function About() {
         </div>
       </section>
 
-      <section className="py-32 bg-[hsl(220,16%,12%)]">
+      <section className="py-32 bg-gradient-to-b from-[hsl(220,22%,18%)] to-[hsl(222,20%,14%)]">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
-          <div className="grid md:grid-cols-3 gap-px bg-white/5">
+          <div className="grid md:grid-cols-3 gap-5">
             {[
               { title: "Our Mission", desc: "Robotics for Kids (R4K) was created with the goal of providing technology equity in the form of giving equal access to robotics and programming knowledge to children in Thailand, and in other ASEAN countries." },
               { title: "How We Work", desc: "We contact and partner with local schools, get 1-2 teachers to become R4K school advisors, donate necessary equipment, and teach students to become student coaches." },
@@ -122,10 +122,10 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
                 viewport={{ once: true }}
-                className="bg-[hsl(220,18%,10%)] p-10 md:p-14"
+                className="bg-[hsl(222,20%,14%)] border border-blue-500/8 p-10 md:p-14 card-glow rounded-lg"
                 data-testid={`about-card-${i}`}
               >
-                <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400/50 mb-6">0{i + 1}</p>
+                <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400/60 mb-6">0{i + 1}</p>
                 <h3 className="font-heading text-xl font-semibold mb-4 text-white">{item.title}</h3>
                 <p className="text-sm text-white/40 leading-relaxed">{item.desc}</p>
               </motion.div>
@@ -134,14 +134,14 @@ export default function About() {
         </div>
       </section>
 
-      <section className="py-32 bg-[hsl(220,18%,8%)]">
+      <section className="py-32 bg-[hsl(222,20%,14%)]">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <motion.div {...fadeUp} className="text-center mb-20">
-            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400/70 mb-4">Since 2018</p>
+            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400 mb-4">Since 2018</p>
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-white">Accomplishments</h2>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-blue-500/10 rounded-lg overflow-hidden">
             {[
               { value: "9", label: "Partner Schools" },
               { value: "24", label: "School Advisors" },
@@ -154,7 +154,7 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
                 viewport={{ once: true }}
-                className="bg-[hsl(220,18%,10%)] p-10 md:p-14 text-center"
+                className="bg-[hsl(222,20%,16%)] p-10 md:p-14 text-center"
                 data-testid={`accomplishment-${i}`}
               >
                 <h3 className="text-4xl md:text-5xl font-heading font-bold mb-2 text-white">{stat.value}</h3>
@@ -165,16 +165,16 @@ export default function About() {
         </div>
       </section>
 
-      <section className="py-32 bg-background">
+      <section className="py-32 bg-gradient-to-b from-[hsl(222,22%,12%)] to-[hsl(222,22%,10%)]">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <motion.div {...fadeUp} className="text-center mb-24">
-            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400/70 mb-4">People</p>
+            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400 mb-4">People</p>
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-white">Our Team</h2>
           </motion.div>
 
           <div className="space-y-24">
             <div>
-              <h3 className="text-xs font-semibold tracking-[0.3em] uppercase text-center mb-12 text-white/40">Officers</h3>
+              <h3 className="text-xs font-semibold tracking-[0.3em] uppercase text-center mb-12 text-blue-400/50">Officers</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 max-w-3xl mx-auto">
                 {officers.map((m, i) => (
                   <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} viewport={{ once: true }} data-testid={`officer-${i}`}>
@@ -185,7 +185,7 @@ export default function About() {
             </div>
 
             <div>
-              <h3 className="text-xs font-semibold tracking-[0.3em] uppercase text-center mb-12 text-white/40">Website Development</h3>
+              <h3 className="text-xs font-semibold tracking-[0.3em] uppercase text-center mb-12 text-blue-400/50">Website Development</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 max-w-3xl mx-auto">
                 {webDevelopment.map((m, i) => (
                   <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} viewport={{ once: true }} data-testid={`webdev-${i}`}>
@@ -196,7 +196,7 @@ export default function About() {
             </div>
 
             <div>
-              <h3 className="text-xs font-semibold tracking-[0.3em] uppercase text-center mb-12 text-white/40">Faculty Advisors</h3>
+              <h3 className="text-xs font-semibold tracking-[0.3em] uppercase text-center mb-12 text-blue-400/50">Faculty Advisors</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 max-w-3xl mx-auto">
                 {facultyAdvisors.map((m, i) => (
                   <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} viewport={{ once: true }} data-testid={`advisor-${i}`}>
@@ -207,7 +207,7 @@ export default function About() {
             </div>
 
             <div>
-              <h3 className="text-xs font-semibold tracking-[0.3em] uppercase text-center mb-12 text-white/40">Active Members</h3>
+              <h3 className="text-xs font-semibold tracking-[0.3em] uppercase text-center mb-12 text-blue-400/50">Active Members</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 max-w-3xl mx-auto">
                 {activeMembers.map((m, i) => (
                   <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} viewport={{ once: true }} data-testid={`member-${i}`}>
@@ -220,14 +220,14 @@ export default function About() {
         </div>
       </section>
 
-      <section className="py-32 bg-[hsl(220,18%,8%)]">
+      <section className="py-32 bg-[hsl(222,20%,16%)]">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <motion.div {...fadeUp} className="max-w-2xl mb-20">
-            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400/70 mb-4">Network</p>
+            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400 mb-4">Network</p>
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-white">R4K Schools</h2>
           </motion.div>
 
-          <div className="space-y-px">
+          <div className="space-y-2">
             {schools.map((school, i) => (
               <motion.div
                 key={i}
@@ -235,11 +235,11 @@ export default function About() {
                 whileInView={{ opacity: 1 }}
                 transition={{ delay: i * 0.05, duration: 0.5 }}
                 viewport={{ once: true }}
-                className="bg-[hsl(220,18%,10%)] p-6 md:p-8 flex flex-wrap items-center gap-6 group hover:bg-[hsl(220,18%,13%)] transition-colors duration-300"
+                className="bg-[hsl(222,20%,14%)] border border-blue-500/5 p-6 md:p-8 flex flex-wrap items-center gap-6 group hover:bg-[hsl(222,20%,18%)] hover:border-blue-500/15 transition-all duration-300 rounded-lg"
                 data-testid={`school-${i}`}
               >
                 <div className="flex items-center gap-3 min-w-[100px]">
-                  <Calendar className="w-4 h-4 text-blue-400/50" />
+                  <Calendar className="w-4 h-4 text-blue-400/60" />
                   <span className="font-heading font-semibold text-sm text-white">{school.year}</span>
                 </div>
                 <div className="flex-1">
