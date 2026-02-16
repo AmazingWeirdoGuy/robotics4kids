@@ -1,6 +1,41 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Globe, Users, GraduationCap, MapPin, Calendar, Trophy, Zap, Heart } from "lucide-react";
+
+function CountUp({ target, suffix = "", duration = 2 }: { target: number; suffix?: string; duration?: number }) {
+  const [count, setCount] = useState(0);
+  const [started, setStarted] = useState(false);
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting && !started) setStarted(true); },
+      { threshold: 0.3 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [started]);
+
+  useEffect(() => {
+    if (!started) return;
+    const steps = 60;
+    const increment = target / steps;
+    let current = 0;
+    const stepTime = (duration * 1000) / steps;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        setCount(target);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(current));
+      }
+    }, stepTime);
+    return () => clearInterval(timer);
+  }, [started, target, duration]);
+
+  return <span ref={ref}>{count}{suffix}</span>;
+}
 import { Link } from "wouter";
 import heroRobot from "@assets/image_1771215214856.png";
 
@@ -109,10 +144,10 @@ export default function Home() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-blue-500/10 rounded-lg overflow-hidden">
             {[
-              { icon: Globe, label: "Countries", value: "4" },
-              { icon: MapPin, label: "Partner Schools", value: "9" },
-              { icon: Users, label: "Coaches & Advisors", value: "100+" },
-              { icon: GraduationCap, label: "Core Members", value: "17" },
+              { icon: Globe, label: "Countries", value: 4, suffix: "" },
+              { icon: MapPin, label: "Partner Schools", value: 9, suffix: "" },
+              { icon: Users, label: "Coaches & Advisors", value: 100, suffix: "+" },
+              { icon: GraduationCap, label: "Core Members", value: 17, suffix: "" },
             ].map((stat, i) => (
               <motion.div
                 key={i}
@@ -124,7 +159,9 @@ export default function Home() {
                 data-testid={`stat-${stat.label.toLowerCase().replace(/\s+/g, '-')}`}
               >
                 <stat.icon className="w-5 h-5 text-blue-400 mb-6" />
-                <h3 className="text-4xl md:text-5xl font-heading font-bold mb-2 text-white">{stat.value}</h3>
+                <h3 className="text-4xl md:text-5xl font-heading font-bold mb-2 text-white">
+                  <CountUp target={stat.value} suffix={stat.suffix} duration={2} />
+                </h3>
                 <p className="text-sm text-white/40 tracking-wide">{stat.label}</p>
               </motion.div>
             ))}
