@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
-import { MapPin, Calendar } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { MapPin, Calendar, ChevronDown, Users } from "lucide-react";
+import { useState } from "react";
 
 const officers = [
   { firstName: "First", lastName: "Last", role: "President", image: "" },
@@ -43,18 +44,67 @@ const fadeUp = {
   transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] as const },
 };
 
-function PersonCard({ name, subtitle, image, initials }: { name: string; subtitle?: string; image: string; initials: string }) {
+function TeamDropdown({ title, count, id, children }: { title: string; count: number; id: string; children: React.ReactNode }) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div className="text-center">
-      <div className="w-28 h-28 mx-auto rounded-full bg-gradient-to-br from-[hsl(220,20%,22%)] to-[hsl(222,22%,16%)] flex items-center justify-center text-blue-400/50 font-heading text-xl font-semibold mb-4 overflow-hidden border border-blue-500/10 shadow-lg shadow-blue-500/5">
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="border border-blue-500/8 rounded-lg overflow-hidden card-glow"
+    >
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between p-5 md:p-6 bg-[hsl(222,20%,14%)] hover:bg-[hsl(222,20%,16%)] transition-colors duration-300 cursor-pointer"
+        data-testid={`button-toggle-${id}`}
+      >
+        <div className="flex items-center gap-4">
+          <Users className="w-4 h-4 text-blue-400" />
+          <span className="font-heading font-semibold text-white text-sm tracking-wide uppercase">{title}</span>
+          <span className="text-xs text-white/30 bg-white/5 px-2.5 py-0.5 rounded-full">{count}</span>
+        </div>
+        <motion.div
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <ChevronDown className="w-4 h-4 text-blue-400/60" />
+        </motion.div>
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="bg-[hsl(222,20%,12%)] border-t border-blue-500/5">
+              {children}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
+function PersonRow({ name, subtitle, image, initials, testId }: { name: string; subtitle?: string; image: string; initials: string; testId: string }) {
+  return (
+    <div className="flex items-center gap-4 px-5 md:px-6 py-4 border-b border-white/3 last:border-b-0 hover:bg-white/[0.02] transition-colors duration-200" data-testid={testId}>
+      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[hsl(220,20%,22%)] to-[hsl(222,22%,16%)] flex items-center justify-center text-blue-400/50 font-heading text-xs font-semibold overflow-hidden border border-blue-500/10 flex-shrink-0">
         {image ? (
           <img src={image} alt={name} className="w-full h-full object-cover" />
         ) : (
           initials
         )}
       </div>
-      <p className="font-heading font-semibold text-sm text-white">{name}</p>
-      {subtitle && <p className="text-xs text-blue-300/50 mt-1">{subtitle}</p>}
+      <div className="flex-1 min-w-0">
+        <p className="font-heading font-semibold text-sm text-white truncate">{name}</p>
+        {subtitle && <p className="text-xs text-blue-300/40 mt-0.5">{subtitle}</p>}
+      </div>
     </div>
   );
 }
@@ -172,50 +222,30 @@ export default function About() {
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-white">Our Team</h2>
           </motion.div>
 
-          <div className="space-y-24">
-            <div>
-              <h3 className="text-xs font-semibold tracking-[0.3em] uppercase text-center mb-12 text-blue-400/50">Officers</h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 max-w-3xl mx-auto">
-                {officers.map((m, i) => (
-                  <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} viewport={{ once: true }} data-testid={`officer-${i}`}>
-                    <PersonCard name={`${m.firstName} ${m.lastName}`} subtitle={m.role} image={m.image} initials={`${m.firstName[0]}${m.lastName[0]}`} />
-                  </motion.div>
-                ))}
-              </div>
-            </div>
+          <div className="space-y-3 max-w-3xl mx-auto">
+            <TeamDropdown title="Officers" count={officers.length} id="officers">
+              {officers.map((m, i) => (
+                <PersonRow key={i} name={`${m.firstName} ${m.lastName}`} subtitle={m.role} image={m.image} initials={`${m.firstName[0]}${m.lastName[0]}`} testId={`officer-${i}`} />
+              ))}
+            </TeamDropdown>
 
-            <div>
-              <h3 className="text-xs font-semibold tracking-[0.3em] uppercase text-center mb-12 text-blue-400/50">Website Development</h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 max-w-3xl mx-auto">
-                {webDevelopment.map((m, i) => (
-                  <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} viewport={{ once: true }} data-testid={`webdev-${i}`}>
-                    <PersonCard name={`${m.firstName} ${m.lastName}`} subtitle={m.role} image={m.image} initials={`${m.firstName[0]}${m.lastName[0]}`} />
-                  </motion.div>
-                ))}
-              </div>
-            </div>
+            <TeamDropdown title="Website Development" count={webDevelopment.length} id="webdev">
+              {webDevelopment.map((m, i) => (
+                <PersonRow key={i} name={`${m.firstName} ${m.lastName}`} subtitle={m.role} image={m.image} initials={`${m.firstName[0]}${m.lastName[0]}`} testId={`webdev-${i}`} />
+              ))}
+            </TeamDropdown>
 
-            <div>
-              <h3 className="text-xs font-semibold tracking-[0.3em] uppercase text-center mb-12 text-blue-400/50">Faculty Advisors</h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 max-w-3xl mx-auto">
-                {facultyAdvisors.map((m, i) => (
-                  <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} viewport={{ once: true }} data-testid={`advisor-${i}`}>
-                    <PersonCard name={m.name} image={m.image} initials={m.name.split(' ').map(n => n[0]).join('').slice(0, 2)} />
-                  </motion.div>
-                ))}
-              </div>
-            </div>
+            <TeamDropdown title="Faculty Advisors" count={facultyAdvisors.length} id="advisors">
+              {facultyAdvisors.map((m, i) => (
+                <PersonRow key={i} name={m.name} image={m.image} initials={m.name.split(' ').map(n => n[0]).join('').slice(0, 2)} testId={`advisor-${i}`} />
+              ))}
+            </TeamDropdown>
 
-            <div>
-              <h3 className="text-xs font-semibold tracking-[0.3em] uppercase text-center mb-12 text-blue-400/50">Active Members</h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 max-w-3xl mx-auto">
-                {activeMembers.map((m, i) => (
-                  <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} viewport={{ once: true }} data-testid={`member-${i}`}>
-                    <PersonCard name={m.name} image={m.image} initials={m.name.split(' ').map(n => n[0]).join('').slice(0, 2)} />
-                  </motion.div>
-                ))}
-              </div>
-            </div>
+            <TeamDropdown title="Active Members" count={activeMembers.length} id="members">
+              {activeMembers.map((m, i) => (
+                <PersonRow key={i} name={m.name} image={m.image} initials={m.name.split(' ').map(n => n[0]).join('').slice(0, 2)} testId={`member-${i}`} />
+              ))}
+            </TeamDropdown>
           </div>
         </div>
       </section>
