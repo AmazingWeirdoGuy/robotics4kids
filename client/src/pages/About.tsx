@@ -1,6 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Calendar, ChevronDown, Users } from "lucide-react";
 import { useState } from "react";
+import founderKris from "@assets/image_1771259753861.png";
+import founderTan from "@assets/image_1771259784308.png";
+import founderBlu from "@assets/image_1771259788803.png";
 
 const officers = [
   { firstName: "First", lastName: "Last", role: "President", image: "" },
@@ -133,16 +136,38 @@ export default function About() {
 
       <section className="py-32 bg-[hsl(222,20%,16%)]">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
-          <motion.div {...fadeUp} className="max-w-3xl">
-            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400 mb-4">Origins</p>
-            <h2 className="font-heading text-3xl md:text-4xl font-bold mb-8 text-white">Experienced Leaders</h2>
-            <p className="text-white/40 leading-relaxed mb-6">
-              Our founders include a Thailand representative for International Youth Robot Competition (IYRC) in Korea, as well as 2-time National VEX Robotics Champion and 2-time Thailand Representative to the VEX Robotics World Championships in the US.
-            </p>
-            <p className="text-white/40 leading-relaxed">
-              Acknowledging the rapid development of technology in the modern world, the significance of programming knowledge is now greater than ever.
-            </p>
-          </motion.div>
+          <div className="grid md:grid-cols-2 gap-16 md:gap-24 items-center">
+            <motion.div {...fadeUp}>
+              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400 mb-4">Origins</p>
+              <h2 className="font-heading text-3xl md:text-4xl font-bold mb-8 text-white">Experienced Leaders</h2>
+              <p className="text-white/40 leading-relaxed mb-6">
+                Our founders include a Thailand representative for International Youth Robot Competition (IYRC) in Korea, as well as 2-time National VEX Robotics Champion and 2-time Thailand Representative to the VEX Robotics World Championships in the US.
+              </p>
+              <p className="text-white/40 leading-relaxed">
+                Acknowledging the rapid development of technology in the modern world, the significance of programming knowledge is now greater than ever.
+              </p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+              className="flex justify-center gap-6 md:gap-8"
+            >
+              {[
+                { img: founderKris, name: "Kris (Ken) Terdprisant" },
+                { img: founderTan, name: "Prompiriya (Tan) Jongrengpian" },
+                { img: founderBlu, name: "Blu Francia" },
+              ].map((founder, i) => (
+                <div key={i} className="text-center" data-testid={`founder-${i}`}>
+                  <div className="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden border border-blue-500/15 shadow-lg shadow-blue-500/10 mx-auto mb-3">
+                    <img src={founder.img} alt={founder.name} className="w-full h-full object-cover" />
+                  </div>
+                  <p className="text-xs text-white/60 font-heading font-medium max-w-[100px] mx-auto leading-tight">{founder.name}</p>
+                </div>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </section>
 
