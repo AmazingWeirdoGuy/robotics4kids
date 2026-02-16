@@ -1,0 +1,51 @@
+Here's how this setup works — it's a pretty neat pattern you can reuse for other projects.
+How It Works
+
+The big idea: Your website is a plain static site (just HTML/CSS/JS files) that reads its content from JSON files. There's no database or backend needed on the live site. All content editing happens on Replit, and then you push to GitHub, which triggers Vercel to auto-deploy.
+The Content System
+
+All your website content lives in JSON files inside client/public/data/:
+
+    members.json — team members and their info
+    news.json — news articles
+    heroImages.json — homepage carousel images
+    programs.json — program cards
+
+Your React frontend simply fetches these JSON files (like fetch("/data/news.json")) and displays them. No API calls, no database — just reading local files.
+The Admin Panel
+
+The admin panel (/admin) is a React page that only exists in development mode (on Replit). It does three things:
+
+    Reads the JSON files to show you the current content
+    Lets you edit content through forms (text fields, image uploads, date pickers, drag-to-reorder)
+    Saves changes back to those same JSON files using dev-only API endpoints on the Express server
+
+The key endpoints are:
+
+    POST /dev/save-json — writes updated JSON data back to the files in client/public/data/
+    POST /dev/upload — handles image uploads to client/public/uploads/
+
+These endpoints only exist when running in development mode, so they're not available on the live site.
+The Deployment Flow
+
+    You edit content on Replit using the admin panel
+    The JSON files and uploaded images get saved to your project files
+    You commit and push to GitHub
+    Vercel detects the push and auto-builds/deploys
+    Vercel runs vite build, which bundles everything as a static site
+    The JSON files and images are included in the build output
+    Your live site serves everything as static files — fast and free
+
+How to Recreate This for Another Project
+
+To build the same setup from scratch, you'd need:
+
+    A Vite + React project with your public-facing pages
+    JSON files in client/public/data/ for your content
+    An Express dev server with endpoints to save JSON files and handle uploads (only active in development)
+    An admin page (gated behind import.meta.env.DEV) with forms to edit each content type
+    A GitHub repo connected to Vercel, configured to build with vite build
+
+The admin page pattern is: load JSON → show in forms → on save, POST the updated data back to the dev server → server writes to the JSON file → changes are ready to commit.
+
+Would you like me to create a more detailed step-by-step guide for setting this up in a new project? Or is there a specific part you'd like me to dig into more?
