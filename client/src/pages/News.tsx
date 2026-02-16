@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, MapPin, Trophy, Zap, Heart, ChevronDown, ArrowLeft } from "lucide-react";
+import { motion } from "framer-motion";
+import { Calendar, MapPin, Trophy, Zap, Heart, ArrowRight } from "lucide-react";
+import { Link } from "wouter";
 
 const iconMap: Record<string, typeof Trophy> = { Trophy, Calendar, Zap, MapPin, Heart };
 
@@ -18,7 +19,6 @@ interface NewsItem {
 export default function News() {
   const [newsData, setNewsData] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [expandedId, setExpandedId] = useState<number | null>(null);
 
   useEffect(() => {
     fetch("/data/news.json")
@@ -29,10 +29,6 @@ export default function News() {
       })
       .catch(() => setLoading(false));
   }, []);
-
-  const toggleExpand = (id: number) => {
-    setExpandedId(expandedId === id ? null : id);
-  };
 
   return (
     <div>
@@ -60,7 +56,6 @@ export default function News() {
             <div className="space-y-4">
               {newsData.map((item, index) => {
                 const Icon = iconMap[item.iconName] || Trophy;
-                const isExpanded = expandedId === item.id;
                 const hasContent = item.content && item.content.trim().length > 0;
 
                 return (
@@ -69,20 +64,16 @@ export default function News() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.08, duration: 0.5 }}
-                    className={`bg-[hsl(222,20%,14%)] border rounded-lg overflow-hidden transition-all duration-500 ${isExpanded ? "border-blue-500/20 shadow-lg shadow-blue-500/5" : "border-blue-500/8 card-glow card-glow-hover"}`}
+                    className="bg-[hsl(222,20%,14%)] border border-blue-500/8 group card-glow card-glow-hover transition-all duration-500 rounded-lg overflow-hidden"
                     data-testid={`news-card-${item.id}`}
                   >
-                    <div className="flex flex-col md:flex-row group">
+                    <div className="flex flex-col md:flex-row">
                       {item.image && (
                         <div className="md:w-80 aspect-video md:aspect-auto overflow-hidden flex-shrink-0">
                           <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100" />
                         </div>
                       )}
-                      <div
-                        className={`p-8 md:p-10 flex-1 ${hasContent ? "cursor-pointer hover:bg-white/[0.02] transition-colors duration-300" : ""}`}
-                        onClick={() => hasContent && toggleExpand(item.id)}
-                        data-testid={`news-toggle-${item.id}`}
-                      >
+                      <div className="p-8 md:p-10 flex-1">
                         <div className="flex items-center gap-4 mb-5">
                           <Icon className="w-4 h-4 text-blue-400" />
                           <span className="text-xs tracking-wide uppercase text-white/40">{item.category}</span>
@@ -91,78 +82,14 @@ export default function News() {
                         <h3 className="font-heading text-2xl font-semibold mb-4 leading-snug text-white">{item.title}</h3>
                         <p className="text-sm text-white/40 leading-relaxed">{item.description}</p>
                         {hasContent && (
-                          <div className="flex items-center gap-2 mt-6">
-                            <span className="text-xs font-medium tracking-wide uppercase text-blue-400">
-                              {isExpanded ? "Close" : "Read More"}
+                          <Link href={`/news/${item.id}`}>
+                            <span className="inline-flex items-center gap-2 mt-6 text-xs font-medium tracking-wide uppercase text-blue-400 hover:text-blue-300 hover:gap-3 transition-all duration-300 cursor-pointer" data-testid={`link-read-article-${item.id}`}>
+                              Read Article <ArrowRight className="w-3 h-3" />
                             </span>
-                            <motion.div
-                              animate={{ rotate: isExpanded ? 180 : 0 }}
-                              transition={{ duration: 0.3 }}
-                            >
-                              <ChevronDown className="w-4 h-4 text-blue-400" />
-                            </motion.div>
-                          </div>
+                          </Link>
                         )}
                       </div>
                     </div>
-
-                    <AnimatePresence>
-                      {isExpanded && hasContent && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-                          className="overflow-hidden"
-                        >
-                          <div className="border-t border-blue-500/10">
-                            <div className="p-8 md:p-10 md:pl-16 max-w-3xl">
-                              <div className="prose prose-invert prose-sm max-w-none">
-                                {item.content.split("\n").map((paragraph, pIndex) => {
-                                  const trimmed = paragraph.trim();
-                                  if (!trimmed) return null;
-                                  if (trimmed.startsWith("# ")) {
-                                    return <h2 key={pIndex} className="font-heading text-xl font-bold text-white mt-8 mb-4 first:mt-0">{trimmed.slice(2)}</h2>;
-                                  }
-                                  if (trimmed.startsWith("## ")) {
-                                    return <h3 key={pIndex} className="font-heading text-lg font-semibold text-white mt-6 mb-3">{trimmed.slice(3)}</h3>;
-                                  }
-                                  if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
-                                    return (
-                                      <div key={pIndex} className="flex gap-3 mb-2">
-                                        <span className="text-blue-400 mt-1.5 flex-shrink-0">•</span>
-                                        <p className="text-white/50 leading-relaxed text-sm">{trimmed.slice(2)}</p>
-                                      </div>
-                                    );
-                                  }
-                                  if (trimmed.startsWith("![") && trimmed.includes("](")) {
-                                    const urlMatch = trimmed.match(/\]\((.+?)\)/);
-                                    const altMatch = trimmed.match(/\[(.+?)\]/);
-                                    if (urlMatch) {
-                                      return (
-                                        <div key={pIndex} className="my-6 rounded-lg overflow-hidden">
-                                          <img src={urlMatch[1]} alt={altMatch?.[1] || ""} className="w-full rounded-lg" />
-                                          {altMatch?.[1] && <p className="text-xs text-white/30 mt-2">{altMatch[1]}</p>}
-                                        </div>
-                                      );
-                                    }
-                                  }
-                                  return <p key={pIndex} className="text-white/50 leading-relaxed text-sm mb-4">{trimmed}</p>;
-                                })}
-                              </div>
-
-                              <button
-                                onClick={(e) => { e.stopPropagation(); toggleExpand(item.id); }}
-                                className="mt-8 inline-flex items-center gap-2 text-xs font-medium tracking-wide uppercase text-blue-400 hover:text-blue-300 transition-colors cursor-pointer"
-                                data-testid={`news-close-${item.id}`}
-                              >
-                                <ArrowLeft className="w-3 h-3" /> Close Article
-                              </button>
-                            </div>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
                   </motion.div>
                 );
               })}

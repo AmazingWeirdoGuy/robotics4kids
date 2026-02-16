@@ -242,7 +242,7 @@ export default function Home() {
                   </div>
                   <h3 className="font-heading text-xl font-semibold mb-3 leading-snug text-white">{item.title}</h3>
                   <p className="text-sm text-white/35 mb-6">{item.date}</p>
-                  <Link href="/news" data-testid={`link-read-news-${item.id}`}>
+                  <Link href={`/news/${item.id}`} data-testid={`link-read-news-${item.id}`}>
                     <span className="inline-flex items-center gap-2 text-xs font-medium tracking-wide uppercase text-blue-400 group-hover:gap-3 transition-all duration-300 cursor-pointer">
                       Read <ArrowRight className="w-3 h-3" />
                     </span>
