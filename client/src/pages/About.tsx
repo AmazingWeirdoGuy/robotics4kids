@@ -1,32 +1,25 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Calendar, ChevronDown, Users } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import founderKris from "@assets/image_1771259753861.png";
 import founderTan from "@assets/image_1771259784308.png";
 import founderBlu from "@assets/image_1771259788803.png";
 
-const officers = [
-  { firstName: "First", lastName: "Last", role: "President", image: "" },
-  { firstName: "First", lastName: "Last", role: "Vice President", image: "" },
-  { firstName: "First", lastName: "Last", role: "Secretary", image: "" },
-];
+interface Member {
+  id: number;
+  name: string;
+  title: string;
+  bio: string;
+  photo: string;
+  email: string;
+}
 
-const webDevelopment = [
-  { firstName: "First", lastName: "Last", role: "Lead Developer", image: "" },
-  { firstName: "First", lastName: "Last", role: "Developer", image: "" },
-];
-
-const facultyAdvisors = [
-  { name: "Faculty Advisor Name", image: "" },
-  { name: "Faculty Advisor Name", image: "" },
-];
-
-const activeMembers = [
-  { name: "Active Member Name", image: "" },
-  { name: "Active Member Name", image: "" },
-  { name: "Active Member Name", image: "" },
-  { name: "Active Member Name", image: "" },
-];
+interface MembersData {
+  officers: Member[];
+  websiteManagers: Member[];
+  facultyAdvisors: Member[];
+  activeMembers: Member[];
+}
 
 const schools = [
   { year: "2018", name: "Prasert Islam School", location: "Nonthaburi, Thailand", note: "& 2022 revisit" },
@@ -46,6 +39,10 @@ const fadeUp = {
   viewport: { once: true, margin: "-80px" },
   transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] as const },
 };
+
+function getInitials(name: string): string {
+  return name.split(' ').map(n => n[0]).join('').slice(0, 2);
+}
 
 function TeamDropdown({ title, count, id, children }: { title: string; count: number; id: string; children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -113,6 +110,24 @@ function PersonRow({ name, subtitle, image, initials, testId }: { name: string; 
 }
 
 export default function About() {
+  const [members, setMembers] = useState<MembersData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/data/members.json")
+      .then(r => r.json())
+      .then(data => {
+        setMembers(data);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
+  const officers = members?.officers ?? [];
+  const websiteManagers = members?.websiteManagers ?? [];
+  const facultyAdvisors = members?.facultyAdvisors ?? [];
+  const activeMembers = members?.activeMembers ?? [];
+
   return (
     <div>
       <section className="py-32 bg-gradient-to-b from-[hsl(222,22%,12%)] to-[hsl(222,22%,10%)]">
@@ -238,31 +253,35 @@ export default function About() {
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-white">Our Team</h2>
           </motion.div>
 
-          <div className="space-y-3 max-w-3xl mx-auto">
-            <TeamDropdown title="Officers" count={officers.length} id="officers">
-              {officers.map((m, i) => (
-                <PersonRow key={i} name={`${m.firstName} ${m.lastName}`} subtitle={m.role} image={m.image} initials={`${m.firstName[0]}${m.lastName[0]}`} testId={`officer-${i}`} />
-              ))}
-            </TeamDropdown>
+          {loading ? (
+            <div className="text-center py-20 text-white/40">Loading team data...</div>
+          ) : (
+            <div className="space-y-3 max-w-3xl mx-auto">
+              <TeamDropdown title="Officers" count={officers.length} id="officers">
+                {officers.map((m, i) => (
+                  <PersonRow key={m.id} name={m.name} subtitle={m.title} image={m.photo} initials={getInitials(m.name)} testId={`officer-${i}`} />
+                ))}
+              </TeamDropdown>
 
-            <TeamDropdown title="Website Development" count={webDevelopment.length} id="webdev">
-              {webDevelopment.map((m, i) => (
-                <PersonRow key={i} name={`${m.firstName} ${m.lastName}`} subtitle={m.role} image={m.image} initials={`${m.firstName[0]}${m.lastName[0]}`} testId={`webdev-${i}`} />
-              ))}
-            </TeamDropdown>
+              <TeamDropdown title="Website Development" count={websiteManagers.length} id="webdev">
+                {websiteManagers.map((m, i) => (
+                  <PersonRow key={m.id} name={m.name} subtitle={m.title} image={m.photo} initials={getInitials(m.name)} testId={`webdev-${i}`} />
+                ))}
+              </TeamDropdown>
 
-            <TeamDropdown title="Faculty Advisors" count={facultyAdvisors.length} id="advisors">
-              {facultyAdvisors.map((m, i) => (
-                <PersonRow key={i} name={m.name} image={m.image} initials={m.name.split(' ').map(n => n[0]).join('').slice(0, 2)} testId={`advisor-${i}`} />
-              ))}
-            </TeamDropdown>
+              <TeamDropdown title="Faculty Advisors" count={facultyAdvisors.length} id="advisors">
+                {facultyAdvisors.map((m, i) => (
+                  <PersonRow key={m.id} name={m.name} subtitle={m.title} image={m.photo} initials={getInitials(m.name)} testId={`advisor-${i}`} />
+                ))}
+              </TeamDropdown>
 
-            <TeamDropdown title="Active Members" count={activeMembers.length} id="members">
-              {activeMembers.map((m, i) => (
-                <PersonRow key={i} name={m.name} image={m.image} initials={m.name.split(' ').map(n => n[0]).join('').slice(0, 2)} testId={`member-${i}`} />
-              ))}
-            </TeamDropdown>
-          </div>
+              <TeamDropdown title="Active Members" count={activeMembers.length} id="members">
+                {activeMembers.map((m, i) => (
+                  <PersonRow key={m.id} name={m.name} subtitle={m.title} image={m.photo} initials={getInitials(m.name)} testId={`member-${i}`} />
+                ))}
+              </TeamDropdown>
+            </div>
+          )}
         </div>
       </section>
 

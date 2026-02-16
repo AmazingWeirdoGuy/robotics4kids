@@ -1,7 +1,7 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Globe, Users, GraduationCap, MapPin, Calendar, Trophy, Zap, Heart } from "lucide-react";
 import { Link } from "wouter";
-import { newsData } from "@/data/newsData";
 import heroRobot from "@assets/image_1771215214856.png";
 
 const iconMap: Record<string, typeof Trophy> = { Trophy, Calendar, Heart, MapPin, Zap };
@@ -13,8 +13,42 @@ const fadeUp = {
   transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] as const },
 };
 
+interface NewsItem {
+  id: number;
+  title: string;
+  date: string;
+  category: string;
+  description: string;
+  content: string;
+  iconName: string;
+  image: string;
+}
+
+interface Program {
+  id: number;
+  name: string;
+  description: string;
+  image: string;
+  link: string;
+}
+
 export default function Home() {
-  const latestNews = newsData.slice(0, 3);
+  const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
+  const [programs, setPrograms] = useState<Program[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    Promise.all([
+      fetch("/data/news.json").then(r => r.json()),
+      fetch("/data/programs.json").then(r => r.json()),
+    ]).then(([news, progs]) => {
+      setNewsItems(news);
+      setPrograms(progs);
+      setLoading(false);
+    }).catch(() => setLoading(false));
+  }, []);
+
+  const latestNews = newsItems.slice(0, 3);
 
   return (
     <div className="flex flex-col w-full">
@@ -106,14 +140,9 @@ export default function Home() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {[
-              { title: "Micro:bit Tiny:bit", desc: "Basics of robotic programming using the Yahboom Tiny:bit smart robot and BBC Micro:bit.", image: "https://r4kclub.com//storage/412/63eb4945953b2_18C04C53-2D7A-4242-9C6F-48BDBEB3315E.jpeg", link: "https://docs.google.com/presentation/d/1OflKdwVpcN1dVqpK6EKd71--vB7qQP4f-RI5MU_bDTc/edit?usp=sharing" },
-              { title: "LEGO EV3", desc: "Five class curriculum outlining the basics of robotics programming using LEGO Mindstorms EV3.", image: "https://r4kclub.com//storage/413/63eb4a29a3332_F24EFC0F-7809-4232-9BB0-FE73CC083C86.jpeg", link: "https://docs.google.com/presentation/d/13-g4edxw7CDdy4v-hbmjic7MD3ebHB5eBGfPxhVoHOE/edit" },
-              { title: "Raspberry Pi", desc: "Thai language Raspberry Pi course with hands-on labs and assignments.", image: "https://r4kclub.com//storage/88/5fd6eaaff0299_870x400_08.jpg", link: "https://drive.google.com/file/d/14_mnA1poyv9cjoB9onj6YppqP5oegOP7/view?usp=sharing" },
-              { title: "Micro:bit Zoom:bit", desc: "Robotics programming fundamentals based on the Micro:bit Zoom:bit platform.", image: "https://r4kclub.com//storage/615/65e561fe5fba4_zoombit-v2-TH-800x800.png", link: "https://docs.google.com/presentation/d/1ndA06pSGkPt7QtOgQYFrn9nsLddMeT5E7ypqfLsIKIU/edit?usp=sharing" },
-            ].map((course, i) => (
+            {programs.map((course, i) => (
               <motion.a
-                key={i}
+                key={course.id}
                 href={course.link}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -125,11 +154,11 @@ export default function Home() {
                 data-testid={`course-${i}`}
               >
                 <div className="aspect-square overflow-hidden">
-                  <img src={course.image} alt={course.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-75 group-hover:opacity-100" />
+                  <img src={course.image} alt={course.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-75 group-hover:opacity-100" />
                 </div>
                 <div className="p-6 md:p-8">
-                  <h3 className="font-heading text-lg font-semibold mb-2 text-white">{course.title}</h3>
-                  <p className="text-sm text-white/40 leading-relaxed mb-4">{course.desc}</p>
+                  <h3 className="font-heading text-lg font-semibold mb-2 text-white">{course.name}</h3>
+                  <p className="text-sm text-white/40 leading-relaxed mb-4">{course.description}</p>
                   <span className="inline-flex items-center gap-2 text-xs font-medium tracking-wide uppercase text-blue-400 group-hover:gap-3 transition-all duration-300">
                     View <ArrowRight className="w-3 h-3" />
                   </span>
@@ -193,7 +222,9 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-5">
-            {latestNews.length > 0 ? latestNews.map((item, i) => {
+            {loading ? (
+              <div className="col-span-3 bg-[hsl(222,20%,14%)] text-center py-20 text-white/40 rounded-lg">Loading...</div>
+            ) : latestNews.length > 0 ? latestNews.map((item, i) => {
               const Icon = iconMap[item.iconName] || Trophy;
               return (
                 <motion.div

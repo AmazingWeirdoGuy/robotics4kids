@@ -1,10 +1,34 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Calendar, MapPin, Trophy, Zap, Heart } from "lucide-react";
-import { newsData } from "@/data/newsData";
 
 const iconMap: Record<string, typeof Trophy> = { Trophy, Calendar, Zap, MapPin, Heart };
 
+interface NewsItem {
+  id: number;
+  title: string;
+  date: string;
+  category: string;
+  description: string;
+  content: string;
+  iconName: string;
+  image: string;
+}
+
 export default function News() {
+  const [newsData, setNewsData] = useState<NewsItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/data/news.json")
+      .then(r => r.json())
+      .then(data => {
+        setNewsData(data);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
   return (
     <div>
       <section className="py-32 bg-gradient-to-b from-[hsl(222,22%,12%)] to-[hsl(222,22%,10%)]">
@@ -19,7 +43,11 @@ export default function News() {
             <h1 className="font-heading text-5xl md:text-7xl font-bold leading-[0.95] tracking-[-0.02em] text-white">Latest News</h1>
           </motion.div>
 
-          {newsData.length === 0 ? (
+          {loading ? (
+            <div className="text-center py-20">
+              <p className="text-white/40">Loading news...</p>
+            </div>
+          ) : newsData.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-white/40">No news items yet. Check back soon.</p>
             </div>
