@@ -72,17 +72,17 @@ export default function News() {
                     className={`bg-[hsl(222,20%,14%)] border rounded-lg overflow-hidden transition-all duration-500 ${isExpanded ? "border-blue-500/20 shadow-lg shadow-blue-500/5" : "border-blue-500/8 card-glow card-glow-hover"}`}
                     data-testid={`news-card-${item.id}`}
                   >
-                    <div
-                      className={`flex flex-col md:flex-row ${hasContent ? "cursor-pointer" : ""} group`}
-                      onClick={() => hasContent && toggleExpand(item.id)}
-                      data-testid={`news-toggle-${item.id}`}
-                    >
+                    <div className="flex flex-col md:flex-row group">
                       {item.image && (
                         <div className="md:w-80 aspect-video md:aspect-auto overflow-hidden flex-shrink-0">
                           <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100" />
                         </div>
                       )}
-                      <div className="p-8 md:p-10 flex-1">
+                      <div
+                        className={`p-8 md:p-10 flex-1 ${hasContent ? "cursor-pointer hover:bg-white/[0.02] transition-colors duration-300" : ""}`}
+                        onClick={() => hasContent && toggleExpand(item.id)}
+                        data-testid={`news-toggle-${item.id}`}
+                      >
                         <div className="flex items-center gap-4 mb-5">
                           <Icon className="w-4 h-4 text-blue-400" />
                           <span className="text-xs tracking-wide uppercase text-white/40">{item.category}</span>
