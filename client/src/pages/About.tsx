@@ -1,6 +1,41 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Calendar, ChevronDown, Users } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+
+function CountUp({ target, suffix = "", duration = 2 }: { target: number; suffix?: string; duration?: number }) {
+  const [count, setCount] = useState(0);
+  const [started, setStarted] = useState(false);
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting && !started) setStarted(true); },
+      { threshold: 0.3 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [started]);
+
+  useEffect(() => {
+    if (!started) return;
+    const steps = 60;
+    const increment = target / steps;
+    let current = 0;
+    const stepTime = (duration * 1000) / steps;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        setCount(target);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(current));
+      }
+    }, stepTime);
+    return () => clearInterval(timer);
+  }, [started, target, duration]);
+
+  return <span ref={ref}>{count}{suffix}</span>;
+}
 import founderKris from "@assets/image_1771259753861.png";
 import founderTan from "@assets/image_1771259784308.png";
 import founderBlu from "@assets/image_1771259788803.png";
@@ -224,10 +259,10 @@ export default function About() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-blue-500/10 rounded-lg overflow-hidden">
             {[
-              { value: "9", label: "Partner Schools" },
-              { value: "24", label: "School Advisors" },
-              { value: "26", label: "Student Coaches" },
-              { value: "60+", label: "Student Graduates" },
+              { value: 9, suffix: "", label: "Partner Schools" },
+              { value: 24, suffix: "", label: "School Advisors" },
+              { value: 26, suffix: "", label: "Student Coaches" },
+              { value: 60, suffix: "+", label: "Student Graduates" },
             ].map((stat, i) => (
               <motion.div
                 key={i}
@@ -238,7 +273,9 @@ export default function About() {
                 className="bg-[hsl(222,20%,16%)] p-10 md:p-14 text-center"
                 data-testid={`accomplishment-${i}`}
               >
-                <h3 className="text-4xl md:text-5xl font-heading font-bold mb-2 text-white">{stat.value}</h3>
+                <h3 className="text-4xl md:text-5xl font-heading font-bold mb-2 text-white">
+                  <CountUp target={stat.value} suffix={stat.suffix} duration={2} />
+                </h3>
                 <p className="text-sm text-white/40 tracking-wide">{stat.label}</p>
               </motion.div>
             ))}
