@@ -1,0 +1,21 @@
+{
+  "officers": [
+    { "id": 1, "name": "First Last", "title": "President", "bio": "", "photo": "", "email": "" },
+    { "id": 2, "name": "First Last", "title": "Vice President", "bio": "", "photo": "", "email": "" },
+    { "id": 3, "name": "First Last", "title": "Secretary", "bio": "", "photo": "", "email": "" }
+  ],
+  "websiteManagers": [
+    { "id": 1, "name": "First Last", "title": "Lead Developer", "bio": "", "photo": "", "email": "" },
+    { "id": 2, "name": "First Last", "title": "Developer", "bio": "", "photo": "", "email": "" }
+  ],
+  "facultyAdvisors": [
+    { "id": 1, "name": "Faculty Advisor Name", "title": "", "bio": "", "photo": "", "email": "" },
+    { "id": 2, "name": "Faculty Advisor Name", "title": "", "bio": "", "photo": "", "email": "" }
+  ],
+  "activeMembers": [
+    { "id": 1, "name": "Active Member Name", "title": "", "bio": "", "photo": "", "email": "" },
+    { "id": 2, "name": "Active Member Name", "title": "", "bio": "", "photo": "", "email": "" },
+    { "id": 3, "name": "Active Member Name", "title": "", "bio": "", "photo": "", "email": "" },
+    { "id": 4, "name": "Active Member Name", "title": "", "bio": "", "photo": "", "email": "" }
+  ]
+}
