@@ -44,8 +44,8 @@ function getInitials(name: string): string {
   return name.split(' ').map(n => n[0]).join('').slice(0, 2);
 }
 
-function TeamDropdown({ title, count, id, children }: { title: string; count: number; id: string; children: React.ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false);
+function TeamDropdown({ title, count, id, children, defaultOpen = false }: { title: string; count: number; id: string; children: React.ReactNode; defaultOpen?: boolean }) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
     <motion.div
@@ -257,13 +257,13 @@ export default function About() {
             <div className="text-center py-20 text-white/40">Loading team data...</div>
           ) : (
             <div className="space-y-3 max-w-3xl mx-auto">
-              <TeamDropdown title="Officers" count={officers.length} id="officers">
+              <TeamDropdown title="Officers" count={officers.length} id="officers" defaultOpen>
                 {officers.map((m, i) => (
                   <PersonRow key={m.id} name={m.name} subtitle={m.title} image={m.photo} initials={getInitials(m.name)} testId={`officer-${i}`} />
                 ))}
               </TeamDropdown>
 
-              <TeamDropdown title="Website Development" count={websiteManagers.length} id="webdev">
+              <TeamDropdown title="Website Development" count={websiteManagers.length} id="webdev" defaultOpen>
                 {websiteManagers.map((m, i) => (
                   <PersonRow key={m.id} name={m.name} subtitle={m.title} image={m.photo} initials={getInitials(m.name)} testId={`webdev-${i}`} />
                 ))}
