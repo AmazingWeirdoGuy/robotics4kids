@@ -292,31 +292,72 @@ export default function About() {
             <h2 className="font-heading text-4xl md:text-5xl font-bold text-white">R4K Schools</h2>
           </motion.div>
 
-          <div className="space-y-2">
-            {schools.map((school, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: i * 0.05, duration: 0.5 }}
-                viewport={{ once: true }}
-                className="bg-[hsl(222,20%,14%)] border border-blue-500/5 p-6 md:p-8 flex flex-wrap items-center gap-6 group hover:bg-[hsl(222,20%,18%)] hover:border-blue-500/15 transition-all duration-300 rounded-lg"
-                data-testid={`school-${i}`}
-              >
-                <div className="flex items-center gap-3 min-w-[100px]">
-                  <Calendar className="w-4 h-4 text-blue-400/60" />
-                  <span className="font-heading font-semibold text-sm text-white">{school.year}</span>
+          <div className="relative max-w-3xl mx-auto">
+            <div className="absolute left-[19px] md:left-1/2 md:-translate-x-px top-0 bottom-0 w-px bg-gradient-to-b from-blue-500/30 via-blue-500/15 to-transparent" />
+
+            {schools.map((school, i) => {
+              const isLeft = i % 2 === 0;
+              const prevYear = i > 0 ? schools[i - 1].year : null;
+              const showYear = school.year !== prevYear;
+
+              return (
+                <div key={i} className="relative" data-testid={`school-${i}`}>
+                  {showYear && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5 }}
+                      className="relative flex items-center mb-6 mt-2 first:mt-0"
+                    >
+                      <div className="md:absolute md:left-1/2 md:-translate-x-1/2 ml-[7px] md:ml-0 z-10">
+                        <div className="bg-blue-600 text-white font-heading font-bold text-sm px-4 py-1.5 rounded-full shadow-lg shadow-blue-600/25">
+                          {school.year}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  <motion.div
+                    initial={{ opacity: 0, x: isLeft ? -30 : 30, y: 10 }}
+                    whileInView={{ opacity: 1, x: 0, y: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+                    className={`relative flex items-start mb-8 md:mb-10 ${isLeft ? "md:flex-row" : "md:flex-row-reverse"} flex-row`}
+                  >
+                    <div className="absolute left-[15px] md:left-1/2 md:-translate-x-1/2 top-5 z-10">
+                      <div className="w-[9px] h-[9px] rounded-full bg-blue-400 ring-4 ring-[hsl(222,20%,16%)] shadow-sm shadow-blue-400/30" />
+                    </div>
+
+                    <div className={`flex-1 ${isLeft ? "md:pr-12 md:text-right" : "md:pl-12 md:text-left"} pl-10 md:pl-0`}>
+                      <div className={`group bg-[hsl(222,20%,14%)] border border-blue-500/8 p-5 md:p-6 rounded-lg hover:bg-[hsl(222,20%,18%)] hover:border-blue-500/15 transition-all duration-300 card-glow`}>
+                        <h3 className="font-heading font-semibold text-white text-[15px] mb-1.5">{school.name}</h3>
+                        {school.note && <p className="text-xs text-blue-400/50 mb-2">{school.note}</p>}
+                        <div className={`flex items-center gap-2 text-white/30 ${isLeft ? "md:justify-end" : "md:justify-start"}`}>
+                          <MapPin className="w-3 h-3 flex-shrink-0" />
+                          <span className="text-xs tracking-wide">{school.location}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="hidden md:block flex-1" />
+                  </motion.div>
                 </div>
-                <div className="flex-1">
-                  <h3 className="font-heading font-semibold text-white">{school.name}</h3>
-                  {school.note && <span className="text-xs text-white/30">{school.note}</span>}
+              );
+            })}
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="relative flex items-center mt-2"
+            >
+              <div className="md:absolute md:left-1/2 md:-translate-x-1/2 ml-[3px] md:ml-0 z-10">
+                <div className="w-8 h-8 rounded-full bg-[hsl(222,20%,14%)] border border-blue-500/20 flex items-center justify-center">
+                  <span className="text-blue-400 text-xs font-bold">...</span>
                 </div>
-                <div className="flex items-center gap-2 text-white/30">
-                  <MapPin className="w-3 h-3" />
-                  <span className="text-xs tracking-wide">{school.location}</span>
-                </div>
-              </motion.div>
-            ))}
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
