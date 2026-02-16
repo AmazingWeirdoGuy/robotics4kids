@@ -152,8 +152,10 @@ export default function About() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1 }}
-              className="flex justify-center gap-6 md:gap-8"
+              className="flex flex-col items-center"
             >
+              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400 mb-8">Founders</p>
+              <div className="flex justify-center gap-6 md:gap-8">
               {[
                 { img: founderKris, name: "Kris (Ken) Terdprisant" },
                 { img: founderTan, name: "Prompiriya (Tan) Jongrengpian" },
@@ -166,6 +168,7 @@ export default function About() {
                   <p className="text-xs text-white/60 font-heading font-medium max-w-[100px] mx-auto leading-tight">{founder.name}</p>
                 </div>
               ))}
+              </div>
             </motion.div>
           </div>
         </div>
