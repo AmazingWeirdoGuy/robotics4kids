@@ -1,8 +1,7 @@
 import { Link, useLocation } from "wouter";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
 import logo from "@assets/image_1763957987556.png";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -11,126 +10,104 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
     { href: "/", label: "Home" },
-    { href: "/about", label: "About Us" },
+    { href: "/about", label: "About" },
     { href: "/news", label: "News" },
     { href: "/contact", label: "Contact" },
   ];
 
   return (
-    <div className="min-h-screen flex flex-col font-sans bg-background text-foreground overflow-x-hidden">
-      {/* Abstract Background */}
-      <div className="fixed inset-0 z-[-1] opacity-40 pointer-events-none">
-        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-blue-200/30 blur-[100px]" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-cyan-200/30 blur-[100px]" />
-      </div>
-
-      {/* Navbar */}
-      <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled ? "glass py-2" : "bg-transparent py-4"
-        }`}
-      >
-        <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 group cursor-pointer">
-              <img src={logo} alt="R4K Logo" className="h-12 w-12 object-cover rounded-full" />
+    <div className="min-h-screen flex flex-col font-sans bg-white text-foreground overflow-x-hidden">
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white/90 backdrop-blur-xl border-b border-black/5" : "bg-transparent"}`}>
+        <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-16">
+          <Link href="/" className="flex items-center gap-3 cursor-pointer">
+            <img src={logo} alt="R4K" className="h-9 w-9 object-cover rounded-full" />
+            <span className="font-heading font-semibold text-sm tracking-wide uppercase">R4K</span>
           </Link>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-10">
             {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} className={`relative text-sm font-medium transition-colors hover:text-primary ${
-                    location === link.href ? "text-primary" : "text-muted-foreground"
-                  }`}>
-                  {link.label}
-                  {location === link.href && (
-                    <motion.div
-                      layoutId="underline"
-                      className="absolute left-0 right-0 -bottom-1 h-0.5 bg-primary rounded-full"
-                    />
-                  )}
+              <Link key={link.href} href={link.href} className={`relative text-[13px] font-medium tracking-wide uppercase transition-colors duration-300 ${location === link.href ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}>
+                {link.label}
+                {location === link.href && (
+                  <motion.div layoutId="nav-indicator" className="absolute -bottom-1 left-0 right-0 h-[1.5px] bg-foreground" transition={{ type: "spring", stiffness: 380, damping: 30 }} />
+                )}
               </Link>
             ))}
-            <Link href="/contact">
-              <Button variant="default" size="sm" className="rounded-full px-6 shadow-lg shadow-primary/20">
-                Join Now
-              </Button>
-            </Link>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 text-foreground"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <X /> : <Menu />}
+          <Link href="/contact" className="hidden md:block">
+            <span className="text-[13px] font-medium tracking-wide uppercase text-foreground border border-foreground px-5 py-2 hover:bg-foreground hover:text-white transition-all duration-300">
+              Get Involved
+            </span>
+          </Link>
+
+          <button className="md:hidden p-2" onClick={() => setIsOpen(!isOpen)} data-testid="button-mobile-menu">
+            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
 
-        {/* Mobile Nav */}
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 right-0 glass border-t border-white/20 p-4 md:hidden flex flex-col gap-4"
-          >
-            {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} onClick={() => setIsOpen(false)}
-                  className={`block text-lg font-medium p-2 rounded-lg hover:bg-white/50 ${
-                    location === link.href ? "text-primary bg-white/50" : "text-foreground"
-                  }`}>
-                  {link.label}
-              </Link>
-            ))}
-          </motion.div>
-        )}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden bg-white border-b border-black/5 overflow-hidden"
+            >
+              <div className="px-6 py-6 space-y-4">
+                {navLinks.map((link) => (
+                  <Link key={link.href} href={link.href} onClick={() => setIsOpen(false)} className={`block text-sm font-medium tracking-wide uppercase ${location === link.href ? "text-foreground" : "text-muted-foreground"}`}>
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
-      {/* Main Content */}
-      <main className="flex-grow pt-20">
-        {children}
-      </main>
+      <main className="flex-grow pt-16">{children}</main>
 
-      {/* Footer */}
-      <footer className="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-12 mt-20">
-        <div className="container mx-auto px-4 md:px-6 grid md:grid-cols-4 gap-8">
-          <div className="col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <img src={logo} alt="R4K Logo" className="h-10 w-10 object-cover rounded-full" />
-              <span className="font-heading font-bold text-xl">Robotics for Kids</span>
+      <footer className="border-t border-black/10 mt-32">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 py-16">
+          <div className="grid md:grid-cols-4 gap-12">
+            <div className="md:col-span-2">
+              <div className="flex items-center gap-3 mb-5">
+                <img src={logo} alt="R4K" className="h-8 w-8 object-cover rounded-full" />
+                <span className="font-heading font-semibold text-sm tracking-wide uppercase">Robotics for Kids</span>
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
+                Empowering the next generation through robotics education and community outreach across Thailand and ASEAN.
+              </p>
             </div>
-            <p className="text-muted-foreground max-w-md">
-              Empowering the next generation of engineers and innovators through robotics education and community outreach.
-            </p>
-          </div>
-          <div>
-            <h3 className="font-heading font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li><Link href="/" className="text-muted-foreground hover:text-primary transition-colors">Home</Link></li>
-              <li><Link href="/about" className="text-muted-foreground hover:text-primary transition-colors">About Us</Link></li>
-              <li><Link href="/news" className="text-muted-foreground hover:text-primary transition-colors">Events</Link></li>
-              <li><Link href="/contact" className="text-muted-foreground hover:text-primary transition-colors">Contact</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-heading font-semibold mb-4">Connect</h3>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Instagram</a></li>
-              <li><a href="mailto:contact@r4kclub.com" className="text-muted-foreground hover:text-primary transition-colors">Email</a></li>
-            </ul>
+            <div>
+              <h3 className="text-xs font-semibold tracking-widest uppercase mb-5">Navigate</h3>
+              <ul className="space-y-3">
+                {navLinks.map(link => (
+                  <li key={link.href}><Link href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">{link.label}</Link></li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-xs font-semibold tracking-widest uppercase mb-5">Connect</h3>
+              <ul className="space-y-3">
+                <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Instagram</a></li>
+                <li><a href="mailto:contact@r4kclub.com" className="text-sm text-muted-foreground hover:text-foreground transition-colors">contact@r4kclub.com</a></li>
+              </ul>
+            </div>
           </div>
         </div>
-        <div className="container mx-auto px-4 md:px-6 mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 text-center text-muted-foreground text-sm">
-          © 2025 Robotics for Kids. All rights reserved.
+        <div className="border-t border-black/5">
+          <div className="max-w-7xl mx-auto px-6 md:px-10 py-6 text-center">
+            <p className="text-xs text-muted-foreground tracking-wide">&copy; 2025 Robotics for Kids. All rights reserved.</p>
+          </div>
         </div>
       </footer>
     </div>

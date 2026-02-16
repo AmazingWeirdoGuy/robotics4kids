@@ -2,80 +2,63 @@ import { motion } from "framer-motion";
 import { Calendar, MapPin, Trophy, Zap, Heart } from "lucide-react";
 import { newsData } from "@/data/newsData";
 
-const iconMap: Record<string, typeof Trophy> = {
-  Trophy,
-  Calendar,
-  Zap,
-  MapPin,
-  Heart,
-};
+const iconMap: Record<string, typeof Trophy> = { Trophy, Calendar, Zap, MapPin, Heart };
 
 export default function News() {
   return (
-    <div className="pt-10 pb-20">
-      <div className="container mx-auto px-4 md:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-12"
-        >
-          <h1 className="font-heading text-5xl font-bold mb-4">Latest News</h1>
-          <p className="text-muted-foreground text-lg">Follow our latest news and announcements here.</p>
-        </motion.div>
+    <div>
+      <section className="py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] as const }}
+            className="max-w-2xl mb-20"
+          >
+            <p className="text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">Updates</p>
+            <h1 className="font-heading text-5xl md:text-7xl font-bold leading-[0.95] tracking-[-0.02em]">Latest News</h1>
+          </motion.div>
 
-        {newsData.length === 0 ? (
-          <div className="text-center py-20">
-            <p className="text-muted-foreground text-lg">No news items yet. Check back soon!</p>
-          </div>
-        ) : (
-          <div className="grid md:grid-cols-2 gap-6">
-            {newsData.map((item, index) => {
-              const Icon = iconMap[item.iconName] || Trophy;
-              return (
-                <motion.div
-                  key={item.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="glass-card rounded-2xl overflow-hidden group cursor-pointer"
-                  data-testid={`news-card-${item.id}`}
-                >
-                  {item.image && (
-                    <div className="aspect-video overflow-hidden">
-                      <img 
-                        src={item.image} 
-                        alt={item.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    </div>
-                  )}
-                  <div className="p-8">
-                    <div className="flex items-start justify-between mb-6">
-                      <div className="flex items-center gap-3">
-                        <div className="p-3 rounded-xl bg-blue-50 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                          <Icon className="w-6 h-6" />
+          {newsData.length === 0 ? (
+            <div className="text-center py-20">
+              <p className="text-muted-foreground">No news items yet. Check back soon.</p>
+            </div>
+          ) : (
+            <div className="space-y-px bg-black/5">
+              {newsData.map((item, index) => {
+                const Icon = iconMap[item.iconName] || Trophy;
+                return (
+                  <motion.div
+                    key={item.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.08, duration: 0.5 }}
+                    className="bg-white group"
+                    data-testid={`news-card-${item.id}`}
+                  >
+                    <div className="flex flex-col md:flex-row">
+                      {item.image && (
+                        <div className="md:w-80 aspect-video md:aspect-auto overflow-hidden flex-shrink-0">
+                          <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                         </div>
-                        <span className="text-xs font-medium text-muted-foreground bg-secondary px-3 py-1 rounded-full">
-                          {item.category}
-                        </span>
+                      )}
+                      <div className="p-8 md:p-10 flex-1">
+                        <div className="flex items-center gap-4 mb-5">
+                          <Icon className="w-4 h-4 text-muted-foreground" />
+                          <span className="text-xs tracking-wide uppercase text-muted-foreground">{item.category}</span>
+                          <span className="text-xs text-muted-foreground ml-auto">{item.date}</span>
+                        </div>
+                        <h3 className="font-heading text-2xl font-semibold mb-4 leading-snug">{item.title}</h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
                       </div>
-                      <span className="text-sm font-medium text-muted-foreground">
-                        {item.date}
-                      </span>
                     </div>
-                    <h3 className="font-heading text-2xl font-bold mb-3 group-hover:text-primary transition-colors">
-                      {item.title}
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {item.description}
-                    </p>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-        )}
-      </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </section>
     </div>
   );
 }

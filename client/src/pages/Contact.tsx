@@ -1,117 +1,110 @@
 import { motion } from "framer-motion";
-import { Mail, Globe, Heart } from "lucide-react";
+import { Mail, Globe, Heart, ArrowRight } from "lucide-react";
 
 export default function Contact() {
   return (
-    <div className="pt-10 pb-20">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-          >
-            <h1 className="font-heading text-5xl md:text-6xl font-bold mb-6">Get in Touch</h1>
-            <p className="text-xl text-muted-foreground mb-12">
-              Interested in partnering with R4K or want to support our mission of bringing robotics education to children across ASEAN?
-            </p>
+    <div>
+      <section className="py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
+          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] as const }}
+            >
+              <p className="text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">Reach Out</p>
+              <h1 className="font-heading text-5xl md:text-7xl font-bold leading-[0.95] tracking-[-0.02em] mb-8">Get in Touch</h1>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-16">
+                Interested in partnering with R4K or supporting our mission of bringing robotics education to children across ASEAN?
+              </p>
 
-            <div className="space-y-8">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-primary">
-                  <Mail className="w-6 h-6" />
+              <div className="space-y-10">
+                <div className="flex items-start gap-5">
+                  <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Mail className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 className="font-heading font-semibold mb-1">Email</h3>
+                    <a href="mailto:contact@r4kclub.com" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-email">
+                      contact@r4kclub.com
+                    </a>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-heading font-semibold text-lg">Email Us</h3>
-                  <a href="mailto:contact@r4kclub.com" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-email">
-                    contact@r4kclub.com
-                  </a>
+                <div className="flex items-start gap-5">
+                  <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Globe className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 className="font-heading font-semibold mb-1">Website</h3>
+                    <a href="https://www.r4kclub.com" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-website">
+                      www.r4kclub.com
+                    </a>
+                  </div>
+                </div>
+                <div className="flex items-start gap-5">
+                  <div className="w-10 h-10 rounded-full bg-neutral-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Heart className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 className="font-heading font-semibold mb-1">Support</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Donations for teaching materials and student coach tuition
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-primary">
-                  <Globe className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 className="font-heading font-semibold text-lg">Website</h3>
-                  <a href="https://www.r4kclub.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-website">
-                    www.r4kclub.com
-                  </a>
-                </div>
+
+              <div className="mt-16 border-t border-black/5 pt-12">
+                <h3 className="text-xs font-semibold tracking-[0.3em] uppercase mb-6">Partnership Opportunities</h3>
+                <ul className="space-y-4">
+                  {[
+                    "Become a partner school",
+                    "Sponsor robotics equipment",
+                    "Support student coach scholarships",
+                    "Volunteer as a teacher advisor",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-center gap-3 text-sm text-muted-foreground">
+                      <ArrowRight className="w-3 h-3 flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center text-primary">
-                  <Heart className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 className="font-heading font-semibold text-lg">Support</h3>
-                  <p className="text-muted-foreground">
-                    Donations for teaching materials and student coach tuition
-                  </p>
-                </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] as const, delay: 0.2 }}
+              className="bg-neutral-50 p-6 md:p-10"
+            >
+              <h2 className="font-heading text-xl font-semibold mb-2 text-center">Contact Form</h2>
+              <p className="text-sm text-muted-foreground text-center mb-8">Fill out the form and we'll be in touch.</p>
+
+              <div className="bg-white overflow-hidden">
+                <iframe
+                  src="https://docs.google.com/forms/d/e/1FAIpQLSdExample/viewform?embedded=true"
+                  width="100%"
+                  height="600"
+                  frameBorder="0"
+                  marginHeight={0}
+                  marginWidth={0}
+                  className="w-full"
+                  title="Contact Form"
+                  data-testid="google-form"
+                >
+                  Loading...
+                </iframe>
               </div>
-            </div>
 
-            {/* Partnership Info */}
-            <div className="mt-12 glass-card p-6 rounded-2xl">
-              <h3 className="font-heading font-bold text-lg mb-3">Partnership Opportunities</h3>
-              <ul className="space-y-2 text-muted-foreground">
-                <li className="flex items-start gap-2">
-                  <span className="text-primary mt-1">•</span>
-                  <span>Become a partner school</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-primary mt-1">•</span>
-                  <span>Sponsor robotics equipment</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-primary mt-1">•</span>
-                  <span>Support student coach scholarships</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-primary mt-1">•</span>
-                  <span>Volunteer as a teacher advisor</span>
-                </li>
-              </ul>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-            className="glass-card p-4 md:p-6 rounded-3xl"
-          >
-            <h2 className="font-heading text-2xl font-bold mb-4 text-center">Contact Form</h2>
-            <p className="text-muted-foreground text-center mb-6">
-              Fill out the form below and we'll get back to you soon.
-            </p>
-            
-            {/* Embedded Google Form */}
-            <div className="w-full rounded-2xl overflow-hidden bg-white">
-              <iframe
-                src="https://docs.google.com/forms/d/e/1FAIpQLSdExample/viewform?embedded=true"
-                width="100%"
-                height="600"
-                frameBorder="0"
-                marginHeight={0}
-                marginWidth={0}
-                className="w-full"
-                title="Contact Form"
-                data-testid="google-form"
-              >
-                Loading…
-              </iframe>
-            </div>
-
-            <p className="text-sm text-muted-foreground text-center mt-4">
-              Alternatively, email us directly at{" "}
-              <a href="mailto:contact@r4kclub.com" className="text-primary hover:underline">
-                contact@r4kclub.com
-              </a>
-            </p>
-          </motion.div>
+              <p className="text-xs text-muted-foreground text-center mt-6">
+                Or email us at{" "}
+                <a href="mailto:contact@r4kclub.com" className="text-foreground hover:underline">contact@r4kclub.com</a>
+              </p>
+            </motion.div>
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
