@@ -3,6 +3,7 @@ import { ArrowRight, Globe, Users, GraduationCap, BookOpen, Calendar, Trophy, Ma
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { newsData } from "@/data/newsData";
+import heroRobot from "@assets/image_1771215214856.png";
 
 const iconMap: Record<string, typeof Trophy> = {
   Trophy,
@@ -19,40 +20,48 @@ export default function Hero() {
     <div className="flex flex-col w-full">
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-white">
-
         <div className="container mx-auto px-4 md:px-6 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="max-w-2xl"
-          >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 font-medium text-sm mb-6 border border-blue-200">
-              Established 2018
-            </span>
-            <h1 className="font-heading text-6xl md:text-8xl font-bold leading-[0.9] tracking-tighter mb-6 text-foreground">
-              Robotics for <span className="text-primary">Kids</span>
-              <br />
-              <span className="text-4xl md:text-6xl opacity-80">Technology Equity.</span>
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg leading-relaxed">
-              We are a group of high school students sharing our knowledge about robotics and programming with children across Thailand and ASEAN.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link href="/contact">
-                <Button size="lg" className="rounded-full px-8 text-lg h-14 shadow-xl shadow-primary/25" data-testid="button-join">
-                  Partner With Us
-                </Button>
-              </Link>
-              <Link href="/about">
-                <Button variant="outline" size="lg" className="rounded-full px-8 text-lg h-14 bg-white/50 backdrop-blur border-white/40 hover:bg-white/80" data-testid="button-learn-more">
-                  Learn More <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              </Link>
-            </div>
-          </motion.div>
+          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-16">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="max-w-2xl flex-1"
+            >
+              <span className="inline-block px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 font-medium text-sm mb-6 border border-blue-200">
+                Established 2018
+              </span>
+              <h1 className="font-heading text-6xl md:text-8xl font-bold leading-[0.9] tracking-tighter mb-6 text-foreground">
+                Robotics for <span className="text-primary">Kids</span>
+                <br />
+                <span className="text-4xl md:text-6xl opacity-80">Technology Equity.</span>
+              </h1>
+              <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg leading-relaxed">
+                We are a group of high school students sharing our knowledge about robotics and programming with children across Thailand and ASEAN.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Link href="/contact">
+                  <Button size="lg" className="rounded-full px-8 text-lg h-14 shadow-xl shadow-primary/25" data-testid="button-join">
+                    Partner With Us
+                  </Button>
+                </Link>
+                <Link href="/about">
+                  <Button variant="outline" size="lg" className="rounded-full px-8 text-lg h-14 bg-white/50 backdrop-blur border-white/40 hover:bg-white/80" data-testid="button-learn-more">
+                    Learn More <ArrowRight className="ml-2 w-5 h-5" />
+                  </Button>
+                </Link>
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
+              className="flex-1 flex justify-center"
+            >
+              <img src={heroRobot} alt="R4K Robot" className="w-full max-w-md md:max-w-lg object-contain" />
+            </motion.div>
+          </div>
         </div>
-        
       </section>
 
       {/* Progress & Impacts Section */}
