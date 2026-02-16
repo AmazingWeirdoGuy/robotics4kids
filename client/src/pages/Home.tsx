@@ -18,16 +18,7 @@ export default function Hero() {
   return (
     <div className="flex flex-col w-full">
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-        {/* Background Image with Overlay */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://r4kclub.com//storage/284/61ebc709cb961_banner.jpg"
-            alt="R4K Banner"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent dark:from-black/90 dark:via-black/70" />
-        </div>
+      <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-white">
 
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <motion.div
