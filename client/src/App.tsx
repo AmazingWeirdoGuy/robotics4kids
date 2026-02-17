@@ -9,6 +9,7 @@ import News from "@/pages/News";
 import NewsArticle from "@/pages/NewsArticle";
 import Contact from "@/pages/Contact";
 import Admin from "@/pages/Admin";
+import Terms from "@/pages/Terms";
 
 function Router() {
   return (
@@ -19,6 +20,7 @@ function Router() {
         <Route path="/news" component={News} />
         <Route path="/news/:id" component={NewsArticle} />
         <Route path="/contact" component={Contact} />
+        <Route path="/terms" component={Terms} />
         <Route path="/admin" component={Admin} />
         <Route component={NotFound} />
       </Switch>
