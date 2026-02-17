@@ -1,7 +1,7 @@
 import { Link, useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import logo from "@assets/image_1763957987556.png";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -15,6 +15,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [location]);
+
+  const handleNavClick = useCallback((href: string) => {
+    if (location === href) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    setIsOpen(false);
+  }, [location]);
+
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },
@@ -26,14 +37,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen flex flex-col font-sans bg-white text-slate-900 overflow-x-hidden">
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-xl border-b border-slate-200/40">
         <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-3 cursor-pointer" data-testid="link-home-logo">
+          <Link href="/" onClick={() => handleNavClick("/")} className="flex items-center gap-3 cursor-pointer" data-testid="link-home-logo">
             <img src={logo} alt="R4K" className="h-9 w-9 object-cover rounded-full" />
             <span className="font-heading font-semibold text-sm tracking-wide uppercase text-slate-900">R4K</span>
           </Link>
 
           <div className="hidden md:flex items-center gap-10">
             {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} data-testid={`link-nav-${link.label.toLowerCase()}`} className={`relative text-[13px] font-medium tracking-wide uppercase transition-colors duration-300 ${location === link.href ? "text-blue-600" : "text-slate-500 hover:text-slate-900"}`}>
+              <Link key={link.href} href={link.href} onClick={() => handleNavClick(link.href)} data-testid={`link-nav-${link.label.toLowerCase()}`} className={`relative text-[13px] font-medium tracking-wide uppercase transition-colors duration-300 ${location === link.href ? "text-blue-600" : "text-slate-500 hover:text-slate-900"}`}>
                 {link.label}
                 {location === link.href && (
                   <motion.div layoutId="nav-indicator" className="absolute -bottom-1 left-0 right-0 h-[1.5px] bg-blue-500" transition={{ type: "spring", stiffness: 380, damping: 30 }} />
@@ -42,7 +53,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             ))}
           </div>
 
-          <Link href="/contact" className="hidden md:block" data-testid="link-get-involved">
+          <Link href="/contact" onClick={() => handleNavClick("/contact")} className="hidden md:block" data-testid="link-get-involved">
             <span className="text-[13px] font-medium tracking-wide uppercase text-white bg-blue-600 px-5 py-2 rounded-md hover:bg-blue-700 transition-all duration-300">
               Get Involved
             </span>
@@ -63,7 +74,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             >
               <div className="px-6 py-6 space-y-4">
                 {navLinks.map((link) => (
-                  <Link key={link.href} href={link.href} onClick={() => setIsOpen(false)} data-testid={`link-mobile-${link.label.toLowerCase()}`} className={`block text-sm font-medium tracking-wide uppercase ${location === link.href ? "text-blue-600" : "text-slate-500"}`}>
+                  <Link key={link.href} href={link.href} onClick={() => handleNavClick(link.href)} data-testid={`link-mobile-${link.label.toLowerCase()}`} className={`block text-sm font-medium tracking-wide uppercase ${location === link.href ? "text-blue-600" : "text-slate-500"}`}>
                     {link.label}
                   </Link>
                 ))}
