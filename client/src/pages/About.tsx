@@ -88,23 +88,23 @@ function TeamDropdown({ title, count, id, children, defaultOpen = false }: { tit
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="border border-blue-500/8 rounded-lg overflow-hidden card-glow"
+      className="border border-slate-200 rounded-xl overflow-hidden card-glow"
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-5 md:p-6 bg-[hsl(222,20%,14%)] hover:bg-[hsl(222,20%,16%)] transition-colors duration-300 cursor-pointer"
+        className="w-full flex items-center justify-between p-5 md:p-6 bg-white hover:bg-slate-50 transition-colors duration-300 cursor-pointer"
         data-testid={`button-toggle-${id}`}
       >
         <div className="flex items-center gap-4">
-          <Users className="w-4 h-4 text-blue-400" />
-          <span className="font-heading font-semibold text-white text-sm tracking-wide uppercase">{title}</span>
-          <span className="text-xs text-white/30 bg-white/5 px-2.5 py-0.5 rounded-full">{count}</span>
+          <Users className="w-4 h-4 text-blue-600" />
+          <span className="font-heading font-semibold text-slate-900 text-sm tracking-wide uppercase">{title}</span>
+          <span className="text-xs text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full">{count}</span>
         </div>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3 }}
         >
-          <ChevronDown className="w-4 h-4 text-blue-400/60" />
+          <ChevronDown className="w-4 h-4 text-blue-600/60" />
         </motion.div>
       </button>
       <AnimatePresence>
@@ -116,7 +116,7 @@ function TeamDropdown({ title, count, id, children, defaultOpen = false }: { tit
             transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
             className="overflow-hidden"
           >
-            <div className="bg-[hsl(222,20%,12%)] border-t border-blue-500/5">
+            <div className="bg-slate-50 border-t border-slate-200">
               {children}
             </div>
           </motion.div>
@@ -128,8 +128,8 @@ function TeamDropdown({ title, count, id, children, defaultOpen = false }: { tit
 
 function PersonRow({ name, subtitle, image, initials, testId }: { name: string; subtitle?: string; image: string; initials: string; testId: string }) {
   return (
-    <div className="flex items-center gap-4 px-5 md:px-6 py-4 border-b border-white/3 last:border-b-0 hover:bg-white/[0.02] transition-colors duration-200" data-testid={testId}>
-      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[hsl(220,20%,22%)] to-[hsl(222,22%,16%)] flex items-center justify-center text-blue-400/50 font-heading text-xs font-semibold overflow-hidden border border-blue-500/10 flex-shrink-0">
+    <div className="flex items-center gap-4 px-5 md:px-6 py-4 border-b border-slate-200/60 last:border-b-0 hover:bg-white/60 transition-colors duration-200" data-testid={testId}>
+      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center text-blue-600/60 font-heading text-xs font-semibold overflow-hidden border border-blue-200/50 flex-shrink-0">
         {image ? (
           <img src={image} alt={name} className="w-full h-full object-cover" />
         ) : (
@@ -137,8 +137,8 @@ function PersonRow({ name, subtitle, image, initials, testId }: { name: string; 
         )}
       </div>
       <div className="flex-1 min-w-0">
-        <p className="font-heading font-semibold text-sm text-white truncate">{name}</p>
-        {subtitle && <p className="text-xs text-blue-300/40 mt-0.5">{subtitle}</p>}
+        <p className="font-heading font-semibold text-sm text-slate-900 truncate">{name}</p>
+        {subtitle && <p className="text-xs text-blue-600/60 mt-0.5">{subtitle}</p>}
       </div>
     </div>
   );
@@ -165,7 +165,7 @@ export default function About() {
 
   return (
     <div>
-      <section className="py-32 bg-gradient-to-b from-[hsl(222,22%,12%)] to-[hsl(222,22%,10%)]">
+      <section className="py-32 bg-gradient-to-b from-slate-50 to-white">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -173,27 +173,27 @@ export default function About() {
             transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] as const }}
             className="max-w-3xl"
           >
-            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400 mb-6">About R4K</p>
-            <h1 className="font-heading text-5xl md:text-7xl font-bold leading-[0.95] tracking-[-0.02em] mb-8 text-white">
+            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-6">About R4K</p>
+            <h1 className="font-heading text-5xl md:text-7xl font-bold leading-[0.95] tracking-[-0.02em] mb-8 text-slate-900">
               Robotics for Kids
             </h1>
-            <p className="text-xl text-white/45 leading-relaxed">
+            <p className="text-xl text-slate-500 leading-relaxed">
               We are a group of high school students who want to share our knowledge about robotics with other children, providing opportunities to learn robotics and programming.
             </p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-32 bg-[hsl(222,20%,16%)]">
+      <section className="py-32 bg-white">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <div className="grid md:grid-cols-2 gap-16 md:gap-24 items-center">
             <motion.div {...fadeUp}>
-              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400 mb-4">Origins</p>
-              <h2 className="font-heading text-3xl md:text-4xl font-bold mb-8 text-white">Experienced Leaders</h2>
-              <p className="text-white/40 leading-relaxed mb-6">
+              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-4">Origins</p>
+              <h2 className="font-heading text-3xl md:text-4xl font-bold mb-8 text-slate-900">Experienced Leaders</h2>
+              <p className="text-slate-500 leading-relaxed mb-6">
                 Our founders include a Thailand representative for International Youth Robot Competition (IYRC) in Korea, as well as 2-time National VEX Robotics Champion and 2-time Thailand Representative to the VEX Robotics World Championships in the US.
               </p>
-              <p className="text-white/40 leading-relaxed">
+              <p className="text-slate-500 leading-relaxed">
                 Acknowledging the rapid development of technology in the modern world, the significance of programming knowledge is now greater than ever.
               </p>
             </motion.div>
@@ -204,7 +204,7 @@ export default function About() {
               transition={{ duration: 1 }}
               className="flex flex-col items-center"
             >
-              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400 mb-8">Founders</p>
+              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-8">Founders</p>
               <div className="flex justify-center gap-6 md:gap-8">
               {[
                 { img: founderKris, name: "Kris (Ken) Terdprisant" },
@@ -212,10 +212,10 @@ export default function About() {
                 { img: founderBlu, name: "Blu Francia" },
               ].map((founder, i) => (
                 <div key={i} className="text-center" data-testid={`founder-${i}`}>
-                  <div className="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden border border-blue-500/15 shadow-lg shadow-blue-500/10 mx-auto mb-3">
+                  <div className="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden border-2 border-blue-200 shadow-lg shadow-blue-100 mx-auto mb-3">
                     <img src={founder.img} alt={founder.name} className="w-full h-full object-cover" />
                   </div>
-                  <p className="text-xs text-white/60 font-heading font-medium max-w-[100px] mx-auto leading-tight">{founder.name}</p>
+                  <p className="text-xs text-slate-600 font-heading font-medium max-w-[100px] mx-auto leading-tight">{founder.name}</p>
                 </div>
               ))}
               </div>
@@ -224,7 +224,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="py-32 bg-gradient-to-b from-[hsl(220,22%,18%)] to-[hsl(222,20%,14%)]">
+      <section className="py-32 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <div className="grid md:grid-cols-3 gap-5">
             {[
@@ -238,26 +238,26 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
                 viewport={{ once: true }}
-                className="bg-[hsl(222,20%,14%)] border border-blue-500/8 p-10 md:p-14 card-glow rounded-lg"
+                className="bg-white border border-slate-200 p-10 md:p-14 card-glow rounded-xl"
                 data-testid={`about-card-${i}`}
               >
-                <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400/60 mb-6">0{i + 1}</p>
-                <h3 className="font-heading text-xl font-semibold mb-4 text-white">{item.title}</h3>
-                <p className="text-sm text-white/40 leading-relaxed">{item.desc}</p>
+                <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600/50 mb-6">0{i + 1}</p>
+                <h3 className="font-heading text-xl font-semibold mb-4 text-slate-900">{item.title}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-32 bg-[hsl(222,20%,14%)]">
+      <section className="py-32 bg-white">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <motion.div {...fadeUp} className="text-center mb-20">
-            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400 mb-4">Since 2018</p>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-white">Accomplishments</h2>
+            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-4">Since 2018</p>
+            <h2 className="font-heading text-4xl md:text-5xl font-bold text-slate-900">Accomplishments</h2>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-blue-500/10 rounded-lg overflow-hidden">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-slate-200 rounded-xl overflow-hidden">
             {[
               { value: 9, suffix: "", label: "Partner Schools" },
               { value: 24, suffix: "", label: "School Advisors" },
@@ -270,28 +270,28 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1, duration: 0.6 }}
                 viewport={{ once: true }}
-                className="bg-[hsl(222,20%,16%)] p-10 md:p-14 text-center"
+                className="bg-slate-50 p-10 md:p-14 text-center"
                 data-testid={`accomplishment-${i}`}
               >
-                <h3 className="text-4xl md:text-5xl font-heading font-bold mb-2 text-white">
+                <h3 className="text-4xl md:text-5xl font-heading font-bold mb-2 text-slate-900">
                   <CountUp target={stat.value} suffix={stat.suffix} duration={2} />
                 </h3>
-                <p className="text-sm text-white/40 tracking-wide">{stat.label}</p>
+                <p className="text-sm text-slate-500 tracking-wide">{stat.label}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="py-32 bg-gradient-to-b from-[hsl(222,22%,12%)] to-[hsl(222,22%,10%)]">
+      <section className="py-32 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <motion.div {...fadeUp} className="text-center mb-24">
-            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400 mb-4">People</p>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-white">Our Team</h2>
+            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-4">People</p>
+            <h2 className="font-heading text-4xl md:text-5xl font-bold text-slate-900">Our Team</h2>
           </motion.div>
 
           {loading ? (
-            <div className="text-center py-20 text-white/40">Loading team data...</div>
+            <div className="text-center py-20 text-slate-400">Loading team data...</div>
           ) : (
             <div className="space-y-3 max-w-3xl mx-auto">
               <TeamDropdown title="Officers" count={officers.length} id="officers" defaultOpen>
@@ -322,15 +322,15 @@ export default function About() {
         </div>
       </section>
 
-      <section className="py-32 bg-[hsl(222,20%,16%)]">
+      <section className="py-32 bg-white">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <motion.div {...fadeUp} className="max-w-2xl mb-20">
-            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400 mb-4">Network</p>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-white">R4K Schools</h2>
+            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-4">Network</p>
+            <h2 className="font-heading text-4xl md:text-5xl font-bold text-slate-900">R4K Schools</h2>
           </motion.div>
 
           <div className="relative max-w-3xl mx-auto">
-            <div className="absolute left-[19px] md:left-1/2 md:-translate-x-px top-0 bottom-0 w-px bg-gradient-to-b from-blue-500/30 via-blue-500/15 to-transparent" />
+            <div className="absolute left-[19px] md:left-1/2 md:-translate-x-px top-0 bottom-0 w-px bg-gradient-to-b from-blue-400 via-blue-300 to-transparent" />
 
             {schools.map((school, i) => {
               const isLeft = i % 2 === 0;
@@ -363,14 +363,14 @@ export default function About() {
                     className={`relative flex items-start mb-8 md:mb-10 ${isLeft ? "md:flex-row" : "md:flex-row-reverse"} flex-row`}
                   >
                     <div className="absolute left-[15px] md:left-1/2 md:-translate-x-1/2 top-5 z-10">
-                      <div className="w-[9px] h-[9px] rounded-full bg-blue-400 ring-4 ring-[hsl(222,20%,16%)] shadow-sm shadow-blue-400/30" />
+                      <div className="w-[9px] h-[9px] rounded-full bg-blue-500 ring-4 ring-white shadow-sm shadow-blue-400/30" />
                     </div>
 
                     <div className={`flex-1 ${isLeft ? "md:pr-12 md:text-right" : "md:pl-12 md:text-left"} pl-10 md:pl-0`}>
-                      <div className={`group bg-[hsl(222,20%,14%)] border border-blue-500/8 p-5 md:p-6 rounded-lg hover:bg-[hsl(222,20%,18%)] hover:border-blue-500/15 transition-all duration-300 card-glow`}>
-                        <h3 className="font-heading font-semibold text-white text-[15px] mb-1.5">{school.name}</h3>
-                        {school.note && <p className="text-xs text-blue-400/50 mb-2">{school.note}</p>}
-                        <div className={`flex items-center gap-2 text-white/30 ${isLeft ? "md:justify-end" : "md:justify-start"}`}>
+                      <div className={`group bg-white border border-slate-200 p-5 md:p-6 rounded-xl hover:bg-slate-50 hover:border-blue-200 transition-all duration-300 card-glow`}>
+                        <h3 className="font-heading font-semibold text-slate-900 text-[15px] mb-1.5">{school.name}</h3>
+                        {school.note && <p className="text-xs text-blue-600/60 mb-2">{school.note}</p>}
+                        <div className={`flex items-center gap-2 text-slate-400 ${isLeft ? "md:justify-end" : "md:justify-start"}`}>
                           <MapPin className="w-3 h-3 flex-shrink-0" />
                           <span className="text-xs tracking-wide">{school.location}</span>
                         </div>
@@ -390,8 +390,8 @@ export default function About() {
               className="relative flex items-center mt-2"
             >
               <div className="md:absolute md:left-1/2 md:-translate-x-1/2 ml-[3px] md:ml-0 z-10">
-                <div className="w-8 h-8 rounded-full bg-[hsl(222,20%,14%)] border border-blue-500/20 flex items-center justify-center">
-                  <span className="text-blue-400 text-xs font-bold">...</span>
+                <div className="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center">
+                  <span className="text-blue-600 text-xs font-bold">...</span>
                 </div>
               </div>
             </motion.div>

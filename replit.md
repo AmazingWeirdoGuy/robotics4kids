@@ -23,9 +23,9 @@ Preferred communication style: Simple, everyday language.
 - **Tailwind CSS v4** for styling with custom design tokens
 - Components follow the "New York" style variant with custom theming
 - Custom design system featuring:
-  - Electric blue primary color (#217BF4 area)
-  - Clean white and deep navy color scheme
-  - Glassmorphism effects for cards and navigation
+  - Light/white technology palette with blue-600 accents, black text, slate greys
+  - White and light grey backgrounds, dark footer for contrast
+  - Clean card shadows and subtle borders (no glassmorphism)
   - Custom fonts: "DM Sans" for body, "Space Grotesk" for headings
 
 **Project Structure:**

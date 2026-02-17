@@ -33,56 +33,56 @@
 }
 
 :root {
-  --background: 222 22% 10%;
-  --foreground: 210 20% 96%;
+  --background: 0 0% 100%;
+  --foreground: 220 20% 10%;
 
-  --card: 222 20% 14%;
-  --card-foreground: 210 20% 96%;
+  --card: 210 20% 98%;
+  --card-foreground: 220 20% 10%;
 
-  --popover: 222 20% 14%;
-  --popover-foreground: 210 20% 96%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 20% 10%;
 
-  --primary: 217 78% 56%;
+  --primary: 217 78% 51%;
   --primary-foreground: 0 0% 100%;
 
-  --secondary: 220 18% 20%;
-  --secondary-foreground: 210 15% 85%;
+  --secondary: 214 32% 95%;
+  --secondary-foreground: 220 20% 15%;
 
-  --muted: 220 16% 22%;
-  --muted-foreground: 215 12% 58%;
+  --muted: 214 32% 95%;
+  --muted-foreground: 215 14% 45%;
 
-  --accent: 217 78% 56%;
+  --accent: 217 78% 51%;
   --accent-foreground: 0 0% 100%;
 
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 0 0% 100%;
 
-  --border: 220 16% 22%;
-  --input: 220 16% 22%;
-  --ring: 217 78% 56%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 217 78% 51%;
 
   --radius: 0.5rem;
 }
 
 @layer utilities {
-  .glass-dark {
-    @apply bg-[hsl(222,22%,12%)]/85 backdrop-blur-xl border-b border-blue-500/10;
+  .glass-light {
+    @apply bg-white/80 backdrop-blur-xl border-b border-slate-200/60;
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-blue-300;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-blue-800 to-blue-600;
   }
 
   .text-gradient-blue {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-300 to-blue-500;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-blue-700;
   }
 
   .card-glow {
-    box-shadow: 0 4px 24px -4px rgba(59, 130, 246, 0.08), 0 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 4px 16px -2px rgba(59, 130, 246, 0.06);
   }
 
   .card-glow-hover:hover {
-    box-shadow: 0 8px 32px -4px rgba(59, 130, 246, 0.15), 0 2px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 20px -2px rgba(59, 130, 246, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06);
   }
 }
 

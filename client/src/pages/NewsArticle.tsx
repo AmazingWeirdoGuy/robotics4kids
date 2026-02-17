@@ -33,7 +33,7 @@ function renderContent(content: string) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="font-heading text-2xl md:text-3xl font-bold text-white mt-14 mb-5 first:mt-0"
+          className="font-heading text-2xl md:text-3xl font-bold text-slate-900 mt-14 mb-5 first:mt-0"
         >
           {trimmed.slice(2)}
         </motion.h2>
@@ -47,20 +47,20 @@ function renderContent(content: string) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="font-heading text-xl md:text-2xl font-semibold text-white mt-10 mb-4"
+          className="font-heading text-xl md:text-2xl font-semibold text-slate-900 mt-10 mb-4"
         >
           {trimmed.slice(3)}
         </motion.h3>
       );
     }
     if (trimmed.startsWith("### ")) {
-      return <h4 key={pIndex} className="font-heading text-lg font-semibold text-white/90 mt-8 mb-3">{trimmed.slice(4)}</h4>;
+      return <h4 key={pIndex} className="font-heading text-lg font-semibold text-slate-800 mt-8 mb-3">{trimmed.slice(4)}</h4>;
     }
     if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
       return (
         <div key={pIndex} className="flex gap-4 mb-3 ml-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-blue-400/60 mt-2.5 flex-shrink-0" />
-          <p className="text-white/55 leading-[1.8] text-[15px]">{trimmed.slice(2)}</p>
+          <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2.5 flex-shrink-0" />
+          <p className="text-slate-600 leading-[1.8] text-[15px]">{trimmed.slice(2)}</p>
         </div>
       );
     }
@@ -77,11 +77,11 @@ function renderContent(content: string) {
             transition={{ duration: 0.6 }}
             className="my-10 -mx-2 md:-mx-8"
           >
-            <div className="rounded-xl overflow-hidden border border-white/5">
+            <div className="rounded-xl overflow-hidden border border-slate-200">
               <img src={urlMatch[1]} alt={altMatch?.[1] || ""} className="w-full" />
             </div>
             {altMatch?.[1] && altMatch[1] !== "image" && (
-              <figcaption className="text-xs text-white/25 mt-3 text-center italic">{altMatch[1]}</figcaption>
+              <figcaption className="text-xs text-slate-400 mt-3 text-center italic">{altMatch[1]}</figcaption>
             )}
           </motion.figure>
         );
@@ -89,12 +89,12 @@ function renderContent(content: string) {
     }
     if (trimmed.startsWith("> ")) {
       return (
-        <blockquote key={pIndex} className="border-l-2 border-blue-400/30 pl-6 my-8 py-1">
-          <p className="text-white/45 leading-[1.8] italic text-[15px]">{trimmed.slice(2)}</p>
+        <blockquote key={pIndex} className="border-l-2 border-blue-400 pl-6 my-8 py-1">
+          <p className="text-slate-500 leading-[1.8] italic text-[15px]">{trimmed.slice(2)}</p>
         </blockquote>
       );
     }
-    return <p key={pIndex} className="text-white/55 leading-[1.85] mb-5 text-[15px]">{trimmed}</p>;
+    return <p key={pIndex} className="text-slate-600 leading-[1.85] mb-5 text-[15px]">{trimmed}</p>;
   });
 }
 
@@ -119,10 +119,10 @@ export default function NewsArticle() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[hsl(222,22%,10%)]">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-8 h-8 border-2 border-blue-500/30 border-t-blue-400 rounded-full animate-spin" />
-          <p className="text-white/30 text-sm">Loading article...</p>
+          <div className="w-8 h-8 border-2 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
+          <p className="text-slate-400 text-sm">Loading article...</p>
         </div>
       </div>
     );
@@ -130,12 +130,12 @@ export default function NewsArticle() {
 
   if (!article) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[hsl(222,22%,10%)]">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center">
-          <h1 className="font-heading text-3xl font-bold text-white mb-4">Article Not Found</h1>
-          <p className="text-white/40 mb-8">This article doesn't exist or has been removed.</p>
+          <h1 className="font-heading text-3xl font-bold text-slate-900 mb-4">Article Not Found</h1>
+          <p className="text-slate-400 mb-8">This article doesn't exist or has been removed.</p>
           <Link href="/news">
-            <span className="inline-flex items-center gap-2 text-sm font-medium tracking-wide uppercase text-blue-400 hover:text-blue-300 transition-colors cursor-pointer" data-testid="link-back-to-news">
+            <span className="inline-flex items-center gap-2 text-sm font-medium tracking-wide uppercase text-blue-600 hover:text-blue-700 transition-colors cursor-pointer" data-testid="link-back-to-news">
               <ArrowLeft className="w-4 h-4" /> Back to News
             </span>
           </Link>
@@ -151,7 +151,7 @@ export default function NewsArticle() {
   const prevArticle = currentIndex > 0 ? allNews[currentIndex - 1] : null;
 
   return (
-    <div className="bg-[hsl(222,22%,10%)]">
+    <div className="bg-white">
       {article.image ? (
         <div className="relative w-full h-[50vh] md:h-[60vh] overflow-hidden">
           <motion.img
@@ -162,8 +162,8 @@ export default function NewsArticle() {
             alt={article.title}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[hsl(222,22%,10%)] via-[hsl(222,22%,10%)]/60 to-[hsl(222,22%,10%)]/20" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[hsl(222,22%,10%)]/30 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-slate-900/10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/20 to-transparent" />
 
           <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
             <div className="max-w-3xl mx-auto">
@@ -173,18 +173,18 @@ export default function NewsArticle() {
                 transition={{ duration: 0.8, delay: 0.3 }}
               >
                 <Link href="/news">
-                  <span className="inline-flex items-center gap-2 text-xs font-medium tracking-wide uppercase text-white/50 hover:text-white transition-colors cursor-pointer mb-6 block" data-testid="link-back-to-news">
+                  <span className="inline-flex items-center gap-2 text-xs font-medium tracking-wide uppercase text-white/60 hover:text-white transition-colors cursor-pointer mb-6 block" data-testid="link-back-to-news">
                     <ArrowLeft className="w-3 h-3" /> News
                   </span>
                 </Link>
 
                 <div className="flex items-center gap-3 mb-5 flex-wrap">
-                  <span className="inline-flex items-center gap-2 bg-blue-500/20 backdrop-blur-sm text-blue-300 text-xs font-medium tracking-wide uppercase px-3 py-1 rounded-full">
+                  <span className="inline-flex items-center gap-2 bg-blue-600/90 backdrop-blur-sm text-white text-xs font-medium tracking-wide uppercase px-3 py-1 rounded-full">
                     <Icon className="w-3 h-3" /> {article.category}
                   </span>
-                  <span className="text-white/35 text-xs">{article.date}</span>
-                  <span className="text-white/20">·</span>
-                  <span className="inline-flex items-center gap-1 text-white/35 text-xs">
+                  <span className="text-white/50 text-xs">{article.date}</span>
+                  <span className="text-white/30">·</span>
+                  <span className="inline-flex items-center gap-1 text-white/50 text-xs">
                     <Clock className="w-3 h-3" /> {readTime} min read
                   </span>
                 </div>
@@ -197,7 +197,7 @@ export default function NewsArticle() {
           </div>
         </div>
       ) : (
-        <div className="pt-32 pb-8">
+        <div className="pt-32 pb-8 bg-slate-50">
           <div className="max-w-3xl mx-auto px-6 md:px-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -205,21 +205,21 @@ export default function NewsArticle() {
               transition={{ duration: 0.8 }}
             >
               <Link href="/news">
-                <span className="inline-flex items-center gap-2 text-xs font-medium tracking-wide uppercase text-blue-400 hover:text-blue-300 transition-colors cursor-pointer mb-8 block" data-testid="link-back-to-news">
+                <span className="inline-flex items-center gap-2 text-xs font-medium tracking-wide uppercase text-blue-600 hover:text-blue-700 transition-colors cursor-pointer mb-8 block" data-testid="link-back-to-news">
                   <ArrowLeft className="w-3 h-3" /> News
                 </span>
               </Link>
               <div className="flex items-center gap-3 mb-5 flex-wrap">
-                <span className="inline-flex items-center gap-2 bg-blue-500/10 text-blue-400 text-xs font-medium tracking-wide uppercase px-3 py-1 rounded-full">
+                <span className="inline-flex items-center gap-2 bg-blue-600 text-white text-xs font-medium tracking-wide uppercase px-3 py-1 rounded-full">
                   <Icon className="w-3 h-3" /> {article.category}
                 </span>
-                <span className="text-white/30 text-xs">{article.date}</span>
-                <span className="text-white/20">·</span>
-                <span className="inline-flex items-center gap-1 text-white/30 text-xs">
+                <span className="text-slate-400 text-xs">{article.date}</span>
+                <span className="text-slate-300">·</span>
+                <span className="inline-flex items-center gap-1 text-slate-400 text-xs">
                   <Clock className="w-3 h-3" /> {readTime} min read
                 </span>
               </div>
-              <h1 className="font-heading text-3xl md:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-[-0.02em] text-white" data-testid="text-article-title">
+              <h1 className="font-heading text-3xl md:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-[-0.02em] text-slate-900" data-testid="text-article-title">
                 {article.title}
               </h1>
             </motion.div>
@@ -234,11 +234,11 @@ export default function NewsArticle() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <p className="text-lg md:text-xl text-white/50 leading-relaxed mt-10 mb-12 font-light" data-testid="text-article-description">
+            <p className="text-lg md:text-xl text-slate-500 leading-relaxed mt-10 mb-12 font-light" data-testid="text-article-description">
               {article.description}
             </p>
 
-            <div className="w-16 h-px bg-gradient-to-r from-blue-500/40 to-transparent mb-12" />
+            <div className="w-16 h-px bg-gradient-to-r from-blue-500 to-transparent mb-12" />
           </motion.div>
 
           {article.content && article.content.trim() && (
@@ -258,29 +258,29 @@ export default function NewsArticle() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="border-t border-white/5 mt-20 pt-12 pb-6"
+              className="border-t border-slate-200 mt-20 pt-12 pb-6"
             >
-              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400/50 mb-8">More Articles</p>
+              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600/50 mb-8">More Articles</p>
               <div className={`grid gap-4 ${prevArticle && nextArticle ? "md:grid-cols-2" : "md:grid-cols-1 max-w-md"}`}>
                 {prevArticle && (
                   <Link href={`/news/${prevArticle.id}`}>
-                    <div className="group bg-[hsl(222,20%,14%)] border border-blue-500/8 rounded-lg p-6 hover:bg-[hsl(222,20%,18%)] hover:border-blue-500/15 transition-all duration-300 cursor-pointer" data-testid={`link-prev-article-${prevArticle.id}`}>
-                      <p className="text-xs text-white/25 uppercase tracking-wide mb-2 flex items-center gap-2">
+                    <div className="group bg-slate-50 border border-slate-200 rounded-xl p-6 hover:bg-white hover:border-blue-200 transition-all duration-300 cursor-pointer" data-testid={`link-prev-article-${prevArticle.id}`}>
+                      <p className="text-xs text-slate-400 uppercase tracking-wide mb-2 flex items-center gap-2">
                         <ArrowLeft className="w-3 h-3" /> Previous
                       </p>
-                      <h4 className="font-heading font-semibold text-white text-sm group-hover:text-blue-300 transition-colors leading-snug">{prevArticle.title}</h4>
-                      <p className="text-xs text-white/30 mt-2">{prevArticle.date}</p>
+                      <h4 className="font-heading font-semibold text-slate-900 text-sm group-hover:text-blue-600 transition-colors leading-snug">{prevArticle.title}</h4>
+                      <p className="text-xs text-slate-400 mt-2">{prevArticle.date}</p>
                     </div>
                   </Link>
                 )}
                 {nextArticle && (
                   <Link href={`/news/${nextArticle.id}`}>
-                    <div className={`group bg-[hsl(222,20%,14%)] border border-blue-500/8 rounded-lg p-6 hover:bg-[hsl(222,20%,18%)] hover:border-blue-500/15 transition-all duration-300 cursor-pointer ${!prevArticle ? "" : "text-right"}`} data-testid={`link-next-article-${nextArticle.id}`}>
-                      <p className={`text-xs text-white/25 uppercase tracking-wide mb-2 flex items-center gap-2 ${!prevArticle ? "" : "justify-end"}`}>
+                    <div className={`group bg-slate-50 border border-slate-200 rounded-xl p-6 hover:bg-white hover:border-blue-200 transition-all duration-300 cursor-pointer ${!prevArticle ? "" : "text-right"}`} data-testid={`link-next-article-${nextArticle.id}`}>
+                      <p className={`text-xs text-slate-400 uppercase tracking-wide mb-2 flex items-center gap-2 ${!prevArticle ? "" : "justify-end"}`}>
                         Next <ArrowLeft className="w-3 h-3 rotate-180" />
                       </p>
-                      <h4 className="font-heading font-semibold text-white text-sm group-hover:text-blue-300 transition-colors leading-snug">{nextArticle.title}</h4>
-                      <p className="text-xs text-white/30 mt-2">{nextArticle.date}</p>
+                      <h4 className="font-heading font-semibold text-slate-900 text-sm group-hover:text-blue-600 transition-colors leading-snug">{nextArticle.title}</h4>
+                      <p className="text-xs text-slate-400 mt-2">{nextArticle.date}</p>
                     </div>
                   </Link>
                 )}
@@ -288,9 +288,9 @@ export default function NewsArticle() {
             </motion.div>
           )}
 
-          <div className="border-t border-white/5 mt-10 pt-10 pb-20">
+          <div className="border-t border-slate-200 mt-10 pt-10 pb-20">
             <Link href="/news">
-              <span className="inline-flex items-center gap-2 text-xs font-medium tracking-wide uppercase text-blue-400 hover:text-blue-300 transition-colors cursor-pointer" data-testid="link-back-to-news-bottom">
+              <span className="inline-flex items-center gap-2 text-xs font-medium tracking-wide uppercase text-blue-600 hover:text-blue-700 transition-colors cursor-pointer" data-testid="link-back-to-news-bottom">
                 <ArrowLeft className="w-3 h-3" /> All News
               </span>
             </Link>
