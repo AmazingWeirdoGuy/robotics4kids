@@ -83,7 +83,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <img src={logo} alt="R4K" className="h-8 w-8 object-cover rounded-full" />
                 <span className="font-heading font-semibold text-sm tracking-wide uppercase text-white">Robotics for Kids</span>
               </div>
-              <p className="text-sm text-white/50 leading-relaxed max-w-sm">
+              <p className="text-sm text-white/70 leading-relaxed max-w-sm">
                 Empowering the next generation through robotics education and community outreach across Thailand and ASEAN.
               </p>
             </div>
@@ -91,22 +91,22 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <h3 className="text-xs font-semibold tracking-widest uppercase mb-5 text-blue-400">Navigate</h3>
               <ul className="space-y-3">
                 {navLinks.map(link => (
-                  <li key={link.href}><Link href={link.href} data-testid={`link-footer-${link.label.toLowerCase()}`} className="text-sm text-white/50 hover:text-blue-400 transition-colors">{link.label}</Link></li>
+                  <li key={link.href}><Link href={link.href} data-testid={`link-footer-${link.label.toLowerCase()}`} className="text-sm text-white/70 hover:text-blue-400 transition-colors">{link.label}</Link></li>
                 ))}
               </ul>
             </div>
             <div>
               <h3 className="text-xs font-semibold tracking-widest uppercase mb-5 text-blue-400">Connect</h3>
               <ul className="space-y-3">
-                <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer" data-testid="link-instagram" className="text-sm text-white/50 hover:text-blue-400 transition-colors">Instagram</a></li>
-                <li><a href="mailto:contact@r4kclub.com" data-testid="link-footer-email" className="text-sm text-white/50 hover:text-blue-400 transition-colors">contact@r4kclub.com</a></li>
+                <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer" data-testid="link-instagram" className="text-sm text-white/70 hover:text-blue-400 transition-colors">Instagram</a></li>
+                <li><a href="mailto:contact@r4kclub.com" data-testid="link-footer-email" className="text-sm text-white/70 hover:text-blue-400 transition-colors">contact@r4kclub.com</a></li>
               </ul>
             </div>
           </div>
         </div>
         <div className="border-t border-white/10">
           <div className="max-w-7xl mx-auto px-6 md:px-10 py-6 text-center">
-            <p className="text-xs text-white/30 tracking-wide">&copy; 2025 Robotics for Kids. All rights reserved.</p>
+            <p className="text-xs text-white/50 tracking-wide">&copy; 2025 Robotics for Kids. All rights reserved.</p>
           </div>
         </div>
       </footer>
