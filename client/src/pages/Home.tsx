@@ -299,21 +299,23 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-32 bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.15)_0%,transparent_70%)] pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-6 md:px-10 text-center relative z-10">
-          <motion.div {...fadeUp}>
-            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-400 mb-8">Support</p>
-            <h2 className="font-heading text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-blue-300">Support Our Mission</h2>
-            <p className="text-lg text-white/50 max-w-xl mx-auto mb-12 leading-relaxed">
-              We are open for donations for teaching materials and student coach tuition.
-            </p>
-            <Link href="/contact">
-              <span className="inline-flex items-center text-sm font-medium tracking-wide uppercase bg-blue-600 text-white px-8 py-4 rounded-md hover:bg-blue-500 transition-all duration-300 cursor-pointer shadow-lg shadow-blue-600/25" data-testid="button-donate">
-                Make a Donation
-              </span>
-            </Link>
-          </motion.div>
+      <section className="py-32 bg-gradient-to-b from-white to-blue-50 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.06)_0%,transparent_60%)] pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-6 md:px-10 relative z-10">
+          <div className="bg-white border border-slate-200 rounded-2xl p-12 md:p-20 text-center card-glow">
+            <motion.div {...fadeUp}>
+              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-6">Support</p>
+              <h2 className="font-heading text-4xl md:text-6xl font-bold mb-6 text-slate-900">Support Our Mission</h2>
+              <p className="text-lg text-slate-500 max-w-xl mx-auto mb-12 leading-relaxed">
+                We are open for donations for teaching materials and student coach tuition.
+              </p>
+              <Link href="/contact">
+                <span className="inline-flex items-center text-sm font-medium tracking-wide uppercase bg-blue-600 text-white px-8 py-4 rounded-md hover:bg-blue-700 transition-all duration-300 cursor-pointer shadow-lg shadow-blue-600/20" data-testid="button-donate">
+                  Make a Donation
+                </span>
+              </Link>
+            </motion.div>
+          </div>
         </div>
       </section>
     </div>
