@@ -24,7 +24,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen flex flex-col font-sans bg-white text-slate-900 overflow-x-hidden">
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-white/90 backdrop-blur-xl border-b border-slate-200/60 shadow-sm" : "bg-transparent"}`}>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "bg-transparent" : "bg-white/90 backdrop-blur-xl border-b border-slate-200/60 shadow-sm"}`}>
         <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-3 cursor-pointer" data-testid="link-home-logo">
             <img src={logo} alt="R4K" className="h-9 w-9 object-cover rounded-full" />
