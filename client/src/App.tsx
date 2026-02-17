@@ -10,6 +10,7 @@ import NewsArticle from "@/pages/NewsArticle";
 import Contact from "@/pages/Contact";
 import Admin from "@/pages/Admin";
 import Terms from "@/pages/Terms";
+import Privacy from "@/pages/Privacy";
 
 function Router() {
   return (
@@ -21,6 +22,7 @@ function Router() {
         <Route path="/news/:id" component={NewsArticle} />
         <Route path="/contact" component={Contact} />
         <Route path="/terms" component={Terms} />
+        <Route path="/privacy" component={Privacy} />
         <Route path="/admin" component={Admin} />
         <Route component={NotFound} />
       </Switch>

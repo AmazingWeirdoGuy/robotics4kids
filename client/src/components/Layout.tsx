@@ -107,7 +107,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="border-t border-white/10">
           <div className="max-w-7xl mx-auto px-6 md:px-10 py-6 flex flex-col md:flex-row items-center justify-between gap-3">
             <p className="text-xs text-white/50 tracking-wide">&copy; 2025 Robotics for Kids. All rights reserved.</p>
-            <Link href="/terms" data-testid="link-footer-terms" className="text-xs text-white/50 hover:text-blue-400 transition-colors">Terms of Service</Link>
+            <div className="flex items-center gap-4">
+              <Link href="/terms" data-testid="link-footer-terms" className="text-xs text-white/50 hover:text-blue-400 transition-colors">Terms of Service</Link>
+              <span className="text-white/20">·</span>
+              <Link href="/privacy" data-testid="link-footer-privacy" className="text-xs text-white/50 hover:text-blue-400 transition-colors">Privacy Policy</Link>
+            </div>
           </div>
         </div>
       </footer>
