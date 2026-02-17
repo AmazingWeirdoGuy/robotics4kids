@@ -126,7 +126,10 @@ export default function Home() {
               transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] as const, delay: 0.2 }}
               className="flex-1 flex justify-center"
             >
-              <img src={heroRobot} alt="R4K Robot" className="w-full max-w-sm md:max-w-md object-contain drop-shadow-[0_0_60px_rgba(59,130,246,0.15)]" />
+              <div className="relative">
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.25)_0%,rgba(59,130,246,0.08)_40%,transparent_70%)] scale-125 blur-2xl pointer-events-none" />
+                <img src={heroRobot} alt="R4K Robot" className="relative w-full max-w-sm md:max-w-md object-contain drop-shadow-[0_0_40px_rgba(59,130,246,0.2)]" />
+              </div>
             </motion.div>
           </div>
         </div>
