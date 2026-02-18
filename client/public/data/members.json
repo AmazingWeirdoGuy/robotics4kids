@@ -2,24 +2,40 @@
   "officers": [
     {
       "id": 1,
-      "name": "test",
+      "name": "Sean Terdprisant",
       "title": "President",
       "bio": "",
-      "photo": "/uploads/members/crop_1771261433027_1771261434564.jpg",
+      "photo": "",
       "email": ""
     },
     {
       "id": 2,
-      "name": "First Last",
-      "title": "Vice President",
+      "name": "Poon Punjarungroj",
+      "title": "Co President",
       "bio": "",
       "photo": "",
       "email": ""
     },
     {
       "id": 3,
-      "name": "First Last",
-      "title": "Secretary",
+      "name": "Napon Thavornvanit",
+      "title": "Officer",
+      "bio": "",
+      "photo": "",
+      "email": ""
+    },
+    {
+      "id": 1771391325672,
+      "name": "Raheel Parvez",
+      "title": "Officer",
+      "bio": "",
+      "photo": "",
+      "email": ""
+    },
+    {
+      "id": 1771391352772,
+      "name": "Varun Magesh",
+      "title": "Officer",
       "bio": "",
       "photo": "",
       "email": ""
@@ -28,16 +44,16 @@
   "websiteManagers": [
     {
       "id": 1,
-      "name": "test",
-      "title": "Lead Developer",
+      "name": "Rungphob Lertvilaivithaya",
+      "title": "Head of Website Development",
       "bio": "",
       "photo": "/uploads/members/crop_1771261442589_1771261443648.jpg",
       "email": ""
     },
     {
       "id": 2,
-      "name": "First Last",
-      "title": "Developer",
+      "name": "Poon Punjarungroj",
+      "title": "Art Director",
       "bio": "",
       "photo": "",
       "email": ""
@@ -46,26 +62,18 @@
   "facultyAdvisors": [
     {
       "id": 1,
-      "name": "test",
-      "title": "",
+      "name": "Loreto Alonso",
+      "title": "Faculty Advisor",
       "bio": "",
       "photo": "/uploads/members/crop_1771261564351_1771261565890.jpg",
-      "email": ""
-    },
-    {
-      "id": 2,
-      "name": "Faculty Advisor Name",
-      "title": "",
-      "bio": "",
-      "photo": "",
       "email": ""
     }
   ],
   "activeMembers": [
     {
       "id": 1,
-      "name": "test",
-      "title": "test",
+      "name": "Apiwit Bulpakdi",
+      "title": "",
       "bio": "",
       "photo": "/uploads/members/crop_1771261448483_1771261449552.jpg",
       "email": ""

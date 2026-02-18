@@ -37,7 +37,7 @@ function CountUp({ target, suffix = "", duration = 2 }: { target: number; suffix
   return <span ref={ref}>{count}{suffix}</span>;
 }
 import { Link } from "wouter";
-import heroRobot from "@assets/image_1771215214856.png";
+import heroRobot from "@assets/image_1771418263555.png";
 
 const iconMap: Record<string, typeof Trophy> = { Trophy, Calendar, Heart, MapPin, Zap };
 
