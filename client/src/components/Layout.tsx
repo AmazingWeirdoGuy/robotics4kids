@@ -109,7 +109,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div>
               <h3 className="text-xs font-semibold tracking-widest uppercase mb-5 text-blue-400">Connect</h3>
               <ul className="space-y-3">
-                <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer" data-testid="link-instagram" className="text-sm text-white/70 hover:text-blue-400 transition-colors">Instagram</a></li>
+                <li><a href="https://www.instagram.com/r4kclubthailand/" target="_blank" rel="noopener noreferrer" data-testid="link-instagram" className="text-sm text-white/70 hover:text-blue-400 transition-colors">Instagram</a></li>
                 <li><a href="mailto:contact@r4kclub.com" data-testid="link-footer-email" className="text-sm text-white/70 hover:text-blue-400 transition-colors">contact@r4kclub.com</a></li>
               </ul>
             </div>
