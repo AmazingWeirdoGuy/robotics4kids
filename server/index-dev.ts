@@ -80,6 +80,7 @@ app.delete('/dev/upload', (req, res) => {
 
 async function startServer() {
   const vite = await createViteServer({
+    mode: 'development',
     server: { middlewareMode: true },
     appType: 'spa',
   });
