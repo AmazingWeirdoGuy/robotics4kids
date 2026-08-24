@@ -324,7 +324,7 @@ function MembersTab() {
     setDialogOpen(true);
   };
 
-  const handleSaveForm = () => {
+  const handleSaveForm = async () => {
     const updated = { ...data };
     if (editingMember) {
       updated[editingSection] = updated[editingSection].map((m) => (m.id === editingMember.id ? { ...form } : m));
@@ -334,9 +334,10 @@ function MembersTab() {
     setData(updated);
     setDirty(true);
     setDialogOpen(false);
+    await saveData(updated);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (!deleteTarget) return;
     const updated = { ...data };
     const member = updated[deleteTarget.section].find((m) => m.id === deleteTarget.id);
@@ -352,6 +353,7 @@ function MembersTab() {
     setDirty(true);
     setDeleteOpen(false);
     setDeleteTarget(null);
+    await saveData(updated);
   };
 
   const handleDragEnd = (section: keyof MembersData, event: DragEndEvent) => {
@@ -375,7 +377,7 @@ function MembersTab() {
             className="bg-blue-600 hover:bg-blue-500 text-white"
             data-testid="save-members-order"
           >
-            <Save className="w-4 h-4 mr-1" /> {saving ? "Saving..." : "Save Order"}
+            <Save className="w-4 h-4 mr-1" /> {saving ? "Saving..." : "Save Changes"}
           </Button>
         </div>
       )}
@@ -564,26 +566,28 @@ function NewsTab() {
     setDialogOpen(true);
   };
 
-  const handleSaveForm = () => {
-    if (editingItem) {
-      setItems(items.map((i) => (i.id === editingItem.id ? { ...form } : i)));
-    } else {
-      setItems([...items, form]);
-    }
+  const handleSaveForm = async () => {
+    const updated = editingItem
+      ? items.map((i) => (i.id === editingItem.id ? { ...form } : i))
+      : [...items, form];
+    setItems(updated);
     setDirty(true);
     setDialogOpen(false);
+    await saveData(updated);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (deleteId === null) return;
     const item = items.find((i) => i.id === deleteId);
     if (item?.image && item.image.startsWith("/uploads/")) {
       fetch("/dev/upload", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ filePath: item.image }) }).catch(() => {});
     }
-    setItems(items.filter((i) => i.id !== deleteId));
+    const updated = items.filter((i) => i.id !== deleteId);
+    setItems(updated);
     setDirty(true);
     setDeleteOpen(false);
     setDeleteId(null);
+    await saveData(updated);
   };
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -602,7 +606,7 @@ function NewsTab() {
         <div className="flex gap-2">
           {dirty && (
             <Button onClick={() => saveData(items)} disabled={saving} className="bg-blue-600 hover:bg-blue-500 text-white" data-testid="save-news-order">
-              <Save className="w-4 h-4 mr-1" /> {saving ? "Saving..." : "Save Order"}
+              <Save className="w-4 h-4 mr-1" /> {saving ? "Saving..." : "Save Changes"}
             </Button>
           )}
           <Button onClick={openAdd} className="bg-blue-600 hover:bg-blue-500 text-white" data-testid="add-news">
@@ -775,26 +779,28 @@ function HeroImagesTab() {
     setDialogOpen(true);
   };
 
-  const handleSaveForm = () => {
-    if (editingItem) {
-      setItems(items.map((i) => (i.id === editingItem.id ? { ...form } : i)));
-    } else {
-      setItems([...items, form]);
-    }
+  const handleSaveForm = async () => {
+    const updated = editingItem
+      ? items.map((i) => (i.id === editingItem.id ? { ...form } : i))
+      : [...items, form];
+    setItems(updated);
     setDirty(true);
     setDialogOpen(false);
+    await saveData(updated);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (deleteId === null) return;
     const item = items.find((i) => i.id === deleteId);
     if (item?.image && item.image.startsWith("/uploads/")) {
       fetch("/dev/upload", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ filePath: item.image }) }).catch(() => {});
     }
-    setItems(items.filter((i) => i.id !== deleteId));
+    const updated = items.filter((i) => i.id !== deleteId);
+    setItems(updated);
     setDirty(true);
     setDeleteOpen(false);
     setDeleteId(null);
+    await saveData(updated);
   };
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -813,7 +819,7 @@ function HeroImagesTab() {
         <div className="flex gap-2">
           {dirty && (
             <Button onClick={() => saveData(items)} disabled={saving} className="bg-blue-600 hover:bg-blue-500 text-white" data-testid="save-hero-order">
-              <Save className="w-4 h-4 mr-1" /> {saving ? "Saving..." : "Save Order"}
+              <Save className="w-4 h-4 mr-1" /> {saving ? "Saving..." : "Save Changes"}
             </Button>
           )}
           <Button onClick={openAdd} className="bg-blue-600 hover:bg-blue-500 text-white" data-testid="add-hero">
@@ -945,26 +951,28 @@ function ProgramsTab() {
     setDialogOpen(true);
   };
 
-  const handleSaveForm = () => {
-    if (editingItem) {
-      setItems(items.map((i) => (i.id === editingItem.id ? { ...form } : i)));
-    } else {
-      setItems([...items, form]);
-    }
+  const handleSaveForm = async () => {
+    const updated = editingItem
+      ? items.map((i) => (i.id === editingItem.id ? { ...form } : i))
+      : [...items, form];
+    setItems(updated);
     setDirty(true);
     setDialogOpen(false);
+    await saveData(updated);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (deleteId === null) return;
     const item = items.find((i) => i.id === deleteId);
     if (item?.image && item.image.startsWith("/uploads/")) {
       fetch("/dev/upload", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ filePath: item.image }) }).catch(() => {});
     }
-    setItems(items.filter((i) => i.id !== deleteId));
+    const updated = items.filter((i) => i.id !== deleteId);
+    setItems(updated);
     setDirty(true);
     setDeleteOpen(false);
     setDeleteId(null);
+    await saveData(updated);
   };
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -983,7 +991,7 @@ function ProgramsTab() {
         <div className="flex gap-2">
           {dirty && (
             <Button onClick={() => saveData(items)} disabled={saving} className="bg-blue-600 hover:bg-blue-500 text-white" data-testid="save-programs-order">
-              <Save className="w-4 h-4 mr-1" /> {saving ? "Saving..." : "Save Order"}
+              <Save className="w-4 h-4 mr-1" /> {saving ? "Saving..." : "Save Changes"}
             </Button>
           )}
           <Button onClick={openAdd} className="bg-blue-600 hover:bg-blue-500 text-white" data-testid="add-program">
