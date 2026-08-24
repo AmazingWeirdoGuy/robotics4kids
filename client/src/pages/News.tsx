@@ -22,7 +22,7 @@ export default function News() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/data/news.json")
+    fetch("/data/news.json", { cache: "no-store" })
       .then(r => r.json())
       .then(data => {
         setNewsData(data);

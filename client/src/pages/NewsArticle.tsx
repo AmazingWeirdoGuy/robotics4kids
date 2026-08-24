@@ -107,7 +107,7 @@ export default function NewsArticle() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetch("/data/news.json")
+    fetch("/data/news.json", { cache: "no-store" })
       .then(r => r.json())
       .then((data: NewsItem[]) => {
         setAllNews(data);

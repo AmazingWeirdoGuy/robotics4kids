@@ -150,7 +150,7 @@ export default function About() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/data/members.json")
+    fetch("/data/members.json", { cache: "no-store" })
       .then(r => r.json())
       .then(data => {
         setMembers(data);

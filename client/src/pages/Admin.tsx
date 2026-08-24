@@ -287,7 +287,7 @@ function MembersTab() {
   };
 
   useEffect(() => {
-    fetch("/data/members.json")
+    fetch("/data/members.json", { cache: "no-store" })
       .then((r) => r.json())
       .then(setData)
       .catch(() => toast({ title: "Error", description: "Failed to load members", variant: "destructive" }));
@@ -296,11 +296,12 @@ function MembersTab() {
   const saveData = async (d: MembersData) => {
     setSaving(true);
     try {
-      await fetch("/dev/save-json", {
+      const response = await fetch("/dev/save-json", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ filename: "members.json", data: d }),
       });
+      if (!response.ok) throw new Error("Failed to save members");
       toast({ title: "Saved", description: "Members data saved successfully" });
       setDirty(false);
     } catch {
@@ -523,7 +524,7 @@ function NewsTab() {
   const icons = ["Trophy", "Calendar", "Zap", "MapPin", "Heart"];
 
   useEffect(() => {
-    fetch("/data/news.json")
+    fetch("/data/news.json", { cache: "no-store" })
       .then((r) => r.json())
       .then(setItems)
       .catch(() => toast({ title: "Error", description: "Failed to load news", variant: "destructive" }));
@@ -532,11 +533,12 @@ function NewsTab() {
   const saveData = async (d: NewsItem[]) => {
     setSaving(true);
     try {
-      await fetch("/dev/save-json", {
+      const response = await fetch("/dev/save-json", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ filename: "news.json", data: d }),
       });
+      if (!response.ok) throw new Error("Failed to save news");
       toast({ title: "Saved", description: "News data saved successfully" });
       setDirty(false);
     } catch {
@@ -738,7 +740,7 @@ function HeroImagesTab() {
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
   useEffect(() => {
-    fetch("/data/heroImages.json")
+    fetch("/data/heroImages.json", { cache: "no-store" })
       .then((r) => r.json())
       .then(setItems)
       .catch(() => toast({ title: "Error", description: "Failed to load hero images", variant: "destructive" }));
@@ -747,11 +749,12 @@ function HeroImagesTab() {
   const saveData = async (d: HeroImage[]) => {
     setSaving(true);
     try {
-      await fetch("/dev/save-json", {
+      const response = await fetch("/dev/save-json", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ filename: "heroImages.json", data: d }),
       });
+      if (!response.ok) throw new Error("Failed to save hero images");
       toast({ title: "Saved", description: "Hero images saved successfully" });
       setDirty(false);
     } catch {
@@ -907,7 +910,7 @@ function ProgramsTab() {
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
   useEffect(() => {
-    fetch("/data/programs.json")
+    fetch("/data/programs.json", { cache: "no-store" })
       .then((r) => r.json())
       .then(setItems)
       .catch(() => toast({ title: "Error", description: "Failed to load programs", variant: "destructive" }));
@@ -916,11 +919,12 @@ function ProgramsTab() {
   const saveData = async (d: Program[]) => {
     setSaving(true);
     try {
-      await fetch("/dev/save-json", {
+      const response = await fetch("/dev/save-json", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ filename: "programs.json", data: d }),
       });
+      if (!response.ok) throw new Error("Failed to save programs");
       toast({ title: "Saved", description: "Programs saved successfully" });
       setDirty(false);
     } catch {

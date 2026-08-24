@@ -75,8 +75,8 @@ export default function Home() {
 
   useEffect(() => {
     Promise.all([
-      fetch("/data/news.json").then(r => r.json()),
-      fetch("/data/programs.json").then(r => r.json()),
+      fetch("/data/news.json", { cache: "no-store" }).then(r => r.json()),
+      fetch("/data/programs.json", { cache: "no-store" }).then(r => r.json()),
     ]).then(([news, progs]) => {
       setNewsItems(news);
       setPrograms(progs);
