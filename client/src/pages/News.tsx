@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Calendar, MapPin, Trophy, Zap, Heart, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 const iconMap: Record<string, typeof Trophy> = { Trophy, Calendar, Zap, MapPin, Heart };
 
@@ -69,7 +70,7 @@ export default function News() {
                       <div className="flex flex-col md:flex-row">
                         {item.image && (
                           <div className="md:w-80 aspect-video md:aspect-auto overflow-hidden flex-shrink-0">
-                            <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                            <ResponsiveImage src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                           </div>
                         )}
                         <div className="p-8 md:p-10 flex-1">

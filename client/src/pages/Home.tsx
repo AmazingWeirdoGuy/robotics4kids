@@ -37,7 +37,8 @@ function CountUp({ target, suffix = "", duration = 2 }: { target: number; suffix
   return <span ref={ref}>{count}{suffix}</span>;
 }
 import { Link } from "wouter";
-import heroRobot from "@assets/image_1771418263555.png";
+import heroRobot from "@assets/image_1771418263555.webp";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 const iconMap: Record<string, typeof Trophy> = { Trophy, Calendar, Heart, MapPin, Zap };
 
@@ -127,7 +128,7 @@ export default function Home() {
               className="flex-1 flex justify-center"
             >
               <div className="relative">
-                <img src={heroRobot} alt="R4K Robot" className="relative w-full max-w-sm md:max-w-md object-contain" />
+                <ResponsiveImage src={heroRobot} alt="R4K Robot" className="relative w-full max-w-sm md:max-w-md object-contain" />
               </div>
             </motion.div>
           </div>
@@ -209,7 +210,7 @@ export default function Home() {
                 data-testid={`course-${i}`}
               >
                 <div className="aspect-square overflow-hidden">
-                  <img src={course.image} alt={course.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <ResponsiveImage src={course.image} alt={course.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 </div>
                 <div className="p-6 md:p-8">
                   <h3 className="font-heading text-lg font-semibold mb-2 text-slate-900">{course.name}</h3>
@@ -233,14 +234,14 @@ export default function Home() {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-1 rounded-xl overflow-hidden">
             {[
-              { title: "Wat Sai Yai School", image: "https://r4kclub.com//storage/409/63eb476bbef6c_A4FD0D92-1673-4614-8D95-B04FC928CEE5.jpeg", location: "Thailand" },
-              { title: "Xavier Schools & UP Integrated", image: "https://r4kclub.com//storage/410/63eb47a3738b7_9832607F-1C44-40F4-AC7D-C4C66AA7EE45.jpeg", location: "Philippines" },
-              { title: "Pasatipatai School", image: "https://r4kclub.com//storage/541/6437b232e28a1_7ar4k.jpeg", location: "Laos" },
-              { title: "Wat Lat Pla Duk School", image: "https://r4kclub.com//storage/596/65e40c83d562b_R4K-Wat-Lat-Pla-Duk.jpg", location: "Thailand" },
-              { title: "Fundraising in Bangkok", image: "https://r4kclub.com//storage/219/5fe6d96848b0a_12.jpg", location: "Thailand" },
-              { title: "Prasert Islam School", image: "https://r4kclub.com//storage/175/5fe015a49416b_800x600_04.jpg", location: "Thailand" },
-              { title: "Schools of Hope Foundation", image: "https://r4kclub.com//storage/133/5fd71ee2030c3_16.jpg", location: "Myanmar Border" },
-              { title: "Phimai Vithaya School", image: "https://r4kclub.com//storage/239/5fe98012bfd74_IMG_5169.JPG", location: "Thailand" },
+              { title: "Wat Sai Yai School", image: "/uploads/legacy/activity-wat-sai-yai.webp", location: "Thailand" },
+              { title: "Xavier Schools & UP Integrated", image: "/uploads/legacy/activity-xavier.webp", location: "Philippines" },
+              { title: "Pasatipatai School", image: "/uploads/legacy/activity-pasatipatai.webp", location: "Laos" },
+              { title: "Wat Lat Pla Duk School", image: "/uploads/legacy/activity-wat-lat-pla-duk.webp", location: "Thailand" },
+              { title: "Fundraising in Bangkok", image: "/uploads/legacy/activity-fundraising.webp", location: "Thailand" },
+              { title: "Prasert Islam School", image: "/uploads/legacy/activity-prasert-islam.webp", location: "Thailand" },
+              { title: "Schools of Hope Foundation", image: "/uploads/legacy/activity-schools-of-hope.webp", location: "Myanmar Border" },
+              { title: "Phimai Vithaya School", image: "/uploads/legacy/activity-phimai.webp", location: "Thailand" },
             ].map((activity, i) => (
               <motion.div
                 key={i}
@@ -251,7 +252,7 @@ export default function Home() {
                 className="group relative overflow-hidden aspect-square"
                 data-testid={`activity-${i}`}
               >
-                <img src={activity.image} alt={activity.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <ResponsiveImage src={activity.image} alt={activity.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-slate-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-4 md:p-6">
                   <p className="text-blue-300 text-xs tracking-wide uppercase mb-1">{activity.location}</p>
                   <h3 className="text-white text-sm font-medium">{activity.title}</h3>

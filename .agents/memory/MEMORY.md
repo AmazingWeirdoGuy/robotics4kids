@@ -1,0 +1,1 @@
+- [WebP image delivery](webp-image-delivery.md) — prefer browser-generated WebP uploads and local WebP sources with original fallbacks for legacy content.

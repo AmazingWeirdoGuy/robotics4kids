@@ -36,9 +36,10 @@ function CountUp({ target, suffix = "", duration = 2 }: { target: number; suffix
 
   return <span ref={ref}>{count}{suffix}</span>;
 }
-import founderKris from "@assets/image_1771259753861.png";
-import founderTan from "@assets/image_1771259784308.png";
-import founderBlu from "@assets/image_1771259788803.png";
+import founderKris from "@assets/image_1771259753861.webp";
+import founderTan from "@assets/image_1771259784308.webp";
+import founderBlu from "@assets/image_1771259788803.webp";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 interface Member {
   id: number;
@@ -131,7 +132,7 @@ function PersonRow({ name, subtitle, image, initials, testId }: { name: string; 
     <div className="flex items-center gap-4 px-5 md:px-6 py-4 border-b border-slate-200/60 last:border-b-0 hover:bg-white/60 transition-colors duration-200" data-testid={testId}>
       <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center text-blue-600/60 font-heading text-xs font-semibold overflow-hidden border border-blue-200/50 flex-shrink-0">
         {image ? (
-          <img src={image} alt={name} className="w-full h-full object-cover" />
+          <ResponsiveImage src={image} alt={name} className="w-full h-full object-cover" />
         ) : (
           initials
         )}
@@ -213,7 +214,7 @@ export default function About() {
               ].map((founder, i) => (
                 <div key={i} className="text-center" data-testid={`founder-${i}`}>
                   <div className="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden border-2 border-blue-200 shadow-lg shadow-blue-100 mx-auto mb-3">
-                    <img src={founder.img} alt={founder.name} className="w-full h-full object-cover" />
+                    <ResponsiveImage src={founder.img} alt={founder.name} className="w-full h-full object-cover" />
                   </div>
                   <p className="text-xs text-slate-600 font-heading font-medium max-w-[100px] mx-auto leading-tight">{founder.name}</p>
                 </div>

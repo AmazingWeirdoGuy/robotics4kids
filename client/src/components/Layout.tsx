@@ -2,7 +2,8 @@ import { Link, useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
-import logo from "@assets/image_1763957987556.png";
+import logo from "@assets/image_1763957987556.webp";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,7 +39,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/40 backdrop-blur-2xl backdrop-saturate-150 border-b border-white/30 shadow-[0_1px_12px_rgba(0,0,0,0.04)]">
         <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-16">
           <Link href="/" onClick={() => handleNavClick("/")} className="flex items-center gap-3 cursor-pointer" data-testid="link-home-logo">
-            <img src={logo} alt="R4K" className="h-9 w-9 object-cover rounded-full" />
+            <ResponsiveImage src={logo} alt="R4K" className="h-9 w-9 object-cover rounded-full" />
             <span className="font-heading font-semibold text-sm tracking-wide uppercase text-slate-900">R4K</span>
           </Link>
 
@@ -91,7 +92,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="grid md:grid-cols-4 gap-12">
             <div className="md:col-span-2">
               <div className="flex items-center gap-3 mb-5">
-                <img src={logo} alt="R4K" className="h-8 w-8 object-cover rounded-full" />
+                <ResponsiveImage src={logo} alt="R4K" className="h-8 w-8 object-cover rounded-full" />
                 <span className="font-heading font-semibold text-sm tracking-wide uppercase text-white">Robotics for Kids</span>
               </div>
               <p className="text-sm text-white/70 leading-relaxed max-w-sm">

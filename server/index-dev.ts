@@ -46,9 +46,8 @@ app.post('/dev/upload', upload.single('file'), (req, res) => {
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir, { recursive: true });
     }
-    const ext = path.extname(file.originalname) || '.png';
-    const baseName = path.basename(file.originalname, ext).replace(/[^a-zA-Z0-9._-]/g, '_');
-    const finalName = `${baseName}_${Date.now()}${ext}`;
+    const baseName = path.basename(file.originalname, path.extname(file.originalname)).replace(/[^a-zA-Z0-9._-]/g, '_');
+    const finalName = `${baseName}_${Date.now()}.webp`;
     const filePath = path.join(uploadDir, finalName);
     fs.writeFileSync(filePath, file.buffer);
     res.json({ success: true, path: `/uploads/${safeCategory}/${finalName}` });

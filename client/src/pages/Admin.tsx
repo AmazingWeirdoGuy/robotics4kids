@@ -18,6 +18,7 @@ import { CSS } from "@dnd-kit/utilities";
 import Cropper from "react-easy-crop";
 import type { Area } from "react-easy-crop";
 import { GripVertical, Plus, Pencil, Trash2, Upload, ChevronDown, Save, X, ImageIcon, AlertTriangle } from "lucide-react";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 interface Member {
   id: number;
@@ -83,8 +84,8 @@ async function getCroppedImg(imageSrc: string, pixelCrop: Area): Promise<Blob> {
     pixelCrop.width,
     pixelCrop.height
   );
-  return new Promise((resolve) => {
-    canvas.toBlob((blob) => resolve(blob!), "image/jpeg", 0.9);
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error("WebP conversion failed")), "image/webp", 0.82);
   });
 }
 
@@ -125,7 +126,7 @@ function ImageCropUpload({
     try {
       const blob = await getCroppedImg(imageSrc, croppedAreaPixels);
       const formData = new FormData();
-      formData.append("file", blob, `crop_${Date.now()}.jpg`);
+      formData.append("file", blob, `crop_${Date.now()}.webp`);
       formData.append("category", category);
       const res = await fetch("/dev/upload", { method: "POST", body: formData });
       const data = await res.json();
@@ -145,7 +146,7 @@ function ImageCropUpload({
     <div className="space-y-2">
       {currentImage && (
         <div className="flex items-center gap-2">
-          <img
+          <ResponsiveImage
             src={currentImage}
             alt=""
             className="h-12 w-auto rounded border border-white/10 object-cover"
@@ -395,7 +396,7 @@ function MembersTab() {
                         <div className="flex items-center justify-between p-3 bg-[hsl(222,22%,18%)] rounded-lg border border-white/5">
                           <div className="flex items-center gap-3 min-w-0">
                             {member.photo ? (
-                              <img src={member.photo} alt="" className="w-10 h-10 rounded-full object-cover flex-shrink-0" />
+                              <ResponsiveImage src={member.photo} alt="" className="w-10 h-10 rounded-full object-cover flex-shrink-0" />
                             ) : (
                               <div className="w-10 h-10 rounded-full bg-blue-600/20 flex items-center justify-center flex-shrink-0">
                                 <ImageIcon className="w-4 h-4 text-blue-400" />
@@ -615,7 +616,7 @@ function NewsTab() {
               <div className="p-4 bg-[hsl(222,20%,14%)] rounded-lg border border-blue-500/8 flex items-center justify-between">
                 <div className="flex items-center gap-3 min-w-0">
                   {item.image ? (
-                    <img src={item.image} alt="" className="w-16 h-9 rounded object-cover flex-shrink-0" />
+                    <ResponsiveImage src={item.image} alt="" className="w-16 h-9 rounded object-cover flex-shrink-0" />
                   ) : (
                     <div className="w-16 h-9 rounded bg-blue-600/20 flex items-center justify-center flex-shrink-0">
                       <ImageIcon className="w-4 h-4 text-blue-400" />
@@ -825,7 +826,7 @@ function HeroImagesTab() {
               <div className="p-4 bg-[hsl(222,20%,14%)] rounded-lg border border-blue-500/8 flex items-center justify-between">
                 <div className="flex items-center gap-3 min-w-0">
                   {item.image ? (
-                    <img src={item.image} alt="" className="w-24 h-14 rounded object-cover flex-shrink-0" />
+                    <ResponsiveImage src={item.image} alt="" className="w-24 h-14 rounded object-cover flex-shrink-0" />
                   ) : (
                     <div className="w-24 h-14 rounded bg-blue-600/20 flex items-center justify-center flex-shrink-0">
                       <ImageIcon className="w-5 h-5 text-blue-400" />
@@ -994,7 +995,7 @@ function ProgramsTab() {
               <div className="p-4 bg-[hsl(222,20%,14%)] rounded-lg border border-blue-500/8 flex items-center justify-between">
                 <div className="flex items-center gap-3 min-w-0">
                   {item.image ? (
-                    <img src={item.image} alt="" className="w-12 h-12 rounded object-cover flex-shrink-0" />
+                    <ResponsiveImage src={item.image} alt="" className="w-12 h-12 rounded object-cover flex-shrink-0" />
                   ) : (
                     <div className="w-12 h-12 rounded bg-blue-600/20 flex items-center justify-center flex-shrink-0">
                       <ImageIcon className="w-4 h-4 text-blue-400" />

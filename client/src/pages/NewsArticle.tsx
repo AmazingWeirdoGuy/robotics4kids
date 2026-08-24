@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useRoute, Link } from "wouter";
 import { Calendar, MapPin, Trophy, Zap, Heart, ArrowLeft, Clock } from "lucide-react";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 const iconMap: Record<string, typeof Trophy> = { Trophy, Calendar, Zap, MapPin, Heart };
 
@@ -78,7 +79,7 @@ function renderContent(content: string) {
             className="my-10 -mx-2 md:-mx-8"
           >
             <div className="rounded-xl overflow-hidden border border-slate-200">
-              <img src={urlMatch[1]} alt={altMatch?.[1] || ""} className="w-full" />
+              <ResponsiveImage src={urlMatch[1]} alt={altMatch?.[1] || ""} className="w-full" />
             </div>
             {altMatch?.[1] && altMatch[1] !== "image" && (
               <figcaption className="text-xs text-slate-400 mt-3 text-center italic">{altMatch[1]}</figcaption>
@@ -154,14 +155,18 @@ export default function NewsArticle() {
     <div className="bg-white">
       {article.image ? (
         <div className="relative w-full h-[50vh] md:h-[60vh] overflow-hidden">
-          <motion.img
+          <motion.div
             initial={{ scale: 1.05 }}
             animate={{ scale: 1 }}
             transition={{ duration: 1.5, ease: [0.25, 0.1, 0.25, 1] }}
-            src={article.image}
-            alt={article.title}
-            className="w-full h-full object-cover"
-          />
+            className="w-full h-full"
+          >
+            <ResponsiveImage
+              src={article.image}
+              alt={article.title}
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-slate-900/10" />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-900/20 to-transparent" />
 

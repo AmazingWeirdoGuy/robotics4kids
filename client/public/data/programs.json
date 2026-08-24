@@ -3,28 +3,28 @@
     "id": 1,
     "name": "Micro:bit Tiny:bit",
     "description": "Basics of robotic programming using the Yahboom Tiny:bit smart robot and BBC Micro:bit.",
-    "image": "https://r4kclub.com//storage/412/63eb4945953b2_18C04C53-2D7A-4242-9C6F-48BDBEB3315E.jpeg",
+    "image": "/uploads/legacy/program-tinybit.webp",
     "link": "https://docs.google.com/presentation/d/1OflKdwVpcN1dVqpK6EKd71--vB7qQP4f-RI5MU_bDTc/edit?usp=sharing"
   },
   {
     "id": 2,
     "name": "LEGO EV3",
     "description": "Five class curriculum outlining the basics of robotics programming using LEGO Mindstorms EV3.",
-    "image": "https://r4kclub.com//storage/413/63eb4a29a3332_F24EFC0F-7809-4232-9BB0-FE73CC083C86.jpeg",
+    "image": "/uploads/legacy/program-ev3.webp",
     "link": "https://docs.google.com/presentation/d/13-g4edxw7CDdy4v-hbmjic7MD3ebHB5eBGfPxhVoHOE/edit"
   },
   {
     "id": 3,
     "name": "Raspberry Pi",
     "description": "Thai language Raspberry Pi course with hands-on labs and assignments.",
-    "image": "https://r4kclub.com//storage/88/5fd6eaaff0299_870x400_08.jpg",
+    "image": "/uploads/legacy/program-raspberry-pi.webp",
     "link": "https://drive.google.com/file/d/14_mnA1poyv9cjoB9onj6YppqP5oegOP7/view?usp=sharing"
   },
   {
     "id": 4,
     "name": "Micro:bit Zoom:bit",
     "description": "Robotics programming fundamentals based on the Micro:bit Zoom:bit platform.",
-    "image": "https://r4kclub.com//storage/615/65e561fe5fba4_zoombit-v2-TH-800x800.png",
+    "image": "/uploads/legacy/program-zoombit.webp",
     "link": "https://docs.google.com/presentation/d/1ndA06pSGkPt7QtOgQYFrn9nsLddMeT5E7ypqfLsIKIU/edit?usp=sharing"
   }
 ]
