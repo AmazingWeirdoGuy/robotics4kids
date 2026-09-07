@@ -25,8 +25,8 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-heading font-semibold mb-1 text-slate-900">Email</h3>
-                    <a href="mailto:contact@r4kclub.com" className="text-sm text-slate-500 hover:text-blue-600 transition-colors" data-testid="link-email">
-                      contact@r4kclub.com
+                    <a href="mailto:17924@students.isb.ac.th" className="text-sm text-slate-500 hover:text-blue-600 transition-colors" data-testid="link-email">
+                      17924@students.isb.ac.th
                     </a>
                   </div>
                 </div>
@@ -78,29 +78,24 @@ export default function Contact() {
               transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] as const, delay: 0.2 }}
               className="bg-white p-6 md:p-10 border border-slate-200 rounded-xl card-glow"
             >
-              <h2 className="font-heading text-xl font-semibold mb-2 text-center text-slate-900">Contact Form</h2>
-              <p className="text-sm text-slate-500 text-center mb-8">Fill out the form and we'll be in touch.</p>
-
-              <div className="bg-slate-50 overflow-hidden rounded-xl border border-slate-200">
-                <iframe
-                  src="https://docs.google.com/forms/d/e/1FAIpQLSdExample/viewform?embedded=true"
-                  width="100%"
-                  height="600"
-                  frameBorder="0"
-                  marginHeight={0}
-                  marginWidth={0}
-                  className="w-full"
-                  title="Contact Form"
-                  data-testid="google-form"
+              <div className="min-h-[420px] flex flex-col items-center justify-center text-center">
+                <div className="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mb-6 border border-blue-200">
+                  <Mail className="w-7 h-7 text-blue-600" />
+                </div>
+                <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600/60 mb-4">Work Email</p>
+                <h2 className="font-heading text-2xl md:text-3xl font-semibold mb-4 text-slate-900">Let’s work together</h2>
+                <p className="text-sm text-slate-500 leading-relaxed max-w-sm mb-8">
+                  For partnerships, support, and other work-related inquiries, email us directly.
+                </p>
+                <a
+                  href="mailto:17924@students.isb.ac.th"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline transition-colors"
+                  data-testid="link-footer-contact-email"
                 >
-                  Loading...
-                </iframe>
+                  17924@students.isb.ac.th
+                  <ArrowRight className="w-4 h-4" />
+                </a>
               </div>
-
-              <p className="text-xs text-slate-400 text-center mt-6">
-                Or email us at{" "}
-                <a href="mailto:contact@r4kclub.com" className="text-blue-600 hover:underline" data-testid="link-footer-contact-email">contact@r4kclub.com</a>
-              </p>
             </motion.div>
           </div>
         </div>
