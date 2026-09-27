@@ -12,6 +12,7 @@ import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/component
 import { Slider } from "@/components/ui/slider";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Toaster } from "@/components/ui/toaster";
 import { DndContext, closestCenter, type DragEndEvent, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { SortableContext, useSortable, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -1100,35 +1101,38 @@ export default function Admin() {
   }
 
   return (
-    <div className="min-h-screen bg-[hsl(222,22%,10%)] py-10 px-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-white text-3xl font-bold mb-2" data-testid="text-admin-title">Admin Panel</h1>
-          <p className="text-white/40">Manage site content. Changes are saved to JSON data files.</p>
+    <>
+      <Toaster />
+      <div className="min-h-screen bg-[hsl(222,22%,10%)] py-10 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-8">
+            <h1 className="text-white text-3xl font-bold mb-2" data-testid="text-admin-title">Admin Panel</h1>
+            <p className="text-white/40">Manage site content. Changes are saved to JSON data files.</p>
+          </div>
+
+          <Tabs defaultValue="members">
+            <TabsList className="bg-[hsl(222,20%,14%)] border border-blue-500/8 mb-6">
+              <TabsTrigger value="members" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-white/60" data-testid="tab-members">Members</TabsTrigger>
+              <TabsTrigger value="news" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-white/60" data-testid="tab-news">News</TabsTrigger>
+              <TabsTrigger value="hero" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-white/60" data-testid="tab-hero">Hero Images</TabsTrigger>
+              <TabsTrigger value="programs" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-white/60" data-testid="tab-programs">Programs</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="members">
+              <MembersTab />
+            </TabsContent>
+            <TabsContent value="news">
+              <NewsTab />
+            </TabsContent>
+            <TabsContent value="hero">
+              <HeroImagesTab />
+            </TabsContent>
+            <TabsContent value="programs">
+              <ProgramsTab />
+            </TabsContent>
+          </Tabs>
         </div>
-
-        <Tabs defaultValue="members">
-          <TabsList className="bg-[hsl(222,20%,14%)] border border-blue-500/8 mb-6">
-            <TabsTrigger value="members" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-white/60" data-testid="tab-members">Members</TabsTrigger>
-            <TabsTrigger value="news" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-white/60" data-testid="tab-news">News</TabsTrigger>
-            <TabsTrigger value="hero" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-white/60" data-testid="tab-hero">Hero Images</TabsTrigger>
-            <TabsTrigger value="programs" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-white/60" data-testid="tab-programs">Programs</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="members">
-            <MembersTab />
-          </TabsContent>
-          <TabsContent value="news">
-            <NewsTab />
-          </TabsContent>
-          <TabsContent value="hero">
-            <HeroImagesTab />
-          </TabsContent>
-          <TabsContent value="programs">
-            <ProgramsTab />
-          </TabsContent>
-        </Tabs>
       </div>
-    </div>
+    </>
   );
 }

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useRoute, Link } from "wouter";
 import { Calendar, MapPin, Trophy, Zap, Heart, ArrowLeft, Clock } from "lucide-react";
 import ResponsiveImage from "@/components/ResponsiveImage";
+import { useLanguage } from "@/lib/i18n";
 
 const iconMap: Record<string, typeof Trophy> = { Trophy, Calendar, Zap, MapPin, Heart };
 
@@ -100,6 +101,7 @@ function renderContent(content: string) {
 }
 
 export default function NewsArticle() {
+  const { t } = useLanguage();
   const [, params] = useRoute("/news/:id");
   const [article, setArticle] = useState<NewsItem | null>(null);
   const [allNews, setAllNews] = useState<NewsItem[]>([]);
@@ -123,7 +125,7 @@ export default function NewsArticle() {
       <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="flex flex-col items-center gap-4">
           <div className="w-8 h-8 border-2 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
-          <p className="text-slate-400 text-sm">Loading article...</p>
+          <p className="text-slate-400 text-sm">{t("Loading news...")}</p>
         </div>
       </div>
     );
@@ -133,11 +135,11 @@ export default function NewsArticle() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center">
-          <h1 className="font-heading text-3xl font-bold text-slate-900 mb-4">Article Not Found</h1>
-          <p className="text-slate-400 mb-8">This article doesn't exist or has been removed.</p>
+          <h1 className="font-heading text-3xl font-bold text-slate-900 mb-4">{t("Article Not Found")}</h1>
+          <p className="text-slate-400 mb-8">{t("This article doesn't exist or has been removed.")}</p>
           <Link href="/news">
-            <span className="inline-flex items-center gap-2 text-sm font-medium tracking-wide uppercase text-blue-600 hover:text-blue-700 transition-colors cursor-pointer" data-testid="link-back-to-news">
-              <ArrowLeft className="w-4 h-4" /> Back to News
+              <span className="inline-flex items-center gap-2 text-sm font-medium tracking-wide uppercase text-blue-600 hover:text-blue-700 transition-colors cursor-pointer" data-testid="link-back-to-news">
+              <ArrowLeft className="w-4 h-4" /> {t("Back to News")}
             </span>
           </Link>
         </div>
@@ -179,13 +181,13 @@ export default function NewsArticle() {
               >
                 <Link href="/news">
                   <span className="inline-flex items-center gap-2 text-xs font-medium tracking-wide uppercase text-white/60 hover:text-white transition-colors cursor-pointer mb-6 block" data-testid="link-back-to-news">
-                    <ArrowLeft className="w-3 h-3" /> News
+                    <ArrowLeft className="w-3 h-3" /> {t("News")}
                   </span>
                 </Link>
 
                 <div className="flex items-center gap-3 mb-5 flex-wrap">
                   <span className="inline-flex items-center gap-2 bg-blue-600/90 backdrop-blur-sm text-white text-xs font-medium tracking-wide uppercase px-3 py-1 rounded-full">
-                    <Icon className="w-3 h-3" /> {article.category}
+                    <Icon className="w-3 h-3" /> {t(article.category)}
                   </span>
                   <span className="text-white/50 text-xs">{article.date}</span>
                   <span className="text-white/30">·</span>
@@ -225,7 +227,7 @@ export default function NewsArticle() {
                 </span>
               </div>
               <h1 className="font-heading text-3xl md:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-[-0.02em] text-slate-900" data-testid="text-article-title">
-                {article.title}
+                {t(article.title)}
               </h1>
             </motion.div>
           </div>
@@ -240,7 +242,7 @@ export default function NewsArticle() {
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             <p className="text-lg md:text-xl text-slate-500 leading-relaxed mt-10 mb-12 font-light" data-testid="text-article-description">
-              {article.description}
+              {t(article.description)}
             </p>
 
             <div className="w-16 h-px bg-gradient-to-r from-blue-500 to-transparent mb-12" />

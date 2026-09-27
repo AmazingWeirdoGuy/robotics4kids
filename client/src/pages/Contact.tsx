@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { Mail, Globe, Heart, ArrowRight } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 export default function Contact() {
+  const { t } = useLanguage();
   return (
     <div>
       <section className="py-32 bg-gradient-to-b from-slate-50 to-white">
@@ -12,10 +14,10 @@ export default function Contact() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] as const }}
             >
-              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-6">Reach Out</p>
-              <h1 className="font-heading text-5xl md:text-7xl font-bold leading-[0.95] tracking-[-0.02em] mb-8 text-slate-900">Get in Touch</h1>
+              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-6">{t("Reach Out")}</p>
+              <h1 className="font-heading text-5xl md:text-7xl font-bold leading-[0.95] tracking-[-0.02em] mb-8 text-slate-900">{t("Get in Touch")}</h1>
               <p className="text-lg text-slate-500 leading-relaxed mb-16">
-                Interested in partnering with R4K or supporting our mission of bringing robotics education to children across ASEAN?
+                {t("Interested in partnering with R4K or supporting our mission of bringing robotics education to children across ASEAN?")}
               </p>
 
               <div className="space-y-10">
@@ -24,7 +26,7 @@ export default function Contact() {
                     <Mail className="w-4 h-4 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="font-heading font-semibold mb-1 text-slate-900">Email</h3>
+                    <h3 className="font-heading font-semibold mb-1 text-slate-900">{t("Email")}</h3>
                     <a href="mailto:17924@students.isb.ac.th" className="text-sm text-slate-500 hover:text-blue-600 transition-colors" data-testid="link-email">
                       17924@students.isb.ac.th
                     </a>
@@ -35,7 +37,7 @@ export default function Contact() {
                     <Globe className="w-4 h-4 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="font-heading font-semibold mb-1 text-slate-900">Website</h3>
+                    <h3 className="font-heading font-semibold mb-1 text-slate-900">{t("Website")}</h3>
                     <a href="https://www.r4kclub.com" target="_blank" rel="noopener noreferrer" className="text-sm text-slate-500 hover:text-blue-600 transition-colors" data-testid="link-website">
                       www.r4kclub.com
                     </a>
@@ -46,16 +48,16 @@ export default function Contact() {
                     <Heart className="w-4 h-4 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="font-heading font-semibold mb-1 text-slate-900">Support</h3>
+                    <h3 className="font-heading font-semibold mb-1 text-slate-900">{t("Support")}</h3>
                     <p className="text-sm text-slate-500">
-                      Donations for teaching materials and student coach tuition
+                      {t("Donations for teaching materials and student coach tuition")}
                     </p>
                   </div>
                 </div>
               </div>
 
               <div className="mt-16 border-t border-slate-200 pt-12">
-                <h3 className="text-xs font-semibold tracking-[0.3em] uppercase mb-6 text-blue-600/60">Partnership Opportunities</h3>
+                <h3 className="text-xs font-semibold tracking-[0.3em] uppercase mb-6 text-blue-600/60">{t("Partnership Opportunities")}</h3>
                 <ul className="space-y-4">
                   {[
                     "Become a partner school",
@@ -65,7 +67,7 @@ export default function Contact() {
                   ].map((item, i) => (
                     <li key={i} className="flex items-center gap-3 text-sm text-slate-500" data-testid={`text-partnership-${i}`}>
                       <ArrowRight className="w-3 h-3 flex-shrink-0 text-blue-500" />
-                      {item}
+                      {t(item)}
                     </li>
                   ))}
                 </ul>
@@ -82,10 +84,10 @@ export default function Contact() {
                 <div className="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mb-6 border border-blue-200">
                   <Mail className="w-7 h-7 text-blue-600" />
                 </div>
-                <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600/60 mb-4">Work Email</p>
-                <h2 className="font-heading text-2xl md:text-3xl font-semibold mb-4 text-slate-900">Let’s work together</h2>
+                <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600/60 mb-4">{t("Work Email")}</p>
+                <h2 className="font-heading text-2xl md:text-3xl font-semibold mb-4 text-slate-900">{t("Let’s work together")}</h2>
                 <p className="text-sm text-slate-500 leading-relaxed max-w-sm mb-8">
-                  For partnerships, support, and other work-related inquiries, email us directly.
+                  {t("For partnerships, support, and other work-related inquiries, email us directly.")}
                 </p>
                 <a
                   href="mailto:17924@students.isb.ac.th"

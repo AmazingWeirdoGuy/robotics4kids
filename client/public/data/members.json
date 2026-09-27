@@ -3,7 +3,7 @@
     {
       "id": 1,
       "name": "Sean Terdprisant",
-      "title": "President",
+      "title": "Co-founder and President",
       "bio": "",
       "photo": "",
       "email": ""
@@ -11,7 +11,7 @@
     {
       "id": 2,
       "name": "Poon Punjarungroj",
-      "title": "Co President",
+      "title": "Co-president",
       "bio": "",
       "photo": "",
       "email": ""
@@ -19,7 +19,7 @@
     {
       "id": 3,
       "name": "Napon Thavornvanit",
-      "title": "Officer",
+      "title": "Vice President",
       "bio": "",
       "photo": "",
       "email": ""
@@ -27,7 +27,7 @@
     {
       "id": 1771391325672,
       "name": "Raheel E Parvez",
-      "title": "Officer",
+      "title": "Vice President",
       "bio": "",
       "photo": "",
       "email": ""
@@ -52,8 +52,16 @@
     },
     {
       "id": 2,
-      "name": "Keen",
+      "name": "Poranat (Keen) Tokamoltham",
       "title": "Art Director",
+      "bio": "",
+      "photo": "",
+      "email": ""
+    },
+    {
+      "id": 1789793273593,
+      "name": "Paradee Bisalputra",
+      "title": "Quality Assurance Tester",
       "bio": "",
       "photo": "",
       "email": ""
@@ -65,22 +73,22 @@
       "name": "Loreto Alonso",
       "title": "Faculty Advisor",
       "bio": "",
-      "photo": "/uploads/members/crop_1771261564351_1771261565890.webp",
+      "photo": "",
       "email": ""
     }
   ],
   "activeMembers": [
     {
       "id": 1,
-      "name": "Apiwit Bulpakdi",
+      "name": "Wasu Vidayanakorn",
       "title": "",
       "bio": "",
-      "photo": "/uploads/members/crop_1771261448483_1771261449552.webp",
+      "photo": "",
       "email": ""
     },
     {
       "id": 2,
-      "name": "Active Member Name",
+      "name": "Nontapat\tPrayoonthong",
       "title": "",
       "bio": "",
       "photo": "",
@@ -88,7 +96,7 @@
     },
     {
       "id": 3,
-      "name": "Active Member Name",
+      "name": "Ruj\tTandalak",
       "title": "",
       "bio": "",
       "photo": "",
@@ -96,7 +104,159 @@
     },
     {
       "id": 4,
-      "name": "Active Member Name",
+      "name": "Apiwit\tBulpakdi",
+      "title": "",
+      "bio": "",
+      "photo": "",
+      "email": ""
+    },
+    {
+      "id": 1789792707171,
+      "name": "Poranat\tTokamoltham",
+      "title": "",
+      "bio": "",
+      "photo": "",
+      "email": ""
+    },
+    {
+      "id": 1789792719113,
+      "name": "Paradee\tBisalputra",
+      "title": "",
+      "bio": "",
+      "photo": "",
+      "email": ""
+    },
+    {
+      "id": 1789792727558,
+      "name": "Bhuriwaj\tBussayasripatt",
+      "title": "",
+      "bio": "",
+      "photo": "",
+      "email": ""
+    },
+    {
+      "id": 1789792731938,
+      "name": "Nattakrit\tCharoenmechaikul",
+      "title": "",
+      "bio": "",
+      "photo": "",
+      "email": ""
+    },
+    {
+      "id": 1789792735630,
+      "name": "Rungphob\tLertvilaivithaya",
+      "title": "",
+      "bio": "",
+      "photo": "",
+      "email": ""
+    },
+    {
+      "id": 1789792740163,
+      "name": "Rachamongol\tChayapirad",
+      "title": "",
+      "bio": "",
+      "photo": "",
+      "email": ""
+    },
+    {
+      "id": 1789792744689,
+      "name": "Nadech\tCharoenmechaikul",
+      "title": "",
+      "bio": "",
+      "photo": "",
+      "email": ""
+    },
+    {
+      "id": 1789792749818,
+      "name": "Austin\tLamis",
+      "title": "",
+      "bio": "",
+      "photo": "",
+      "email": ""
+    },
+    {
+      "id": 1789792754043,
+      "name": "Sena\tShinozaki",
+      "title": "",
+      "bio": "",
+      "photo": "",
+      "email": ""
+    },
+    {
+      "id": 1789792758206,
+      "name": "Tristan\tGee",
+      "title": "",
+      "bio": "",
+      "photo": "",
+      "email": ""
+    },
+    {
+      "id": 1789792762956,
+      "name": "Phobtorn\tTechopitayakul",
+      "title": "",
+      "bio": "",
+      "photo": "",
+      "email": ""
+    },
+    {
+      "id": 1789792767210,
+      "name": "Jira\tChamroontaneskul",
+      "title": "",
+      "bio": "",
+      "photo": "",
+      "email": ""
+    },
+    {
+      "id": 1789792771239,
+      "name": "Ron\tMatsunobu",
+      "title": "",
+      "bio": "",
+      "photo": "",
+      "email": ""
+    },
+    {
+      "id": 1789792775634,
+      "name": "Kaito\tOse",
+      "title": "",
+      "bio": "",
+      "photo": "",
+      "email": ""
+    },
+    {
+      "id": 1789792780715,
+      "name": "Somchote\tSahavat",
+      "title": "",
+      "bio": "",
+      "photo": "",
+      "email": ""
+    },
+    {
+      "id": 1789792786120,
+      "name": "Pluempiti\tBrahmasakha Na Sakolnagara",
+      "title": "",
+      "bio": "",
+      "photo": "",
+      "email": ""
+    },
+    {
+      "id": 1789792792222,
+      "name": "Jirun\tChamroontaneskul",
+      "title": "",
+      "bio": "",
+      "photo": "",
+      "email": ""
+    },
+    {
+      "id": 1789792798036,
+      "name": "Adaaran\tWongwan",
+      "title": "",
+      "bio": "",
+      "photo": "",
+      "email": ""
+    },
+    {
+      "id": 1789792806604,
+      "name": "Phunnapat\tVarnapruk",
       "title": "",
       "bio": "",
       "photo": "",

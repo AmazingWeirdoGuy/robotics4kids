@@ -40,6 +40,7 @@ import founderKris from "@assets/image_1771259753861.webp";
 import founderTan from "@assets/image_1771259784308.webp";
 import founderBlu from "@assets/image_1771259788803.webp";
 import ResponsiveImage from "@/components/ResponsiveImage";
+import { useLanguage } from "@/lib/i18n";
 
 interface Member {
   id: number;
@@ -146,6 +147,7 @@ function PersonRow({ name, subtitle, image, initials, testId }: { name: string; 
 }
 
 export default function About() {
+  const { t } = useLanguage();
   const [members, setMembers] = useState<MembersData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -174,12 +176,12 @@ export default function About() {
             transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] as const }}
             className="max-w-3xl"
           >
-            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-6">About R4K</p>
+            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-6">{t("About R4K")}</p>
             <h1 className="font-heading text-5xl md:text-7xl font-bold leading-[0.95] tracking-[-0.02em] mb-8 text-slate-900">
               Robotics for Kids
             </h1>
             <p className="text-xl text-slate-500 leading-relaxed">
-              We are a group of high school students who want to share our knowledge about robotics with other children, providing opportunities to learn robotics and programming.
+              {t("We are a group of high school students who want to share our knowledge about robotics with other children, providing opportunities to learn robotics and programming.")}
             </p>
           </motion.div>
         </div>
@@ -189,13 +191,13 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <div className="grid md:grid-cols-2 gap-16 md:gap-24 items-center">
             <motion.div {...fadeUp}>
-              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-4">Origins</p>
-              <h2 className="font-heading text-3xl md:text-4xl font-bold mb-8 text-slate-900">Experienced Leaders</h2>
+              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-4">{t("Origins")}</p>
+              <h2 className="font-heading text-3xl md:text-4xl font-bold mb-8 text-slate-900">{t("Experienced Leaders")}</h2>
               <p className="text-slate-500 leading-relaxed mb-6">
-                Our founders include a Thailand representative for International Youth Robot Competition (IYRC) in Korea, as well as 2-time National VEX Robotics Champion and 2-time Thailand Representative to the VEX Robotics World Championships in the US.
+                {t("Our founders include a Thailand representative for International Youth Robot Competition (IYRC) in Korea, as well as 2-time National VEX Robotics Champion and 2-time Thailand Representative to the VEX Robotics World Championships in the US.")}
               </p>
               <p className="text-slate-500 leading-relaxed">
-                Acknowledging the rapid development of technology in the modern world, the significance of programming knowledge is now greater than ever.
+                {t("Acknowledging the rapid development of technology in the modern world, the significance of programming knowledge is now greater than ever.")}
               </p>
             </motion.div>
             <motion.div
@@ -205,7 +207,7 @@ export default function About() {
               transition={{ duration: 1 }}
               className="flex flex-col items-center"
             >
-              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-8">Founders</p>
+              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-8">{t("Founders")}</p>
               <div className="flex justify-center gap-6 md:gap-8">
               {[
                 { img: founderKris, name: "Kris (Ken) Terdprisant" },
@@ -243,7 +245,7 @@ export default function About() {
                 data-testid={`about-card-${i}`}
               >
                 <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600/50 mb-6">0{i + 1}</p>
-                <h3 className="font-heading text-xl font-semibold mb-4 text-slate-900">{item.title}</h3>
+                <h3 className="font-heading text-xl font-semibold mb-4 text-slate-900">{t(item.title)}</h3>
                 <p className="text-sm text-slate-500 leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
@@ -254,16 +256,16 @@ export default function About() {
       <section className="py-32 bg-white">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <motion.div {...fadeUp} className="text-center mb-20">
-            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-4">Since 2018</p>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-slate-900">Accomplishments</h2>
+            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-4">{t("Established 2018")}</p>
+            <h2 className="font-heading text-4xl md:text-5xl font-bold text-slate-900">{t("Accomplishments")}</h2>
           </motion.div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-slate-200 rounded-xl overflow-hidden">
             {[
-              { value: 9, suffix: "", label: "Partner Schools" },
-              { value: 24, suffix: "", label: "School Advisors" },
-              { value: 26, suffix: "", label: "Student Coaches" },
-              { value: 60, suffix: "+", label: "Student Graduates" },
+              { value: 9, suffix: "", label: t("Partner Schools") },
+              { value: 24, suffix: "", label: t("School Advisors") },
+              { value: 26, suffix: "", label: t("Student Coaches") },
+              { value: 60, suffix: "+", label: t("Student Graduates") },
             ].map((stat, i) => (
               <motion.div
                 key={i}
@@ -287,33 +289,33 @@ export default function About() {
       <section className="py-32 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <motion.div {...fadeUp} className="text-center mb-24">
-            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-4">People</p>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-slate-900">Our Team</h2>
+            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-4">{t("People")}</p>
+            <h2 className="font-heading text-4xl md:text-5xl font-bold text-slate-900">{t("Our Team")}</h2>
           </motion.div>
 
           {loading ? (
             <div className="text-center py-20 text-slate-400">Loading team data...</div>
           ) : (
             <div className="space-y-3 max-w-3xl mx-auto">
-              <TeamDropdown title="Officers" count={officers.length} id="officers" defaultOpen>
+              <TeamDropdown title={t("Officers")} count={officers.length} id="officers" defaultOpen>
                 {officers.map((m, i) => (
                   <PersonRow key={m.id} name={m.name} subtitle={m.title} image={m.photo} initials={getInitials(m.name)} testId={`officer-${i}`} />
                 ))}
               </TeamDropdown>
 
-              <TeamDropdown title="Website Development" count={websiteManagers.length} id="webdev" defaultOpen>
+              <TeamDropdown title={t("Website Development")} count={websiteManagers.length} id="webdev" defaultOpen>
                 {websiteManagers.map((m, i) => (
                   <PersonRow key={m.id} name={m.name} subtitle={m.title} image={m.photo} initials={getInitials(m.name)} testId={`webdev-${i}`} />
                 ))}
               </TeamDropdown>
 
-              <TeamDropdown title="Faculty Advisors" count={facultyAdvisors.length} id="advisors">
+              <TeamDropdown title={t("Faculty Advisors")} count={facultyAdvisors.length} id="advisors">
                 {facultyAdvisors.map((m, i) => (
                   <PersonRow key={m.id} name={m.name} subtitle={m.title} image={m.photo} initials={getInitials(m.name)} testId={`advisor-${i}`} />
                 ))}
               </TeamDropdown>
 
-              <TeamDropdown title="Active Members" count={activeMembers.length} id="members">
+              <TeamDropdown title={t("Active Members")} count={activeMembers.length} id="members">
                 {activeMembers.map((m, i) => (
                   <PersonRow key={m.id} name={m.name} subtitle={m.title} image={m.photo} initials={getInitials(m.name)} testId={`member-${i}`} />
                 ))}
@@ -326,8 +328,8 @@ export default function About() {
       <section className="py-32 bg-white">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <motion.div {...fadeUp} className="max-w-2xl mb-20">
-            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-4">Network</p>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-slate-900">R4K Schools</h2>
+            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-4">{t("Network")}</p>
+            <h2 className="font-heading text-4xl md:text-5xl font-bold text-slate-900">{t("R4K Schools")}</h2>
           </motion.div>
 
           <div className="relative max-w-3xl mx-auto">

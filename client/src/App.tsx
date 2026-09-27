@@ -1,6 +1,5 @@
+import { lazy, Suspense } from "react";
 import { Switch, Route } from "wouter";
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Layout from "@/components/Layout";
 import Home from "@/pages/Home";
@@ -8,9 +7,20 @@ import About from "@/pages/About";
 import News from "@/pages/News";
 import NewsArticle from "@/pages/NewsArticle";
 import Contact from "@/pages/Contact";
-import Admin from "@/pages/Admin";
 import Terms from "@/pages/Terms";
 import Privacy from "@/pages/Privacy";
+
+const Admin = import.meta.env.DEV ? lazy(() => import("@/pages/Admin")) : null;
+
+function AdminRoute() {
+  if (!Admin) return null;
+
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-background" />}>
+      <Admin />
+    </Suspense>
+  );
+}
 
 function Router() {
   return (
@@ -23,7 +33,7 @@ function Router() {
         <Route path="/contact" component={Contact} />
         <Route path="/terms" component={Terms} />
         <Route path="/privacy" component={Privacy} />
-        <Route path="/admin" component={Admin} />
+        {Admin && <Route path="/admin" component={AdminRoute} />}
         <Route component={NotFound} />
       </Switch>
     </Layout>
@@ -31,12 +41,7 @@ function Router() {
 }
 
 function App() {
-  return (
-    <TooltipProvider>
-      <Toaster />
-      <Router />
-    </TooltipProvider>
-  );
+  return <Router />;
 }
 
 export default App;

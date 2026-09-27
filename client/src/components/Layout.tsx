@@ -4,11 +4,13 @@ import { Menu, X } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import logo from "@assets/image_1763957987556.webp";
 import ResponsiveImage from "@/components/ResponsiveImage";
+import { useLanguage } from "@/lib/i18n";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [location] = useLocation();
   const [scrolled, setScrolled] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -28,10 +30,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }, [location]);
 
   const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About" },
-    { href: "/news", label: "News" },
-    { href: "/contact", label: "Contact" },
+    { href: "/", label: t("Home") },
+    { href: "/about", label: t("About") },
+    { href: "/news", label: t("News") },
+    { href: "/contact", label: t("Contact") },
   ];
 
   return (
@@ -54,11 +56,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             ))}
           </div>
 
-          <Link href="/contact" onClick={() => handleNavClick("/contact")} className="hidden md:block" data-testid="link-get-involved">
-            <span className="text-[13px] font-medium tracking-wide uppercase text-white bg-blue-600 px-5 py-2 rounded-md hover:bg-blue-700 transition-all duration-300">
-              Get Involved
-            </span>
-          </Link>
+          <div className="hidden md:flex items-center gap-3">
+            {import.meta.env.DEV && (
+              <Link href="/admin" onClick={() => handleNavClick("/admin")} className="text-[13px] font-medium tracking-wide uppercase text-blue-700 border border-blue-200 bg-blue-50 px-4 py-2 rounded-md hover:bg-blue-100 transition-colors">
+                Editor
+              </Link>
+            )}
+            <Link href="/contact" onClick={() => handleNavClick("/contact")} data-testid="link-get-involved">
+              <span className="text-[13px] font-medium tracking-wide uppercase text-white bg-blue-600 px-5 py-2 rounded-md hover:bg-blue-700 transition-all duration-300">
+                {t("Get Involved")}
+              </span>
+            </Link>
+          </div>
 
           <button className="md:hidden p-2 text-slate-900" onClick={() => setIsOpen(!isOpen)} data-testid="button-mobile-menu">
             {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -79,6 +88,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     {link.label}
                   </Link>
                 ))}
+                {import.meta.env.DEV && (
+                  <Link href="/admin" onClick={() => handleNavClick("/admin")} className="block text-sm font-medium tracking-wide uppercase text-blue-600">
+                    Editor
+                  </Link>
+                )}
               </div>
             </motion.div>
           )}
@@ -93,14 +107,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div className="md:col-span-2">
               <div className="flex items-center gap-3 mb-5">
                 <ResponsiveImage src={logo} alt="R4K" className="h-8 w-8 object-cover rounded-full" />
-                <span className="font-heading font-semibold text-sm tracking-wide uppercase text-white">Robotics for Kids</span>
+                <span className="font-heading font-semibold text-sm tracking-wide uppercase text-white">{t("Robotics for Kids")}</span>
               </div>
               <p className="text-sm text-white/70 leading-relaxed max-w-sm">
-                Empowering the next generation through robotics education and community outreach across Thailand and ASEAN.
+                {t("Empowering the next generation through robotics education and community outreach across Thailand and ASEAN.")}
               </p>
             </div>
             <div>
-              <h3 className="text-xs font-semibold tracking-widest uppercase mb-5 text-blue-400">Navigate</h3>
+              <h3 className="text-xs font-semibold tracking-widest uppercase mb-5 text-blue-400">{t("Navigate")}</h3>
               <ul className="space-y-3">
                 {navLinks.map(link => (
                   <li key={link.href}><Link href={link.href} data-testid={`link-footer-${link.label.toLowerCase()}`} className="text-sm text-white/70 hover:text-blue-400 transition-colors">{link.label}</Link></li>
@@ -108,7 +122,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </ul>
             </div>
             <div>
-              <h3 className="text-xs font-semibold tracking-widest uppercase mb-5 text-blue-400">Connect</h3>
+              <h3 className="text-xs font-semibold tracking-widest uppercase mb-5 text-blue-400">{t("Connect")}</h3>
               <ul className="space-y-3">
                 <li><a href="https://www.instagram.com/r4kclubthailand/" target="_blank" rel="noopener noreferrer" data-testid="link-instagram" className="text-sm text-white/70 hover:text-blue-400 transition-colors">Instagram</a></li>
                 <li><a href="mailto:contact@r4kclub.com" data-testid="link-footer-email" className="text-sm text-white/70 hover:text-blue-400 transition-colors">contact@r4kclub.com</a></li>
@@ -120,9 +134,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="max-w-7xl mx-auto px-6 md:px-10 py-6 flex flex-col md:flex-row items-center justify-between gap-3">
             <p className="text-xs text-white/50 tracking-wide">&copy; 2026 Robotics for Kids. All rights reserved.</p>
             <div className="flex items-center gap-4">
-              <Link href="/terms" data-testid="link-footer-terms" className="text-xs text-white/50 hover:text-blue-400 transition-colors">Terms of Service</Link>
+              <Link href="/terms" data-testid="link-footer-terms" className="text-xs text-white/50 hover:text-blue-400 transition-colors">{t("Terms of Service")}</Link>
               <span className="text-white/20">·</span>
-              <Link href="/privacy" data-testid="link-footer-privacy" className="text-xs text-white/50 hover:text-blue-400 transition-colors">Privacy Policy</Link>
+              <Link href="/privacy" data-testid="link-footer-privacy" className="text-xs text-white/50 hover:text-blue-400 transition-colors">{t("Privacy Policy")}</Link>
             </div>
           </div>
         </div>

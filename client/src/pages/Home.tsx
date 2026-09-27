@@ -39,6 +39,7 @@ function CountUp({ target, suffix = "", duration = 2 }: { target: number; suffix
 import { Link } from "wouter";
 import heroRobot from "@assets/image_1771418263555.webp";
 import ResponsiveImage from "@/components/ResponsiveImage";
+import { useLanguage } from "@/lib/i18n";
 
 const iconMap: Record<string, typeof Trophy> = { Trophy, Calendar, Heart, MapPin, Zap };
 
@@ -69,6 +70,7 @@ interface Program {
 }
 
 export default function Home() {
+  const { t } = useLanguage();
   const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
   const [programs, setPrograms] = useState<Program[]>([]);
   const [loading, setLoading] = useState(true);
@@ -99,24 +101,24 @@ export default function Home() {
               transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] as const }}
               className="flex-1"
             >
-              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-8">Established 2018</p>
+              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-8">{t("Established 2018")}</p>
               <h1 className="font-heading text-[clamp(3rem,7vw,6rem)] font-bold leading-[0.95] tracking-[-0.03em] mb-8 text-slate-900">
-                Robotics
+                {t("Robotics")}
                 <br />
-                <span className="text-gradient-blue">for Kids</span>
+                <span className="text-gradient-blue">{t("for Kids")}</span>
               </h1>
               <p className="text-lg text-slate-500 leading-relaxed max-w-md mb-10">
-                High school students sharing robotics and programming knowledge with children across Thailand and ASEAN.
+                {t("High school students sharing robotics and programming knowledge with children across Thailand and ASEAN.")}
               </p>
               <div className="flex items-center gap-6">
                 <Link href="/contact">
                   <span className="inline-flex items-center text-sm font-medium tracking-wide uppercase bg-blue-600 text-white px-8 py-4 rounded-md hover:bg-blue-700 transition-colors duration-300 cursor-pointer shadow-lg shadow-blue-600/20" data-testid="button-join">
-                    Partner With Us
+                    {t("Partner With Us")}
                   </span>
                 </Link>
                 <Link href="/about">
                   <span className="inline-flex items-center gap-2 text-sm font-medium tracking-wide uppercase text-slate-500 hover:text-blue-600 transition-all duration-300 cursor-pointer" data-testid="button-learn-more">
-                    Learn More <ArrowRight className="w-4 h-4" />
+                    {t("Learn More")} <ArrowRight className="w-4 h-4" />
                   </span>
                 </Link>
               </div>
@@ -141,7 +143,7 @@ export default function Home() {
           className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer"
           onClick={() => window.scrollTo({ top: window.innerHeight, behavior: "smooth" })}
         >
-          <span className="text-[10px] font-medium tracking-[0.3em] uppercase text-slate-400">Scroll</span>
+          <span className="text-[10px] font-medium tracking-[0.3em] uppercase text-slate-400">{t("Scroll")}</span>
           <motion.div
             animate={{ y: [0, 6, 0] }}
             transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
@@ -154,19 +156,19 @@ export default function Home() {
       <section className="py-32 bg-white">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <motion.div {...fadeUp} className="max-w-2xl mb-20">
-            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-4">Impact</p>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold leading-tight mb-6 text-slate-900">Our Progress</h2>
+            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-4">{t("Impact")}</p>
+            <h2 className="font-heading text-4xl md:text-5xl font-bold leading-tight mb-6 text-slate-900">{t("Our Progress")}</h2>
             <p className="text-slate-500 text-lg leading-relaxed">
-              A growing network across 4 countries, 9 schools, and 100+ coaches and advisors.
+              {t("A growing network across 4 countries, 9 schools, and 100+ coaches and advisors.")}
             </p>
           </motion.div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-slate-200 rounded-xl overflow-hidden">
             {[
-              { icon: Globe, label: "Countries", value: 4, suffix: "" },
-              { icon: MapPin, label: "Partner Schools", value: 9, suffix: "" },
-              { icon: Users, label: "Coaches & Advisors", value: 100, suffix: "+" },
-              { icon: GraduationCap, label: "Core Members", value: 17, suffix: "" },
+              { icon: Globe, label: t("Countries"), value: 4, suffix: "" },
+              { icon: MapPin, label: t("Partner Schools"), value: 9, suffix: "" },
+              { icon: Users, label: t("Coaches & Advisors"), value: 100, suffix: "+" },
+              { icon: GraduationCap, label: t("Core Members"), value: 17, suffix: "" },
             ].map((stat, i) => (
               <motion.div
                 key={i}
@@ -191,8 +193,8 @@ export default function Home() {
       <section className="py-32 bg-gradient-to-b from-slate-50 to-white">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <motion.div {...fadeUp} className="max-w-2xl mb-20">
-            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-4">Education</p>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold leading-tight text-slate-900">Our Courses</h2>
+            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-4">{t("Education")}</p>
+            <h2 className="font-heading text-4xl md:text-5xl font-bold leading-tight text-slate-900">{t("Our Courses")}</h2>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -213,10 +215,10 @@ export default function Home() {
                   <ResponsiveImage src={course.image} alt={course.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 </div>
                 <div className="p-6 md:p-8">
-                  <h3 className="font-heading text-lg font-semibold mb-2 text-slate-900">{course.name}</h3>
-                  <p className="text-sm text-slate-500 leading-relaxed mb-4">{course.description}</p>
+                  <h3 className="font-heading text-lg font-semibold mb-2 text-slate-900">{t(course.name)}</h3>
+                  <p className="text-sm text-slate-500 leading-relaxed mb-4">{t(course.description)}</p>
                   <span className="inline-flex items-center gap-2 text-xs font-medium tracking-wide uppercase text-blue-600 group-hover:gap-3 transition-all duration-300">
-                    View <ArrowRight className="w-3 h-3" />
+                    {t("View")} <ArrowRight className="w-3 h-3" />
                   </span>
                 </div>
               </motion.a>
@@ -228,8 +230,8 @@ export default function Home() {
       <section className="py-32 bg-white">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <motion.div {...fadeUp} className="max-w-2xl mb-20">
-            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-4">Community</p>
-            <h2 className="font-heading text-4xl md:text-5xl font-bold leading-tight text-slate-900">Our Activities</h2>
+            <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-4">{t("Community")}</p>
+            <h2 className="font-heading text-4xl md:text-5xl font-bold leading-tight text-slate-900">{t("Our Activities")}</h2>
           </motion.div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-1 rounded-xl overflow-hidden">
@@ -267,12 +269,12 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <div className="flex justify-between items-end mb-16">
             <motion.div {...fadeUp}>
-              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-4">Updates</p>
-              <h2 className="font-heading text-4xl md:text-5xl font-bold text-slate-900">Latest News</h2>
+              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-4">{t("Updates")}</p>
+              <h2 className="font-heading text-4xl md:text-5xl font-bold text-slate-900">{t("Latest News")}</h2>
             </motion.div>
             <Link href="/news">
               <span className="hidden md:inline-flex items-center gap-2 text-xs font-medium tracking-wide uppercase text-blue-600 hover:text-blue-700 transition-colors cursor-pointer" data-testid="button-view-all-news">
-                All News <ArrowRight className="w-3 h-3" />
+                {t("All News")} <ArrowRight className="w-3 h-3" />
               </span>
             </Link>
           </div>
@@ -294,19 +296,19 @@ export default function Home() {
                 >
                   <div className="flex items-center gap-3 mb-6">
                     <Icon className="w-4 h-4 text-blue-600" />
-                    <span className="text-xs tracking-wide uppercase text-slate-400">{item.category}</span>
+                    <span className="text-xs tracking-wide uppercase text-slate-400">{t(item.category)}</span>
                   </div>
-                  <h3 className="font-heading text-xl font-semibold mb-3 leading-snug text-slate-900">{item.title}</h3>
+                  <h3 className="font-heading text-xl font-semibold mb-3 leading-snug text-slate-900">{t(item.title)}</h3>
                   <p className="text-sm text-slate-400 mb-6">{item.date}</p>
                   <Link href={`/news/${item.id}`} data-testid={`link-read-news-${item.id}`}>
                     <span className="inline-flex items-center gap-2 text-xs font-medium tracking-wide uppercase text-blue-600 group-hover:gap-3 transition-all duration-300 cursor-pointer">
-                      Read <ArrowRight className="w-3 h-3" />
+                      {t("Read")} <ArrowRight className="w-3 h-3" />
                     </span>
                   </Link>
                 </motion.div>
               );
             }) : (
-              <div className="col-span-3 bg-white text-center py-20 text-slate-400 rounded-xl border border-slate-200">No news yet.</div>
+              <div className="col-span-3 bg-white text-center py-20 text-slate-400 rounded-xl border border-slate-200">{t("No news items yet. Check back soon.")}</div>
             )}
           </div>
 
@@ -323,14 +325,14 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 md:px-10 relative z-10">
           <div className="bg-white border border-slate-200 rounded-2xl p-12 md:p-20 text-center card-glow">
             <motion.div {...fadeUp}>
-              <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-6">Support</p>
-              <h2 className="font-heading text-4xl md:text-6xl font-bold mb-6 text-slate-900">Support Our Mission</h2>
+                <p className="text-xs font-medium tracking-[0.3em] uppercase text-blue-600 mb-6">{t("Support")}</p>
+              <h2 className="font-heading text-4xl md:text-6xl font-bold mb-6 text-slate-900">{t("Support Our Mission")}</h2>
               <p className="text-lg text-slate-500 max-w-xl mx-auto mb-12 leading-relaxed">
-                We are open for donations for teaching materials and student coach tuition.
+                {t("We are open for donations for teaching materials and student coach tuition.")}
               </p>
               <Link href="/contact">
                 <span className="inline-flex items-center text-sm font-medium tracking-wide uppercase bg-blue-600 text-white px-8 py-4 rounded-md hover:bg-blue-700 transition-all duration-300 cursor-pointer shadow-lg shadow-blue-600/20" data-testid="button-donate">
-                  Make a Donation
+                  {t("Make a Donation")}
                 </span>
               </Link>
             </motion.div>

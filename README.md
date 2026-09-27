@@ -1,100 +1,74 @@
-# R4K - Robotics for Kids Website
+# R4K — Robotics for Kids
 
-A modern, frontend-only website for the Robotics for Kids club, built with React, TypeScript, and Vite.
+A static website built with React, TypeScript, Vite, Tailwind CSS, Wouter, and Framer Motion. The deployed site has no server, database, runtime API, or required environment variable.
 
-## 🚀 Getting Started
+## Local development
 
-### Development
-```bash
-npm install
+Use Node.js 20.19 or newer.
+
+```sh
+npm ci
 npm run dev
 ```
 
-The site will be available at `http://localhost:5000`
+Open `http://127.0.0.1:5001`. The content editor is available only during local development at `http://127.0.0.1:5001/admin`.
 
-### Build for Production
-```bash
+The editor can update the JSON files in `client/public/data` and images in `client/public/uploads`. Its small write API is part of the Vite development server, binds to the local computer, and is excluded from production builds.
+
+## Verify and build
+
+```sh
+npm run check
 npm run build
+npm run preview
 ```
 
-The built files will be in the `dist/` directory, ready to deploy to Vercel or any static hosting service.
+The deployable website is generated in `dist/`. The preview is available at `http://127.0.0.1:4173`.
 
-## 📝 Managing Content
+The production preview behaves like the deployed site: `/admin` and the local write API are unavailable.
 
-### Editing News Items
+## Deploy to a domain
 
-All news content is stored in `client/src/data/newsData.ts`. To add, edit, or remove news items:
+Any static host can serve the `dist/` directory:
 
-1. Open `client/src/data/newsData.ts` in your code editor
-2. Add/edit/remove items from the `newsData` array
-3. Each news item has the following structure:
+- Install command: `npm ci`
+- Build command: `npm run build`
+- Publish directory: `dist`
+- Node.js version: 20.19 or newer
 
-```typescript
-{
-  id: number;              // Unique ID
-  title: string;           // News title
-  date: string;            // Display date (e.g., "Nov 20, 2025")
-  category: string;        // Category (e.g., "Competition", "Events")
-  description: string;     // Full description
-  iconName: string;        // Icon name: "Trophy", "Calendar", "Zap", or "MapPin"
-}
+`vercel.json` configures Vercel automatically. Cloudflare's single-page-app fallback is configured in `wrangler.jsonc`, so direct visits to `/about`, `/contact`, and news articles load correctly.
+
+## Development site on Cloudflare Workers
+
+The repository includes `wrangler.jsonc` for a static Cloudflare Worker named `r4k-website-development`. It serves the generated `dist/` directory and sends browser navigation requests through the React single-page app.
+
+```sh
+npm run preview:cloudflare
+npm run deploy:development
 ```
 
-4. Save the file
-5. Commit and push to GitHub
-6. Vercel will automatically redeploy
+For automatic GitHub deployments, import this repository in **Cloudflare Dashboard → Workers & Pages → Create application → Import a repository**. Use:
 
-### Example: Adding a New News Item
+- Production branch: `main`
+- Build command: `npm run build`
+- Deploy command: `npx wrangler deploy`
+- Preview command: `npx wrangler preview`
 
-```typescript
-{
-  id: 5,
-  title: "Summer Robotics Camp",
-  date: "Jun 15, 2025",
-  category: "Announcement",
-  description: "Join us for a week-long intensive robotics camp this summer!",
-  iconName: "Calendar",
-}
-```
+The `main` branch updates the persistent development Worker. Other branches can receive isolated Cloudflare Preview URLs when preview builds are enabled. The local `/admin` editor remains excluded from every Cloudflare build.
 
-## 📁 Project Structure
+After deploying, add the domain in the host's dashboard and point the domain's DNS records to the values provided by that host. The metadata, sitemap, and robots file currently use `https://www.r4kclub.com`. If the final domain changes, update:
 
-```
-client/
-  ├── src/
-  │   ├── components/     # Reusable UI components
-  │   ├── data/          # Data files (newsData.ts)
-  │   ├── pages/         # Page components
-  │   └── lib/           # Utilities
-  ├── public/            # Static assets
-  └── index.html         # Entry HTML
-```
+- `client/index.html`
+- `client/public/robots.txt`
+- `client/public/sitemap.xml`
 
-## 🎨 Tech Stack
+## Editing content
 
-- **React** - UI framework
-- **TypeScript** - Type safety
-- **Vite** - Build tool
-- **Tailwind CSS** - Styling
-- **Wouter** - Routing
-- **Framer Motion** - Animations
+- `client/src/pages` contains the page layouts and static page copy.
+- `client/src/components/Layout.tsx` contains the navigation and footer.
+- `client/src/index.css` contains global styles and theme values.
+- `client/public/data` contains members, news, and program data.
+- `client/public/uploads` contains public content images.
+- `attached_assets` contains images imported by the React components.
 
-## 🚢 Deployment
-
-This site is designed to be deployed on Vercel:
-
-1. Connect your GitHub repository to Vercel
-2. Vercel will automatically detect it's a Vite project
-3. Every push to `main` will trigger a new deployment
-4. No environment variables or build configuration needed
-
-## 📱 Pages
-
-- **Home** (`/`) - Hero, stats, courses, activities, and latest news
-- **About** (`/about`) - Mission and team information  
-- **News** (`/news`) - All news articles
-- **Contact** (`/contact`) - Contact form and information
-
----
-
-Built with ❤️ by the R4K team
+Use the local editor or edit the files directly. To update the real website, run the checks, rebuild, and deploy the newly generated `dist/` directory. The hosting provider only serves those static files, so it does not need a paid backend.
